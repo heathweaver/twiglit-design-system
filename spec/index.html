@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Twiglit Design System — Overview</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="assets/brand/favicon.png" />
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/system.css" />
+<style>
+  /* The spine demo — the four-bar header in miniature */
+  .spine {
+    border: 1px solid var(--border);
+    overflow: hidden;
+    background: var(--bg);
+  }
+  .spine .bar { padding-inline: var(--space-5); }
+  .spine .bar-tag {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-subtle);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .spine .body {
+    background: var(--bg);
+    padding: var(--space-5) var(--space-5) var(--space-7);
+    display: flex; flex-direction: column; gap: 6px;
+    font-size: var(--t-body);
+  }
+  .spine .body .row { gap: var(--space-2); padding: 4px 0; }
+  .spine .body .berry { width: 12px; height: 12px; }
+
+  /* Section tiles */
+  .section-tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  @media (max-width: 880px) { .section-tiles { grid-template-columns: 1fr; } }
+  .tile {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: var(--space-6);
+    transition: background var(--d-fast) var(--ease);
+    display: flex; flex-direction: column; gap: var(--space-2);
+  }
+  .tile:hover { background: var(--bar-search); }
+  .tile-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+  }
+  .tile-title {
+    font-size: var(--t-md);
+    font-weight: var(--w-bold);
+    letter-spacing: var(--tracking-tight);
+    margin: 4px 0 var(--space-2);
+  }
+  .tile-desc {
+    color: var(--fg-muted);
+    font-size: var(--t-small);
+    margin: 0;
+    flex: 1;
+    line-height: var(--leading-prose);
+  }
+  .tile-foot {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: var(--space-4);
+    font-size: var(--t-small);
+    color: var(--green-deep);
+    font-weight: var(--w-bold);
+  }
+
+  /* Lexicon */
+  .lexicon {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 880px) { .lexicon { grid-template-columns: repeat(2, 1fr); } }
+  .lex {
+    padding: var(--space-4) var(--space-4) var(--space-5);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .lex-word {
+    font-size: var(--t-md);
+    font-weight: var(--w-bold);
+    letter-spacing: var(--tracking-tight);
+    margin-bottom: 2px;
+  }
+  .lex-pos {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    color: var(--fg-subtle);
+    text-transform: uppercase;
+    margin-bottom: var(--space-3);
+  }
+  .lex-def {
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: var(--leading-prose);
+    text-wrap: pretty;
+  }
+
+  /* Palette strip */
+  .palette {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+  @media (max-width: 720px) { .palette { grid-template-columns: repeat(3, 1fr); } }
+  .palette > div {
+    min-height: 90px;
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .palette .name { font-size: var(--t-small); font-weight: var(--w-bold); }
+  .palette .val {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    opacity: 0.75;
+    letter-spacing: var(--tracking-mono);
+  }
+</style>
+</head>
+<body>
+
+<main class="page">
+  <section class="hero" data-screen-label="01 Overview">
+    <div class="hero-meta">
+      <span><i></i>Twiglit Design System</span>
+      <span>v0.2 · May 2026</span>
+    </div>
+    <h1>Twigl what matters between the AIs and people in your life.</h1>
+    <p class="hero-lead">A shared tree for people and the AIs they work with. Twigl what matters in from anywhere, share branches with the people who need them, and the AIs each of you use can read the tree and pick up where the last one left off.<br /><br />This is the design system. Tokens, components, and rules shared across iOS, web, and marketing.</p>
+  </section>
+
+  <!-- THE SPINE -->
+  <section class="section" data-screen-label="02 Spine">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">The spine</div>
+        <h2 class="section-title">Four bars stack the desktop chrome</h2>
+      </div>
+      <p class="section-sub">Every screen on the desktop reads the same way, top down: who, where, what you can do, what's selected. Stack the bars in this order, every time.</p>
+    </div>
+
+    <div class="spine">
+      <div class="bar bar--search">
+        <span class="bar-avatar">H</span>
+        <span class="search" style="flex:1; max-width:480px; margin:0 auto;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input placeholder="Search…" disabled />
+          <span class="search-kbd">⌘ /</span>
+        </span>
+        <span class="bar-tag">Bar 1 · #f2f2f2 · search</span>
+      </div>
+      <div class="bar bar--location">
+        <span class="bar-crumb">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10h-6v-7H9v7H3z"/></svg>
+          Home
+        </span>
+        <span class="bar-crumb-arrow">›</span>
+        <span class="bar-crumb">Twiglit</span>
+        <span class="bar-crumb-arrow">›</span>
+        <span class="bar-crumb" style="font-weight: var(--w-bold);">Outline</span>
+        <span class="bar-tag">Bar 2 · #e9e9e9 · location</span>
+      </div>
+      <div class="bar bar--action">
+        <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>Focus</span>
+        <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="14 3 14 9 20 9"/></svg>Details</span>
+        <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="0"/></svg>Complete</span>
+        <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="3 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Delete</span>
+        <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="11 17 6 12 11 7"/><line x1="6" y1="12" x2="18" y2="12"/></svg>Outdent</span>
+        <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="13 17 18 12 13 7"/><line x1="18" y1="12" x2="6" y2="12"/></svg>Indent</span>
+        <span class="bar-tag">Bar 3 · #d7d7d7 · actions</span>
+      </div>
+      <div class="bar bar--selected">
+        <span class="berry-folder is-open is-focused" style="width: 18px; height: 18px;"></span>
+        <span style="font-weight: var(--w-bold); font-size: var(--t-md);">Twiglit</span>
+        <span class="bar-tag">Bar 4 · #f0f0f0 · selected row</span>
+      </div>
+
+      <div class="body">
+        <div class="row"><span class="berry"></span><span>Outline</span></div>
+        <div class="row"><span class="berry"></span><span>Nodes</span></div>
+        <div class="row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.75" width="14" height="14"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span>Node Metadata</span>
+        </div>
+        <div class="row"><span class="berry"></span><span>Multi-Homing</span></div>
+        <div class="row"><span class="berry"></span><span>Projects</span></div>
+        <div class="row"><span class="berry"></span><span>Views</span></div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top: var(--space-4);">
+      <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3c-7 0-13 4-13 12 0 3 1 6 1 6s3-1 6-1c8 0 12-6 12-13"/></svg>
+      <div>
+        <p><strong>The bars are a vocabulary, not decoration.</strong> Don't introduce a new grey, don't reorder them, and don't merge two into one. Each bar has one job — the body is white because everything else is grey.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PALETTE -->
+  <section class="section" data-screen-label="03 Palette">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Palette</div>
+        <h2 class="section-title">Collapsed to what matters</h2>
+      </div>
+      <p class="section-sub">White body, four greys, two greens, one berry, one ink. That's the whole brand.</p>
+    </div>
+
+    <div class="palette">
+      <div style="background:#ffffff; color:#333;">
+        <div class="name">Body</div>
+        <div class="val">#ffffff · --bg</div>
+      </div>
+      <div style="background:#f2f2f2; color:#333;">
+        <div class="name">Bar 1</div>
+        <div class="val">#f2f2f2 · --bar-search</div>
+      </div>
+      <div style="background:#e9e9e9; color:#333;">
+        <div class="name">Bar 2</div>
+        <div class="val">#e9e9e9 · --bar-location</div>
+      </div>
+      <div style="background:#d7d7d7; color:#333;">
+        <div class="name">Bar 3</div>
+        <div class="val">#d7d7d7 · --bar-action</div>
+      </div>
+      <div style="background:#40404a; color:white;">
+        <div class="name">Ink</div>
+        <div class="val">#40404a · --ink</div>
+      </div>
+      <div style="background:#417505; color:white;">
+        <div class="name">Green</div>
+        <div class="val">#417505 · --green</div>
+      </div>
+      <div style="background:#2d5103; color:white;">
+        <div class="name">Green deep</div>
+        <div class="val">#2d5103 · --green-deep</div>
+      </div>
+      <div style="background:#e8f0da; color:#2d5103;">
+        <div class="name">Green soft</div>
+        <div class="val">#e8f0da · --green-soft</div>
+      </div>
+      <div style="background:#b86b6a; color:white;">
+        <div class="name">Berry</div>
+        <div class="val">#b86b6a · --berry</div>
+      </div>
+      <div style="background:#f1dcdb; color:#8e4a4a;">
+        <div class="name">Berry soft</div>
+        <div class="val">#f1dcdb · --berry-soft</div>
+      </div>
+      <div style="background:#333; color:white;">
+        <div class="name">Foreground</div>
+        <div class="val">#333 · --fg</div>
+      </div>
+      <div style="background:#999; color:white;">
+        <div class="name">Subtle</div>
+        <div class="val">#999 · --fg-subtle</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEXICON -->
+  <section class="section" data-screen-label="04 Lexicon">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Vocabulary · awaiting approval</div>
+        <h2 class="section-title">The Twiglit lexicon</h2>
+      </div>
+      <p class="section-sub">A proposed naming set rooted in the botanical metaphor. <strong>Nothing here is approved yet.</strong> Until each term gets a green tick, use neutral words in copy: row, view, parent, archive.</p>
+    </div>
+
+    <div class="callout callout--berry" style="margin-bottom: var(--space-4);">
+      <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.5"/></svg>
+      <div>
+        <p><strong>Heath approves each term explicitly.</strong> Words like “twig”, “leaf”, and “twigl” are reserved — don't use them as everyday vocabulary in product copy or docs until they're marked <span class="badge badge-green">approved</span>.</p>
+      </div>
+    </div>
+
+    <div class="lexicon">
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">twig</div>
+          <span class="badge">await</span>
+        </div>
+        <div class="lex-pos">noun</div>
+        <p class="lex-def">A single node — a task, an idea, a thread.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">twigl</div>
+          <span class="badge badge-green">approved</span>
+        </div>
+        <div class="lex-pos">verb / feature name</div>
+        <p class="lex-def">The AI assistant. Also “New twigl” as the add-row affordance.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">twiglit</div>
+          <span class="badge badge-green">approved</span>
+        </div>
+        <div class="lex-pos">product name</div>
+        <p class="lex-def">The product itself.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">berry</div>
+          <span class="badge badge-green">approved</span>
+        </div>
+        <div class="lex-pos">noun</div>
+        <p class="lex-def">The bullet on a row. The signature visual.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">leaf</div>
+          <span class="badge">await</span>
+        </div>
+        <div class="lex-pos">noun</div>
+        <p class="lex-def">A view over your data — calendar, board, doc, chat-bot.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">grain</div>
+          <span class="badge">await</span>
+        </div>
+        <div class="lex-pos">noun</div>
+        <p class="lex-def">A self-improving AI skill.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">trunk</div>
+          <span class="badge">await</span>
+        </div>
+        <div class="lex-pos">noun</div>
+        <p class="lex-def">The workspace root.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">prune</div>
+          <span class="badge">await</span>
+        </div>
+        <div class="lex-pos">verb</div>
+        <p class="lex-def">Archive or collapse rows you don't need surfacing.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">graft</div>
+          <span class="badge">await</span>
+        </div>
+        <div class="lex-pos">verb</div>
+        <p class="lex-def">Move a row under a different parent.</p>
+      </div>
+      <div class="lex">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="lex-word">bloom</div>
+          <span class="badge">await</span>
+        </div>
+        <div class="lex-pos">noun</div>
+        <p class="lex-def">An AI-suggested batch of new rows awaiting your accept.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRINCIPLES -->
+  <section class="section" data-screen-label="05 Principles">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">Principles</div>
+        <h2 class="section-title">How Twiglit feels</h2>
+      </div>
+      <p class="section-sub">Four principles for when the rules don't decide for you.</p>
+    </div>
+
+    <div class="principles">
+      <div class="principle">
+        <div class="principle-num">01</div>
+        <h3>Calm, never quiet</h3>
+        <p>Twiglit is patient with you, but it isn't passive. Movement is gentle; copy is direct. No spinners that just spin — every wait teaches you something.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">02</div>
+        <h3>Tree before time</h3>
+        <p>Information is organized by relationship first, schedule second. Lists nest. Views on the same data share state, never duplicate it.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">03</div>
+        <h3>The berry knows</h3>
+        <p>One bullet, one status, one source of truth. Completion, ownership, and progress live on the row itself — never in a separate column you forget to update.</p>
+      </div>
+      <div class="principle">
+        <div class="principle-num">04</div>
+        <h3>Grow into the AI</h3>
+        <p>The grain (skill) and the propose-tray are first-class. Surfaces always make it obvious where the human ends and the assistant begins, and reversal is one tap.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION NAV -->
+  <section class="section" data-screen-label="06 Sections">
+    <div class="section-head">
+      <div>
+        <div class="section-eyebrow">The rest of the system</div>
+        <h2 class="section-title">Browse</h2>
+      </div>
+    </div>
+
+    <div class="section-tiles">
+      <a href="foundations.html" class="tile">
+        <div class="tile-eyebrow">01 · Foundations</div>
+        <h3 class="tile-title">Color, type, spacing, motion</h3>
+        <p class="tile-desc">Tokens that govern everything else. The collapsed palette, the type scale tuned for high-density rows, spacing rhythm.</p>
+        <div class="tile-foot">Open foundations →</div>
+      </a>
+      <a href="components.html" class="tile">
+        <div class="tile-eyebrow">02 · Components</div>
+        <h3 class="tile-title">Buttons, inputs, berries, bars</h3>
+        <p class="tile-desc">The atoms: buttons, fields, search, the berry bullet, outline rows, the four-bar header, the ink rail, the dark mobile pill.</p>
+        <div class="tile-foot">Open components →</div>
+      </a>
+      <a href="patterns.html" class="tile">
+        <div class="tile-eyebrow">03 · Patterns</div>
+        <h3 class="tile-title">Home, DMs, Tree, Leaves</h3>
+        <p class="tile-desc">Full screens assembled — the AI chat home, the WhatsApp-shaped DMs, the Workflowy-shaped tree, customisable leaves stacked on top.</p>
+        <div class="tile-foot">Open patterns →</div>
+      </a>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Twiglit Design System · v0.2</span>
+    <span>One direction · One green · No round corners</span>
+  </footer>
+</main>
+
+<script src="assets/js/topbar.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

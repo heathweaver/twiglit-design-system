@@ -1,0 +1,78 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  .surface {
+    padding: 12px;
+    background: var(--surface-tint);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .nav-row {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%;
+  }
+  .pill {
+    flex: 1;
+    border-radius: 4px;
+    padding: 6px 8px;
+    display: flex;
+    background: #ffffff;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+  }
+  .pill-item {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 8px 4px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: var(--font-sans);
+    color: var(--fg-muted);
+  }
+  .pill-item.active { background: var(--green-soft); color: var(--green-deep); }
+  .pill-item svg {
+    width: 24px; height: 24px;
+    stroke: currentColor; fill: none; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .pill-search {
+    width: 56px; height: 56px;
+    background: var(--green); color: white;
+    display: grid; place-items: center;
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(65,117,5,0.40);
+    flex-shrink: 0;
+  }
+  .pill-search svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; }
+</style>
+</head><body>
+<div class="card-shell" style="gap:8px; padding:14px 18px">
+  <div class="surface">
+    <div class="nav-row">
+      <div class="pill">
+        <div class="pill-item active">
+          <svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v10a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg>
+          Home
+        </div>
+        <div class="pill-item">
+          <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-6l-4 3v-3H5a2 2 0 0 1-2-2z"/><path d="M9 18a2 2 0 0 0 2 2h6l4 3v-3a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2"/></svg>
+          DMs
+        </div>
+        <div class="pill-item">
+          <svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19c0-3 2.7-5.5 6-5.5s6 2.5 6 5.5"/><path d="M15 19c0-2 1.8-3.5 4-3.5s4 1.5 4 3.5"/></svg>
+          Friends
+        </div>
+        <div class="pill-item">
+          <svg viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h8l4 4v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 4v4h4"/><path d="M8 13l2-1 1 2 2-1.5 2 1.5 1-2 2 1"/></svg>
+          AI
+        </div>
+      </div>
+      <div class="pill-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      </div>
+    </div>
+  </div>
+  <p style="font-size:11px;color:var(--fg-muted);margin:0;line-height:1.55;max-width:60ch">White pill, light-green active. <strong>24px icons · 4px radius</strong> across the pill, active pocket, and search FAB.</p>
+</div>
+</body></html>

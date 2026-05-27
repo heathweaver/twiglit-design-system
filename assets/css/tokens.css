@@ -1,0 +1,137 @@
+/* =========================================================================
+   Twiglit Design Tokens
+   Single direction. Collapsed palette. Sharp corners. Density-first.
+   ========================================================================= */
+
+/* The wordmark ships as an outlined SVG at assets/brand/wordmark.svg —
+   no webfont is loaded. Body, headings, UI all use the SF Pro / system
+   stack defined below. */
+
+:root {
+  /* -----------------------------------------------------------------------
+     SURFACES — the layered-greys vocabulary
+     The app's desktop chrome is four horizontal bars, each a darker grey.
+     Treat them as named roles, not interchangeable.
+     ----------------------------------------------------------------------- */
+  --bg:              #ffffff;   /* Content surface — the tree, modal bodies */
+  --bar-search:      #f2f2f2;   /* Bar 1 — search / global nav */
+  --bar-location:    #e9e9e9;   /* Bar 2 — breadcrumbs / location */
+  --bar-action:      #d7d7d7;   /* Bar 3 — verbs on the selected twig */
+  --bar-selected:    #f0f0f0;   /* Bar 4 — highlight under the focused twig row */
+
+  /* For migrating misc backgrounds */
+  --surface-sunken:  #f8f8f8;
+  --surface-tint:    #fafafa;
+
+  /* -----------------------------------------------------------------------
+     INK — the dark right rail
+     ----------------------------------------------------------------------- */
+  --ink:             #40404a;
+  --ink-elev:        #4d4d58;       /* hover / pinned state */
+  --ink-icon:        #9b9b9b;       /* idle icon */
+  --ink-icon-hover:  rgba(255, 255, 255, 0.85);
+  --ink-divider:     rgba(255, 255, 255, 0.1);
+
+  /* -----------------------------------------------------------------------
+     FOREGROUND
+     ----------------------------------------------------------------------- */
+  --fg:              #333333;   /* body text */
+  --fg-muted:        #666666;   /* secondary */
+  --fg-subtle:       #999999;   /* meta, mono labels */
+  --fg-faint:        #c0c0c0;   /* very low contrast */
+  --fg-on-ink:       #ffffff;
+  --fg-on-brand:     #ffffff;
+
+  /* Borders */
+  --border:          #e0e0e0;
+  --border-strong:   #c0c0c0;
+  --border-faint:    #f0f0f0;
+
+  /* -----------------------------------------------------------------------
+     BRAND GREEN — collapsed
+     One bright primary, one deep for text-on-grey, one tint for backgrounds.
+     ----------------------------------------------------------------------- */
+  --green:           #417505;   /* THE brand green — buttons, FAB, logo bg */
+  --green-deep:      #2d5103;   /* darker; used for action-bar text on grey */
+  --green-soft:      #e8f0da;   /* tint behind selected items */
+  --green-hover:     #345d04;
+
+  /* -----------------------------------------------------------------------
+     BERRY — the bullet and the accent
+     ----------------------------------------------------------------------- */
+  --berry:           #b86b6a;   /* default twig bullet, fallback avatar bg */
+  --berry-soft:      #f1dcdb;   /* tint for locked/attention states */
+  --berry-deep:      #8e4a4a;   /* berry text on tint */
+
+  /* -----------------------------------------------------------------------
+     TYPE — system stack, collapsed weights
+     ----------------------------------------------------------------------- */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono:
+    ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Mono", monospace;
+
+  /* Weights — four are available. Default rhythm is regular + bold.
+     Reach for medium and heavy only when bold isn't enough nuance. */
+  --w-regular:       400;
+  --w-medium:        500;
+  --w-bold:          600;
+  --w-heavy:         700;
+
+  /* Type scale — tuned for high-density tree readability */
+  --t-micro:         11px;
+  --t-small:         12px;
+  --t-body:          14px;   /* body / row text */
+  --t-base:          15px;   /* paragraph */
+  --t-md:            17px;   /* small heading */
+  --t-lg:            20px;   /* section title */
+  --t-xl:            28px;   /* page title */
+  --t-2xl:           40px;   /* display */
+  --t-3xl:           56px;   /* hero */
+
+  --leading-tight:   1.25;
+  --leading-body:    1.5;
+  --leading-prose:   1.6;
+  --tracking-tight:  -0.015em;
+  --tracking-display:-0.022em;
+  --tracking-mono:   0.04em;
+
+  /* -----------------------------------------------------------------------
+     SPACING — 4-point, compact-by-default on desktop
+     ----------------------------------------------------------------------- */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-7:  32px;
+  --space-8:  40px;
+  --space-9:  56px;
+  --space-10: 72px;
+
+  /* -----------------------------------------------------------------------
+     HEADER BAR HEIGHTS — these are real measurements from the app
+     ----------------------------------------------------------------------- */
+  --h-bar-search:    52px;
+  --h-bar-location:  30px;
+  --h-bar-action:    40px;
+
+  /* -----------------------------------------------------------------------
+     ELEVATION — flat. Hairline borders carry edges; shadow is rare.
+     ----------------------------------------------------------------------- */
+  --shadow-bar:      0 1px 0 rgba(0, 0, 0, 0.05);
+  --shadow-action:   0 2px 3px rgba(0, 0, 0, 0.12);
+  --shadow-modal:    0 8px 32px rgba(0, 0, 0, 0.16);
+  --shadow-menu:     0 4px 16px rgba(0, 0, 0, 0.12);
+
+  /* -----------------------------------------------------------------------
+     MOTION — sub-100ms target. Three durations is overkill.
+     ----------------------------------------------------------------------- */
+  --ease:            cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-spring:     cubic-bezier(0.34, 1.4, 0.64, 1);
+  --d-fast:          80ms;     /* default for everything */
+  --d-base:          100ms;    /* ceiling — anything slower gets refactored */
+  --d-slow:          100ms;    /* alias, same value */
+}

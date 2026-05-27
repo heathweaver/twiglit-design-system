@@ -1,0 +1,37 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/system.css">
+<link rel="stylesheet" href="_card.css"></head><body>
+<div class="card-shell">
+<div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:18px 12px; align-items:start">
+  <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+    <span class="berry size-lg"></span>
+    <span class="mono">empty</span>
+  </div>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+    <span class="berry size-lg is-checked"></span>
+    <span class="mono">checked</span>
+  </div>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+    <span class="berry size-lg is-checked is-shared"></span>
+    <span class="mono">shared</span>
+  </div>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+    <span class="berry size-lg is-checked is-multiplied"></span>
+    <span class="mono">multiplied</span>
+  </div>
+  <div style="display:flex; flex-direction:column; align-items:center; gap:6px">
+    <span class="berry-folder is-open is-focused" style="width:18px;height:18px"></span>
+    <span class="mono">folder</span>
+  </div>
+</div>
+<div class="row" style="gap:14px; align-items:baseline">
+  <span class="berry"></span>
+  <span class="berry size-md"></span>
+  <span class="berry size-lg"></span>
+  <span class="berry size-xl"></span>
+  <span class="mono" style="margin-left:6px">11 · 14 · 18 · 24 px</span>
+</div>
+<p style="font-size:11px;color:var(--fg-muted);margin:0;line-height:1.5"><strong>The signature visual.</strong> A 1px-stroke circle + optional 18%-inset center dot. Shared shifts to <span style="color:#27AA66">#27AA66</span>; multiplied to <span style="color:#9B59B6">#9B59B6</span>; focused-row to <span style="color:var(--green-deep)">--green-deep</span>.</p>
+</div>
+</body></html>

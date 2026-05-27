@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Foundations — Twiglit Design System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="assets/brand/favicon.png" />
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/system.css" />
+<style>
+  .docs { display: grid; grid-template-columns: 180px 1fr; gap: var(--space-6); align-items: start; }
+  @media (max-width: 720px) {
+    .docs { grid-template-columns: 1fr; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px 6px; }
+    .toc .toc-h { width: 100%; padding: 0 0 4px; margin: 0; }
+    .toc a { padding: 4px 10px; background: var(--bar-search); }
+  }
+  .toc { position: sticky; top: 88px; font-size: var(--t-small); display: grid; gap: 2px; }
+  .toc-h {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fg-subtle);
+    padding: 6px 10px;
+    margin-top: var(--space-3);
+  }
+  .toc a {
+    padding: 6px 10px;
+    color: var(--fg-muted);
+    transition: background var(--d-fast) var(--ease);
+  }
+  .toc a:hover { background: var(--bar-search); color: var(--fg); }
+  .toc a.active { background: var(--green-soft); color: var(--green-deep); font-weight: var(--w-bold); }
+
+  /* Scale table */
+  .scale-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--t-small);
+  }
+  .scale-table th {
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    font-weight: var(--w-regular);
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--border);
+  }
+  .scale-table td {
+    padding: var(--space-3);
+    border-bottom: 1px solid var(--border-faint);
+    vertical-align: middle;
+  }
+  .scale-table tr:last-child td { border-bottom: none; }
+  .scale-table .mono { color: var(--fg-muted); }
+</style>
+</head>
+<body>
+
+<main class="page">
+  <section class="hero">
+    <div class="hero-meta">
+      <span><i></i>Foundations</span>
+      <span>Color · Type · Space · Motion</span>
+    </div>
+    <h1>The tokens that hold <em>everything</em> together.</h1>
+    <p class="hero-lead">Tokens are the smallest, shareable unit of design. Use these — not raw hex values, not magic px numbers — and the rest of the system rebuilds itself when something changes.</p>
+  </section>
+
+  <div class="docs">
+    <aside class="toc">
+      <div class="toc-h">On this page</div>
+      <a href="#color" class="active">Color</a>
+      <a href="#type">Typography</a>
+      <a href="#space">Spacing</a>
+      <a href="#radii">Radii</a>
+      <a href="#motion">Motion</a>
+      <a href="#icons">Iconography</a>
+    </aside>
+
+    <div>
+
+      <!-- COLOR -->
+      <section class="section" id="color" data-screen-label="01 Color">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">01 · Color</div>
+            <h2 class="section-title">Color roles, not raw colors</h2>
+          </div>
+          <p class="section-sub">Every color in Twiglit has a job. Don't reach for the hex — reach for the role. The token moves; the hex doesn't.</p>
+        </div>
+
+        <div class="subsection">
+          <h3 class="subsection-title">Surface layers</h3>
+          <p class="subsection-note">The desktop chrome is four stacked greys, each darker than the last. Read them top-down: who, where, what, selected. The body is pure white because everything else is grey.</p>
+          <div class="swatch-stack">
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--bg)"></div>
+              <div class="swatch-name">Body <small>the content surface — the tree, modal bodies</small></div>
+              <span class="swatch-value">--bg · #ffffff</span>
+            </div>
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--bar-search)"></div>
+              <div class="swatch-name">Bar 1 — Search <small>top bar: avatar, global search, inbox</small></div>
+              <span class="swatch-value">--bar-search · #f2f2f2</span>
+            </div>
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--bar-location)"></div>
+              <div class="swatch-name">Bar 2 — Location <small>breadcrumb / where you are</small></div>
+              <span class="swatch-value">--bar-location · #e9e9e9</span>
+            </div>
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--bar-action)"></div>
+              <div class="swatch-name">Bar 3 — Action <small>verbs on the selected twig (focus, details, complete…)</small></div>
+              <span class="swatch-value">--bar-action · #d7d7d7</span>
+            </div>
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--bar-selected)"></div>
+              <div class="swatch-name">Bar 4 — Selected <small>the focused twig row in the tree</small></div>
+              <span class="swatch-value">--bar-selected · #f0f0f0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 class="subsection-title">Foreground</h3>
+          <div class="swatch-stack">
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--fg)"></div>
+              <div class="swatch-name">Foreground <small>body text, breadcrumbs, default content</small></div>
+              <span class="swatch-value">--fg · #333</span>
+            </div>
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--fg-muted)"></div>
+              <div class="swatch-name">Muted <small>secondary text, supportive labels</small></div>
+              <span class="swatch-value">--fg-muted · #666</span>
+            </div>
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--fg-subtle)"></div>
+              <div class="swatch-name">Subtle <small>meta, timestamps, mono labels</small></div>
+              <span class="swatch-value">--fg-subtle · #999</span>
+            </div>
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--fg-faint)"></div>
+              <div class="swatch-name">Faint <small>placeholder text, disabled</small></div>
+              <span class="swatch-value">--fg-faint · #c0c0c0</span>
+            </div>
+            <div class="swatch">
+              <div class="swatch-chip" style="background: var(--border)"></div>
+              <div class="swatch-name">Border <small>default hairline</small></div>
+              <span class="swatch-value">--border · #e0e0e0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="subsection">
+          <h3 class="subsection-title">Brand</h3>
+          <p class="subsection-note">One bright green for actions and logo, one deep green for text on grey, one soft tint for selected/hover states. Everything else that used to be green has been retired.</p>
+          <div class="grid-3">
+            <div class="color-block" style="background: var(--green); color: white;">
+              <span class="color-block-label">Green</span>
+              <span class="color-block-val">#417505 · --green</span>
+            </div>
+            <div class="color-block" style="background: var(--green-deep); color: white;">
+              <span class="color-block-label">Green deep</span>
+              <span class="color-block-val">#2d5103 · --green-deep</span>
+            </div>
+            <div class="color-block" style="background: var(--green-soft); color: var(--green-deep);">
+              <span class="color-block-label">Green soft</span>
+              <span class="color-block-val">#e8f0da · --green-soft</span>
+            </div>
+          </div>
+          <p class="subsection-note" style="margin-top: var(--space-3);">
+            <strong>Roles.</strong>
+            <span class="mono">--green</span> = brand bg (logo, primary buttons, FAB, leaf-soft bar).
+            <span class="mono">--green-deep</span> = green text on grey (action-bar verbs, "+ New twigl" link, focused folder).
+            <span class="mono">--green-soft</span> = green tint behind selected items, callouts.
+          </p>
+        </div>
+
+        <div class="subsection">
+          <h3 class="subsection-title">Berry &amp; Ink</h3>
+          <div class="grid-3">
+            <div class="color-block" style="background: var(--berry); color: white;">
+              <span class="color-block-label">Berry</span>
+              <span class="color-block-val">#b86b6a · --berry</span>
+            </div>
+            <div class="color-block" style="background: var(--berry-soft); color: var(--berry-deep);">
+              <span class="color-block-label">Berry soft</span>
+              <span class="color-block-val">#f1dcdb · --berry-soft</span>
+            </div>
+            <div class="color-block" style="background: var(--ink); color: white;">
+              <span class="color-block-label">Ink</span>
+              <span class="color-block-val">#40404a · --ink</span>
+            </div>
+          </div>
+          <p class="subsection-note" style="margin-top: var(--space-3);">
+            <strong>Berry</strong> is the bullet color and the avatar fallback. <strong>Ink</strong> is the right-side rail and the mobile pill — never use either for body backgrounds.
+          </p>
+        </div>
+
+        <div class="callout">
+          <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg>
+          <div>
+            <p><strong>The palette is closed.</strong> No new greens. No new greys. If you need a new role, propose adding it as a token rather than reaching for a fresh hex — that's how a system stays a system.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TYPE -->
+      <section class="section" id="type" data-screen-label="02 Type">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">02 · Typography</div>
+            <h2 class="section-title">System stack, four weights</h2>
+          </div>
+          <p class="section-sub">We rely on the system stack — <span class="mono">-apple-system</span> first. No webfonts. Four weights are available: regular (400) and bold (600) cover the default rhythm; medium (500) and heavy (700) are available when bold doesn't give enough nuance.</p>
+        </div>
+
+        <div class="card">
+          <div class="type-row">
+            <span class="type-label">Hero<small>56 · 600 · -0.022em</small></span>
+            <span class="type-sample" style="font-size:56px; font-weight:var(--w-bold); letter-spacing:var(--tracking-display); line-height:1.02">Grow softly.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Display<small>40 · 600</small></span>
+            <span class="type-sample" style="font-size:40px; font-weight:var(--w-bold); letter-spacing:var(--tracking-display); line-height:1.05">Trees, not folders.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Page title<small>28 · 600</small></span>
+            <span class="type-sample" style="font-size:28px; font-weight:var(--w-bold); letter-spacing:var(--tracking-tight)">Weekly planning</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Section<small>20 · 600</small></span>
+            <span class="type-sample" style="font-size:20px; font-weight:var(--w-bold); letter-spacing:var(--tracking-tight)">Today's twigs</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Heading<small>17 · 600</small></span>
+            <span class="type-sample" style="font-size:17px; font-weight:var(--w-bold); letter-spacing:var(--tracking-tight)">A node is the atom</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Lead<small>17 · 400 · 1.6</small></span>
+            <span class="type-sample" style="font-size:17px; line-height:1.6;">A twig is a node. The berry is the bullet. Leaves are how you view it.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Paragraph<small>15 · 400 · 1.5</small></span>
+            <span class="type-sample" style="font-size:15px; line-height:1.5;">The reading size for prose — design system docs, modal copy, settings. Stops growing at 17.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Body / row<small>14 · 400 · 1.5</small></span>
+            <span class="type-sample" style="font-size:14px;">The default size in the tree, in lists, in nav. Tight enough to fit information, loose enough to read at glance.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Small<small>12 · 400</small></span>
+            <span class="type-sample" style="font-size:12px; color:var(--fg-muted)">Secondary labels, supportive text, breadcrumb crumbs at small sizes.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Micro<small>11 · 400</small></span>
+            <span class="type-sample" style="font-size:11px; color:var(--fg-subtle)">Timestamps. Badge text. The smallest you ever go.</span>
+          </div>
+          <div class="type-row">
+            <span class="type-label">Mono<small>11 · SF Mono</small></span>
+            <span class="type-sample mono" style="font-size:11px;">⌘ K · ⌥ ↵ · ⇧ ⌘ T — keyboard shortcuts only</span>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: var(--space-5);">
+          <div class="card">
+            <h3 class="card-title">Type stack</h3>
+            <p class="mono" style="margin-top: var(--space-3); line-height:1.7">
+              -apple-system,<br />
+              BlinkMacSystemFont,<br />
+              system-ui,<br />
+              "Segoe UI",<br />
+              "Noto Sans",<br />
+              sans-serif,<br />
+              "Apple Color Emoji",<br />
+              "Segoe UI Emoji"
+            </p>
+          </div>
+          <div class="card">
+            <h3 class="card-title">Four weights, used sparingly</h3>
+            <div style="display:grid; gap: var(--space-2); margin-top: var(--space-3); font-size: var(--t-body);">
+              <div style="display:flex; align-items:baseline; gap: var(--space-3);"><span style="font-weight:400; min-width: 70px;">Regular</span><span class="mono">400</span><span style="color:var(--fg-muted); font-size:13px;">Body, paragraphs, captions, rows</span></div>
+              <div style="display:flex; align-items:baseline; gap: var(--space-3);"><span style="font-weight:500; min-width: 70px;">Medium</span><span class="mono">500</span><span style="color:var(--fg-muted); font-size:13px;">Secondary emphasis, small labels</span></div>
+              <div style="display:flex; align-items:baseline; gap: var(--space-3);"><span style="font-weight:600; min-width: 70px;">Bold</span><span class="mono">600</span><span style="color:var(--fg-muted); font-size:13px;">Headings, titles, primary emphasis</span></div>
+              <div style="display:flex; align-items:baseline; gap: var(--space-3);"><span style="font-weight:700; min-width: 70px;">Heavy</span><span class="mono">700</span><span style="color:var(--fg-muted); font-size:13px;">Strong emphasis when bold isn't enough</span></div>
+            </div>
+            <p style="margin: var(--space-4) 0 0; font-size: var(--t-small); color: var(--fg-muted); line-height: var(--leading-prose);">
+              Default to regular + bold; reach for medium and heavy only when the rhythm needs the extra step. 300 (light) and 800/900 (extra-bold/black) are still out — they read thin or shouty on screen.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SPACING -->
+      <section class="section" id="space" data-screen-label="03 Space">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">03 · Spacing</div>
+            <h2 class="section-title">A 4-point rhythm</h2>
+          </div>
+          <p class="section-sub">Spacing scales linearly off 4px. The tree is dense — most internal gaps live in <span class="mono">--space-2</span> to <span class="mono">--space-4</span>. Larger values are for layout chrome, not row content.</p>
+        </div>
+
+        <div class="card" style="margin-bottom: var(--space-4);">
+          <table class="scale-table">
+            <thead>
+              <tr><th>Token</th><th>Px</th><th>Use for</th></tr>
+            </thead>
+            <tbody>
+              <tr><td class="mono">--space-1</td><td>4</td><td>Icon-to-label gap</td></tr>
+              <tr><td class="mono">--space-2</td><td>8</td><td>Inside small components (chip padding, etc.)</td></tr>
+              <tr><td class="mono">--space-3</td><td>12</td><td>Between related items in a card</td></tr>
+              <tr><td class="mono">--space-4</td><td>16</td><td>Card padding, small section gutter</td></tr>
+              <tr><td class="mono">--space-5</td><td>20</td><td>Default card padding</td></tr>
+              <tr><td class="mono">--space-6</td><td>24</td><td>Page gutter, bar inner padding</td></tr>
+              <tr><td class="mono">--space-7</td><td>32</td><td>Between subsections</td></tr>
+              <tr><td class="mono">--space-8</td><td>40</td><td>Page top breathing room</td></tr>
+              <tr><td class="mono">--space-9</td><td>56</td><td>Between major sections</td></tr>
+              <tr><td class="mono">--space-10</td><td>72</td><td>Hero breathing room</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title">Visual scale</h3>
+          <div style="margin-top: var(--space-3);">
+            <div class="space-row"><span class="space-token">--space-1</span><div class="space-bar" style="width: 4px"></div><span class="space-val">4</span></div>
+            <div class="space-row"><span class="space-token">--space-2</span><div class="space-bar" style="width: 8px"></div><span class="space-val">8</span></div>
+            <div class="space-row"><span class="space-token">--space-3</span><div class="space-bar" style="width: 12px"></div><span class="space-val">12</span></div>
+            <div class="space-row"><span class="space-token">--space-4</span><div class="space-bar" style="width: 16px"></div><span class="space-val">16</span></div>
+            <div class="space-row"><span class="space-token">--space-5</span><div class="space-bar" style="width: 20px"></div><span class="space-val">20</span></div>
+            <div class="space-row"><span class="space-token">--space-6</span><div class="space-bar" style="width: 24px"></div><span class="space-val">24</span></div>
+            <div class="space-row"><span class="space-token">--space-7</span><div class="space-bar" style="width: 32px"></div><span class="space-val">32</span></div>
+            <div class="space-row"><span class="space-token">--space-8</span><div class="space-bar" style="width: 40px"></div><span class="space-val">40</span></div>
+            <div class="space-row"><span class="space-token">--space-9</span><div class="space-bar" style="width: 56px"></div><span class="space-val">56</span></div>
+            <div class="space-row"><span class="space-token">--space-10</span><div class="space-bar" style="width: 72px"></div><span class="space-val">72</span></div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top: var(--space-4);">
+          <h3 class="card-title">Bar heights</h3>
+          <p class="subsection-note">The desktop chrome adds up to <span class="mono">120px</span> of fixed header. Scroll padding is <span class="mono">128px</span> to clear it.</p>
+          <table class="scale-table">
+            <tbody>
+              <tr><td class="mono">--h-bar-search</td><td>44px</td><td>Bar 1 — top</td></tr>
+              <tr><td class="mono">--h-bar-location</td><td>36px</td><td>Bar 2 — breadcrumbs</td></tr>
+              <tr><td class="mono">--h-bar-action</td><td>40px</td><td>Bar 3 — verbs</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- RADII -->
+      <section class="section" id="radii" data-screen-label="04 Radii">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">04 · Radii</div>
+            <h2 class="section-title">Square. Always.</h2>
+          </div>
+          <p class="section-sub">Twiglit doesn't soften its corners. The product reads as ink on paper — a notebook, not an interface. Two exceptions exist for one reason each.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:var(--space-3);">
+            <div style="width: 64px; height: 64px; background: var(--green);"></div>
+            <span class="mono">default · 0px</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:var(--space-3);">
+            <div class="berry" style="width: 32px; height: 32px;"></div>
+            <span class="mono">--berry · 50%</span>
+            <span style="font-size: var(--t-small); color: var(--fg-muted); text-align: center;">The bullet is the brand. It stays round.</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:var(--space-3);">
+            <div style="width: 64px; height: 24px; background: var(--bar-search); border: 1px solid var(--border); border-radius: 999px;"></div>
+            <span class="mono">pill · 999px</span>
+            <span style="font-size: var(--t-small); color: var(--fg-muted); text-align: center;">Filter chips only. Earned, not default.</span>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top: var(--space-5);">
+          <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>
+          <div>
+            <p><strong>If you find yourself wanting to round something:</strong> ask whether it's actually the berry or a filter chip. If not, square it.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOTION -->
+      <section class="section" id="motion" data-screen-label="05 Motion">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">05 · Motion</div>
+            <h2 class="section-title">Sub-100ms or refactor</h2>
+          </div>
+          <p class="section-sub">Twiglit targets &lt;100ms on everything. If a transition takes longer than that, something is wrong with the code, not the design.</p>
+        </div>
+
+        <div class="card">
+          <table class="scale-table">
+            <tbody>
+              <tr><td class="mono">--d-fast</td><td>80ms</td><td>Hover, focus, taps, color swaps — default for everything</td></tr>
+              <tr><td class="mono">--d-base</td><td>100ms</td><td>Ceiling — panel slide, accordion open</td></tr>
+              <tr><td class="mono">--ease</td><td>cubic-bezier(0.2, 0.7, 0.2, 1)</td><td>The only easing</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout" style="margin-top: var(--space-4);">
+          <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l3 2"/></svg>
+          <div>
+            <p><strong>Patience is calm; slowness is rude.</strong> If you find yourself wanting a longer easing, the answer is almost always to remove the animation entirely.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ICONS -->
+      <section class="section" id="icons" data-screen-label="06 Icons">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">06 · Iconography</div>
+            <h2 class="section-title">Traditional, simple, hairline</h2>
+          </div>
+          <p class="section-sub">Cleanly drawn, traditional metaphors — a house is a house, a magnifier is a magnifier. 1.5–1.75px stroke, rounded line caps and joins. Square optical bounds.</p>
+        </div>
+
+        <div class="callout" style="margin-bottom: var(--space-4);">
+          <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><circle cx="12" cy="16" r="0.5"/></svg>
+          <div>
+            <p><strong>This set is a placeholder.</strong> The target is a custom set drawn for Twiglit. Until then we use a single traditional style (Phosphor regular, or hand-redrawn equivalents).</p>
+          </div>
+        </div>
+
+        <div class="grid-4" style="grid-template-columns: repeat(8, 1fr); gap: var(--space-2);">
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 11l9-7 9 7v10a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">home</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">calendar</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="4" cy="7" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="17" r="1"/><path d="M9 7h12M9 12h12M9 17h12"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">tree</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">search</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M21 12a8 8 0 0 1-12 6.93L4 20l1.07-5A8 8 0 1 1 21 12z"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">chat</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15 20c0-2.2 1.8-4 4-4s4 1.8 4 4"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">team</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M6 4h12a1 1 0 0 1 1 1v16l-7-4-7 4V5a1 1 0 0 1 1-1z"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">bookmark</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M3 4h18l-7 9v6l-4 2v-8z"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">filter</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">focus</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="14 3 14 9 20 9"/><path d="M8 13h8M8 17h5"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">details</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><rect x="4" y="4" width="16" height="16" rx="1"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">complete</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><path d="M4 7h16M9 7V4h6v3M6 7v13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7M10 11v6M14 11v6"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">delete</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="11 17 6 12 11 7"/><line x1="6" y1="12" x2="19" y2="12"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">outdent</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><polyline points="13 17 18 12 13 7"/><line x1="18" y1="12" x2="5" y2="12"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">indent</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">plus</span>
+          </div>
+          <div class="card" style="display:flex; flex-direction:column; align-items:center; gap:8px; padding: var(--space-4) var(--space-2);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="22" height="22"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+            <span style="font-size:11px; color: var(--fg-muted);">settings</span>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top: var(--space-5);">
+          <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+          <div>
+            <p><strong>Rules.</strong> Stroked, never filled. 24×24 viewBox, square optical bounds. Centered visually, not mathematically. Inherit <span class="mono">currentColor</span>. Always paired with a text label when used as an action.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Foundations · Twiglit Design System</span>
+        <span>← <a href="index.html">overview</a> · next: <a href="components.html">components</a></span>
+      </footer>
+    </div>
+  </div>
+</main>
+
+<script src="assets/js/topbar.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+  const links = document.querySelectorAll('.toc a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const idx = sections.indexOf(e.target);
+        if (idx >= 0) links[idx].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => s && io.observe(s));
+</script>
+</body>
+</html>

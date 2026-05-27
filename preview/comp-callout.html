@@ -1,0 +1,95 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/system.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  .opt-label {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fg-subtle); margin-bottom: 6px;
+  }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .callout-mini {
+    background: var(--green-soft);
+    border-left: 3px solid var(--green);
+    padding: 10px 14px;
+    display: flex; align-items: flex-start; gap: 10px;
+    color: var(--green-deep);
+    font-size: 13px; line-height: 1.5;
+  }
+  .callout-mini.is-berry {
+    background: var(--berry-soft);
+    border-left-color: var(--berry);
+    color: var(--berry-deep);
+  }
+  .callout-mini svg { width: 20px; height: 20px; flex-shrink: 0; margin-top: 1px; }
+  .callout-mini p { margin: 0; }
+  .callout-mini strong { font-weight: 600; }
+</style>
+</head><body>
+<div class="card-shell" style="gap:18px">
+
+<!-- GREEN — 4 options -->
+<div>
+  <div class="opt-label">Green callout · pick one</div>
+  <div class="pair">
+    <div>
+      <div class="opt-label" style="margin-bottom:4px; color:var(--fg)">A · The berry · brand-native</div>
+      <div class="callout-mini">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.6" fill="currentColor" stroke="none"/></svg>
+        <p><strong>The bars are a vocabulary, not decoration.</strong> Don't introduce a new grey, don't reorder them.</p>
+      </div>
+    </div>
+    <div>
+      <div class="opt-label" style="margin-bottom:4px; color:var(--fg)">B · Check in circle · universal</div>
+      <div class="callout-mini">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="8 12.5 11 15.5 16 9.5"/></svg>
+        <p><strong>The bars are a vocabulary, not decoration.</strong> Don't introduce a new grey, don't reorder them.</p>
+      </div>
+    </div>
+    <div>
+      <div class="opt-label" style="margin-bottom:4px; color:var(--fg)">C · No icon · just the rule</div>
+      <div class="callout-mini">
+        <p><strong>The bars are a vocabulary, not decoration.</strong> Don't introduce a new grey, don't reorder them, and don't merge two into one.</p>
+      </div>
+    </div>
+    <div>
+      <div class="opt-label" style="margin-bottom:4px; color:var(--fg)">D · Outline berry · empty-state</div>
+      <div class="callout-mini">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/></svg>
+        <p><strong>The bars are a vocabulary, not decoration.</strong> Don't introduce a new grey, don't reorder them.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BERRY (attention) — 3 options -->
+<div>
+  <div class="opt-label">Berry callout · attention · pick one</div>
+  <div class="pair">
+    <div>
+      <div class="opt-label" style="margin-bottom:4px; color:var(--fg)">A · The berry with !</div>
+      <div class="callout-mini is-berry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="13" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="16.5" r="1" fill="currentColor" stroke="none"/></svg>
+        <p><strong>Heath approves each term explicitly.</strong> Words like "twig", "leaf", "twigl" are reserved.</p>
+      </div>
+    </div>
+    <div>
+      <div class="opt-label" style="margin-bottom:4px; color:var(--fg)">B · Triangle · universal warning</div>
+      <div class="callout-mini is-berry">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l10 18H2z"/><line x1="12" y1="10" x2="12" y2="14"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg>
+        <p><strong>Heath approves each term explicitly.</strong> Words like "twig", "leaf", "twigl" are reserved.</p>
+      </div>
+    </div>
+    <div>
+      <div class="opt-label" style="margin-bottom:4px; color:var(--fg)">C · No icon · just the rule</div>
+      <div class="callout-mini is-berry">
+        <p><strong>Heath approves each term explicitly.</strong> Words like "twig", "leaf", "twigl" are reserved.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p style="font-size:11px;color:var(--fg-muted);margin:0;line-height:1.55;max-width:60ch"><strong>Pick a green and a berry.</strong> My vote: <strong>Green A</strong> (the actual brand berry — outline circle + filled center dot, exactly as it appears in the tree) + <strong>Berry A</strong> (outline berry with <code class="mono" style="color:var(--fg-muted)">!</code> inside — same shape, attention-shaped content).</p>
+</div>
+</body></html>

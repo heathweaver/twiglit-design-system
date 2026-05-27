@@ -1,0 +1,145 @@
+/* =========================================================================
+   Chat composer — canonical, shared.
+   ---------------------------------------------------------------------------
+   ONE source of truth for the composer. Import this anywhere a composer
+   appears: the comp-chat-composer card, the chat leaf, iOS thread screens.
+   Do NOT inline composer styles. Do NOT redraw it. Use these classes.
+   ========================================================================= */
+
+.tw-composer {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  border-radius: 4px;
+  transition: border-color var(--d-fast, 80ms) var(--ease, ease);
+}
+.tw-composer:focus-within { border-color: var(--green); }
+
+.tw-composer--compact {
+  padding: 6px 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.tw-composer--expanded {
+  padding: 14px 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+
+/* The "+" — green glyph in a soft grey well */
+.tw-composer-add {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--bar-search); color: var(--green);
+  display: grid; place-items: center;
+  flex-shrink: 0; cursor: pointer;
+}
+.tw-composer-add svg {
+  width: 24px; height: 24px;
+  stroke: currentColor; fill: none;
+  stroke-width: 2.5; stroke-linecap: round;
+}
+
+/* Ghost icon button — used for list / emoji / mention / mic */
+.tw-composer-iconbtn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: transparent; color: var(--fg-faint);
+  display: grid; place-items: center;
+  flex-shrink: 0; cursor: pointer;
+}
+.tw-composer-iconbtn svg {
+  width: 24px; height: 24px;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
+.tw-composer-iconbtn--mic svg { width: 28px; height: 28px; }
+
+/* Inline placeholder (compact) */
+.tw-composer-placeholder {
+  flex: 1;
+  color: var(--fg-faint);
+  font-size: 15px;
+  padding: 0 6px;
+  user-select: none;
+}
+
+/* Expanded text area (just the placeholder line above the toolbar) */
+.tw-composer-text {
+  color: var(--fg-faint);
+  font-size: 15px;
+  line-height: 1.4;
+  min-height: 24px;
+}
+
+/* Toolbar row inside the expanded composer */
+.tw-composer-toolbar {
+  display: flex; align-items: center; gap: 6px;
+  color: var(--fg-muted);
+}
+.tw-composer-toolbar svg {
+  width: 24px; height: 24px;
+  stroke: currentColor; fill: none;
+  stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+}
+.tw-composer-toolbar > * {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 34px; padding: 0 4px; cursor: pointer;
+}
+.tw-composer-toolbar .tw-composer-add { width: 34px; height: 34px; padding: 0; }
+
+/* / command chip — mono, square, no fill */
+.tw-composer-cmd {
+  border: 1px solid var(--border-strong);
+  padding: 0 4px;
+  font-family: var(--font-mono);
+  font-size: 16px; font-weight: 700;
+  color: var(--fg-muted);
+  min-width: 24px; height: 24px;
+  display: inline-flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+
+/* @ mention glyph — mono, larger */
+.tw-composer-mention {
+  font-family: var(--font-mono);
+  font-size: 22px; font-weight: 700;
+  color: var(--fg-muted);
+  line-height: 1;
+}
+
+/* Model picker — text + chevron well */
+.tw-composer-model {
+  color: var(--green-deep);
+  font-weight: 600;
+  font-size: 13px;
+  padding: 0 0 0 4px;
+  margin-left: 4px;
+  gap: 4px;
+}
+.tw-composer-model .chev {
+  display: inline-grid; place-items: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--bar-search);
+  color: var(--green-deep);
+}
+.tw-composer-model .chev svg {
+  width: 16px; height: 16px;
+  stroke-width: 2.5; stroke: currentColor; fill: none;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* Mic in expanded toolbar pushes right */
+.tw-composer-toolbar .tw-composer-iconbtn--mic { margin-left: auto; }
+
+/* Send tile — quiet green */
+.tw-composer-send {
+  background: var(--green-soft);
+  color: var(--green-deep);
+  border-radius: 4px;
+  padding: 0 12px;
+  height: 34px;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+.tw-composer-send svg {
+  width: 22px; height: 22px;
+  fill: currentColor; stroke: none;
+}

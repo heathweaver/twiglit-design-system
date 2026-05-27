@@ -1,0 +1,75 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  .row { display: grid; grid-template-columns: 80px 1fr; gap: 18px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-faint); }
+  .row:last-child { border-bottom: none; }
+  .demo { display: flex; align-items: center; justify-content: center; }
+  .well { background: var(--bar-search); border-radius: 50%; display: grid; place-items: center; color: var(--green-deep); }
+  .well svg { stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+  .bad { border: 1.5px dashed var(--berry); padding: 4px; border-radius: 50%; }
+  .good { border: 1.5px dashed var(--green); padding: 4px; border-radius: 50%; }
+  .label-bad { color: var(--berry-deep); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .label-good { color: var(--green-deep); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+</style>
+</head><body>
+<div class="card-shell" style="gap:0">
+<div class="row">
+  <div class="demo">
+    <div class="bad">
+      <div class="well" style="width:36px; height:36px"><svg viewBox="0 0 24 24" width="12" height="12"><path d="M12 5v14M5 12h14"/></svg></div>
+    </div>
+  </div>
+  <div>
+    <div class="label-bad">Don't · glyph swimming</div>
+    <div style="font-size:13px; color:var(--fg); margin-top:4px; line-height:1.5">12px glyph in a 36px well. The well reads as decorative; the hit target feels unclear. Bad for any user, hostile to older users.</div>
+  </div>
+</div>
+<div class="row">
+  <div class="demo">
+    <div class="good">
+      <div class="well" style="width:30px; height:30px; color:var(--green)"><svg viewBox="0 0 24 24" width="22" height="22" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+    </div>
+  </div>
+  <div>
+    <div class="label-good">Do · glyph fills ≥60% of well</div>
+    <div style="font-size:13px; color:var(--fg); margin-top:4px; line-height:1.5">22px glyph in a 30px well. Clear hit zone, clear meaning, readable at arm's length without reading glasses.</div>
+  </div>
+</div>
+<div class="row">
+  <div class="demo" style="flex-direction:column; gap:6px">
+    <div style="display:flex; align-items:center; gap:4px">
+      <span style="border:1px solid var(--border-strong); padding:0 4px; font-family:var(--font-mono); font-size:11px; min-width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center">/</span>
+      <span style="font-size:10px; color:var(--berry-deep)">11px</span>
+    </div>
+    <div style="display:flex; align-items:center; gap:4px">
+      <span style="border:1px solid var(--border-strong); padding:0 4px; font-family:var(--font-mono); font-size:16px; font-weight:700; min-width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center">/</span>
+      <span style="font-size:10px; color:var(--green-deep)">16px</span>
+    </div>
+  </div>
+  <div>
+    <div style="font-size:13px; color:var(--fg); line-height:1.5"><strong>Command chips, mono labels, kbd</strong> — same rule. Bump font-size and weight before you bump padding. A bigger glyph in a tight box reads as deliberate; a tiny glyph in a roomy box reads as accidental.</div>
+  </div>
+</div>
+<div class="row">
+  <div class="demo">
+    <div style="text-align:center">
+      <div style="width:44px; height:44px; border:1px dashed var(--green); margin:0 auto"></div>
+      <div class="label-good" style="margin-top:6px">44 / 32</div>
+    </div>
+  </div>
+  <div>
+    <div style="font-size:13px; color:var(--fg); line-height:1.5"><strong>Tappable target minimum</strong> — 44×44px on iOS, 32×32px inside web composers + toolbars. Below that you're penalizing presbyopic + motor-impaired users to save 4px of layout.</div>
+  </div>
+</div>
+<div class="row">
+  <div class="demo">
+    <span style="font-family:var(--font-mono); font-size:32px; color:var(--fg-muted)">👓</span>
+  </div>
+  <div>
+    <div style="font-size:13px; color:var(--fg); line-height:1.5"><strong>Test with reading glasses off, arm's length.</strong> If you can't tell what the icon is supposed to do at that distance, it's too small or too thin — fix it before you ship.</div>
+  </div>
+</div>
+<p style="font-size:11px;color:var(--fg-muted);margin:14px 0 0;line-height:1.55;max-width:60ch">Twiglit's audience skews older and the calm/dense rhythm of the brand makes it tempting to under-size affordances — resist it. <strong>Glyphs ≥18px in chrome, ≥22px in chat composers and any tappable surface.</strong> Wells stay 30–32px; the glyph fills ≥60% of the well.</p>
+</div>
+</body></html>

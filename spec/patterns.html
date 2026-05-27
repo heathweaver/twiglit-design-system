@@ -1,0 +1,1900 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Patterns — Twiglit Design System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="assets/brand/favicon.png" />
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/system.css" />
+<style>
+  .docs { display: grid; grid-template-columns: 180px 1fr; gap: var(--space-6); align-items: start; }
+  @media (max-width: 720px) {
+    .docs { grid-template-columns: 1fr; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px 6px; }
+    .toc .toc-h { width: 100%; padding: 0 0 4px; margin: 0; }
+    .toc a { padding: 4px 10px; background: var(--bar-search); }
+  }
+  .toc { position: sticky; top: 88px; font-size: var(--t-small); display: grid; gap: 2px; }
+  .toc-h {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fg-subtle);
+    padding: 6px 10px;
+    margin-top: var(--space-3);
+  }
+  .toc a {
+    padding: 6px 10px;
+    color: var(--fg-muted);
+    transition: background var(--d-fast) var(--ease);
+  }
+  .toc a:hover { background: var(--bar-search); color: var(--fg); }
+  .toc a.active { background: var(--green-soft); color: var(--green-deep); font-weight: var(--w-bold); }
+
+  /* Desktop shell — the canonical 4-bar layout */
+  .desktop {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    display: grid;
+    grid-template-columns: 1fr 64px;
+    height: 560px;
+    overflow: hidden;
+    position: relative;
+  }
+  .desktop-stack { display: flex; flex-direction: column; overflow: hidden; }
+  .desktop-bars { flex-shrink: 0; }
+  .desktop-body {
+    flex: 1;
+    overflow: auto;
+    padding: var(--space-5) var(--space-6) var(--space-6);
+    background: var(--bg);
+  }
+  .desktop-body.split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+  }
+
+  /* AI chat (Home) */
+  .ai-shell { display: grid; grid-template-columns: 240px 1fr; height: 100%; }
+  .ai-side {
+    background: var(--bar-search);
+    border-right: 1px solid var(--border);
+    padding: var(--space-3);
+    overflow-y: auto;
+  }
+  .ai-side .label-mono { padding: 6px 8px; }
+  .ai-side-item {
+    padding: 6px 10px;
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .ai-side-item:hover { background: var(--bg); color: var(--fg); }
+  .ai-side-item.active { background: var(--green-soft); color: var(--green-deep); font-weight: var(--w-bold); }
+  .ai-main { display: flex; flex-direction: column; overflow: hidden; }
+  .ai-thread {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-7) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .ai-msg-user {
+    align-self: flex-end;
+    background: var(--bar-search);
+    padding: var(--space-3) var(--space-4);
+    max-width: 80%;
+    font-size: var(--t-base);
+    line-height: var(--leading-prose);
+  }
+  .ai-msg-ai {
+    align-self: stretch;
+    font-size: var(--t-base);
+    line-height: var(--leading-prose);
+  }
+  .ai-msg-label {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--green-deep);
+    margin-bottom: var(--space-2);
+  }
+  .ai-msg-label svg { width: 14px; height: 14px; }
+  .ai-bloom {
+    margin-top: var(--space-3);
+    border: 1px solid var(--green-soft);
+    border-left: 3px solid var(--green);
+    background: rgba(232, 240, 218, 0.4);
+    padding: var(--space-4);
+  }
+  .ai-bloom-head {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green-deep);
+    margin-bottom: var(--space-3);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .ai-bloom-row {
+    display: flex; align-items: center; gap: var(--space-2);
+    padding: 4px 0;
+    font-size: var(--t-body);
+  }
+  .ai-bloom-actions {
+    display: flex; gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--border);
+  }
+  .ai-composer {
+    flex-shrink: 0;
+    padding: var(--space-4) var(--space-6) var(--space-6);
+    max-width: 760px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ai-composer-shell {
+    border: 1px solid var(--border-strong);
+    background: var(--bg);
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .ai-composer-shell:focus-within { border-color: var(--green); }
+  .ai-composer-shell textarea {
+    border: none;
+    background: transparent;
+    outline: none;
+    resize: none;
+    font: inherit;
+    font-size: var(--t-base);
+    line-height: var(--leading-prose);
+    color: var(--fg);
+    min-height: 32px;
+    max-height: 120px;
+    width: 100%;
+  }
+  .ai-composer-tools {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .ai-tool {
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    font-size: var(--t-micro);
+    color: var(--fg-muted);
+    cursor: pointer;
+  }
+  .ai-tool:hover { background: var(--bar-search); }
+  .ai-tool svg { width: 12px; height: 12px; }
+  .ai-send {
+    width: 32px; height: 32px;
+    background: var(--green);
+    color: white;
+    display: grid; place-items: center;
+    cursor: pointer;
+    border: none;
+  }
+  .ai-send svg { width: 16px; height: 16px; }
+
+  /* DMs (WhatsApp-shaped) */
+  .dms-shell { display: grid; grid-template-columns: 320px 1fr; height: 100%; overflow: hidden; }
+  .dms-side {
+    background: var(--bg);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .dms-side-head {
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border);
+  }
+  .dms-side-list { flex: 1; overflow-y: auto; }
+  .dm-row {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-bottom: 1px solid var(--border-faint);
+    cursor: pointer;
+  }
+  .dm-row:hover { background: var(--bar-search); }
+  .dm-row.active { background: var(--bar-selected); }
+  .dm-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--berry);
+    color: white;
+    display: grid; place-items: center;
+    font-weight: var(--w-bold);
+    flex-shrink: 0;
+  }
+  .dm-avatar.green { background: linear-gradient(135deg, var(--green), #6FA32D); }
+  .dm-avatar.sky { background: linear-gradient(135deg, #5a7da5, #4a6fa5); }
+  .dm-text { flex: 1; min-width: 0; }
+  .dm-name {
+    font-size: var(--t-body);
+    font-weight: var(--w-bold);
+    display: flex; justify-content: space-between; gap: 8px;
+  }
+  .dm-name time {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: var(--w-regular);
+    color: var(--fg-subtle);
+    letter-spacing: var(--tracking-mono);
+  }
+  .dm-preview {
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+  }
+  .dm-unread {
+    background: var(--green);
+    color: white;
+    font-size: 10px;
+    font-weight: var(--w-bold);
+    min-width: 18px; height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center; justify-content: center;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+
+  .dms-main { display: flex; flex-direction: column; overflow: hidden; background: #fafafa; }
+  .dms-main-head {
+    padding: var(--space-3) var(--space-4);
+    background: var(--bar-search);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: var(--space-3);
+  }
+  .dm-bubbles {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-5) var(--space-5);
+    display: flex; flex-direction: column;
+    gap: 6px;
+  }
+  .dm-day {
+    text-align: center;
+    font-size: 11px;
+    color: var(--fg-subtle);
+    margin: var(--space-3) 0;
+  }
+  .bubble {
+    max-width: 70%;
+    padding: 7px 12px;
+    font-size: var(--t-body);
+    line-height: 1.4;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    align-self: flex-start;
+  }
+  .bubble.me {
+    align-self: flex-end;
+    background: var(--green-soft);
+    color: var(--fg);
+    border-color: var(--green-soft);
+  }
+  .bubble-meta {
+    font-size: 10px;
+    color: var(--fg-subtle);
+    margin: 0 4px 4px;
+  }
+  .bubble.me + .bubble-meta { text-align: right; }
+
+  .dm-composer {
+    flex-shrink: 0;
+    padding: var(--space-3) var(--space-4);
+    background: var(--bar-search);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: var(--space-2);
+  }
+  .dm-composer input {
+    flex: 1;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 8px 12px;
+    font: inherit;
+    font-size: var(--t-body);
+    outline: none;
+    color: var(--fg);
+  }
+  .dm-composer input:focus { border-color: var(--green); }
+
+  /* Tree (Workflowy-shaped) */
+  .tree-body {
+    padding: var(--space-5) var(--space-6) var(--space-7);
+    background: var(--bg);
+  }
+  .tree-row {
+    display: flex; align-items: center; gap: var(--space-2);
+    padding: 4px 0;
+    line-height: 1.6;
+    font-size: var(--t-body);
+    cursor: text;
+    position: relative;
+  }
+  .tree-row:hover { background: rgba(0,0,0,0.02); }
+  .tree-row.selected {
+    background: var(--bar-selected);
+    margin: 0 calc(-1 * var(--space-6));
+    padding-left: var(--space-6);
+    padding-right: var(--space-6);
+  }
+  .tree-row .collapse {
+    width: 12px; height: 12px;
+    color: var(--fg-faint);
+    opacity: 0;
+  }
+  .tree-row:hover .collapse { opacity: 1; }
+  .tree-children {
+    padding-left: 24px;
+    position: relative;
+  }
+  .tree-children::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 6px;
+    bottom: 6px;
+    width: 1px;
+    background: var(--border-strong);
+    opacity: 0.4;
+  }
+
+  /* Leaf preview */
+  .leaf-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-3);
+  }
+  @media (max-width: 720px) { .leaf-cards { grid-template-columns: 1fr; } }
+  .leaf-col {
+    background: var(--bar-search);
+    border: 1px solid var(--border);
+    padding: var(--space-3);
+  }
+  .leaf-col-h {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    margin-bottom: var(--space-3);
+    display: flex; justify-content: space-between;
+  }
+  .leaf-tile {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: var(--space-3);
+    margin-bottom: var(--space-2);
+    font-size: var(--t-body);
+  }
+  .leaf-tile-meta {
+    margin-top: var(--space-2);
+    display: flex; gap: var(--space-2);
+    font-size: var(--t-micro);
+    color: var(--fg-muted);
+    font-family: var(--font-mono);
+    letter-spacing: var(--tracking-mono);
+  }
+
+  /* Notes for each pattern */
+  .pattern-notes { padding-top: var(--space-4); }
+  .pattern-notes h3 {
+    margin: 0 0 var(--space-2);
+    font-size: var(--t-body);
+    font-weight: var(--w-bold);
+    letter-spacing: var(--tracking-tight);
+  }
+  .pattern-notes p {
+    margin: 0 0 var(--space-3);
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    line-height: var(--leading-prose);
+  }
+  .pattern-notes ul {
+    padding-left: 16px;
+    margin: 0 0 var(--space-3);
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    line-height: var(--leading-prose);
+  }
+  .pattern-notes li { padding: 3px 0; }
+  .pattern-notes li::marker { color: var(--green); }
+
+  .side-by-side {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: var(--space-6);
+    align-items: start;
+  }
+  @media (max-width: 1100px) { .side-by-side { grid-template-columns: 1fr; } }
+
+  /* =====================================================================
+     HOME — start route (centered welcome)
+     ===================================================================== */
+  .home-start {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: clamp(40px, 7vh, 80px) var(--space-6) clamp(60px, 10vh, 100px);
+    text-align: center;
+    background: var(--bg);
+    gap: var(--space-4);
+    min-height: 480px;
+  }
+  .home-mark {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--green);
+    display: grid; place-items: center;
+    position: relative; overflow: hidden;
+  }
+  .home-mark img { width: 42px; height: 42px; position: relative; z-index: 1; }
+  .home-mark::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 55%, rgba(0,0,0,0.18));
+  }
+  .home-welcome {
+    font-family: Georgia, "Times New Roman", ui-serif, serif;
+    font-size: clamp(26px, 3vw, 34px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin: 4px 0 0;
+    color: var(--fg);
+    line-height: 1.15;
+  }
+  .home-sub {
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    margin: 0;
+    font-weight: 400;
+  }
+  .home-composer {
+    margin-top: var(--space-3);
+    width: 100%;
+    max-width: 460px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 10px;
+    text-align: left;
+  }
+  .home-composer .placeholder {
+    font-size: var(--t-small);
+    color: var(--fg-faint);
+    padding: 2px 0;
+  }
+  .home-composer .tools {
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--fg-muted);
+  }
+  .home-composer .plus svg { width: 18px; height: 18px; stroke-width: 1.5; }
+  .home-composer .wave {
+    display: flex; align-items: center; gap: 2px;
+    height: 16px;
+  }
+  .home-composer .wave i {
+    display: block;
+    width: 2px;
+    background: var(--green);
+    border-radius: 1px;
+  }
+  .home-prompts {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    justify-content: center;
+    max-width: 560px;
+    margin-top: 6px;
+  }
+  .home-prompt {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    color: var(--fg);
+    cursor: pointer;
+    white-space: nowrap;
+    font-weight: var(--w-bold);
+  }
+  .home-prompt:hover { background: var(--bar-search); }
+
+  /* =====================================================================
+     DMs — single-pane, phone-shaped (one leaf, always)
+     ===================================================================== */
+  .dms-pair {
+    display: grid;
+    grid-template-columns: 320px 320px;
+    gap: var(--space-5);
+    justify-content: center;
+  }
+  @media (max-width: 760px) { .dms-pair { grid-template-columns: 1fr; justify-items: center; } }
+  .dms-leaf {
+    width: 100%;
+    border: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .leaf-bar {
+    background: var(--ink);
+    color: var(--fg-on-ink);
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+    flex-shrink: 0;
+  }
+  .leaf-bar svg { width: 16px; height: 16px; }
+  .leaf-bar h3 {
+    margin: 0;
+    font-size: var(--t-body);
+    font-weight: var(--w-bold);
+    flex: 1;
+  }
+  .leaf-bar .leaf-bar-meta { color: rgba(255,255,255,0.7); font-weight: 400; }
+  .leaf-bar .close-x {
+    background: transparent; border: 0; color: var(--fg-on-ink);
+    cursor: pointer; padding: 4px; opacity: 0.8;
+  }
+  .leaf-bar .close-x svg { width: 16px; height: 16px; }
+
+  .dms-search {
+    padding: 10px 12px 6px;
+  }
+  .dms-search-shell {
+    background: var(--bar-search);
+    border-radius: 999px;
+    padding: 7px 12px;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--fg-muted);
+    font-size: 12px;
+  }
+  .dms-search-shell svg { width: 13px; height: 13px; }
+  .dms-letter {
+    background: var(--bar-search);
+    font-size: 11px;
+    font-weight: var(--w-bold);
+    color: var(--fg-muted);
+    padding: 4px 14px;
+  }
+  .dms-person {
+    display: flex; align-items: center; gap: 12px;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+  .dms-person:not(:last-child) { border-bottom: 1px solid var(--border); }
+  .dms-person:hover { background: var(--bar-search); }
+  .dms-person .ava {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-weight: var(--w-bold);
+    font-size: 12px;
+    color: white;
+    background: var(--fg-faint);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+  .dms-person .ava.photo { background: linear-gradient(135deg, #b88a6e, #8b5a3c); }
+  .dms-person .ava.berry { background: var(--berry); }
+  .dms-person .text { flex: 1; min-width: 0; }
+  .dms-person .name {
+    font-size: 13px;
+    font-weight: var(--w-bold);
+    color: var(--fg);
+  }
+  .dms-person .tag {
+    font-size: 10px;
+    color: var(--berry-deep);
+    margin-top: 1px;
+    font-weight: var(--w-bold);
+    letter-spacing: 0.02em;
+  }
+
+  /* Conversation single-pane */
+  .dms-convo { background: #fafafa; }
+  .dms-convo-head {
+    background: var(--ink);
+    color: var(--fg-on-ink);
+    padding: 9px 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .dms-convo-head .back {
+    background: transparent; border: 0; color: var(--fg-on-ink);
+    cursor: pointer; padding: 2px;
+  }
+  .dms-convo-head .back svg { width: 16px; height: 16px; }
+  .dms-convo-head .ava {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #b88a6e, #8b5a3c);
+    flex-shrink: 0;
+  }
+  .dms-convo-head .who {
+    flex: 1;
+    font-weight: var(--w-bold);
+    font-size: 13px;
+  }
+  .dms-convo-head .who small {
+    display: block;
+    font-weight: 400;
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 1px;
+  }
+  .dms-convo-body {
+    padding: 14px 12px;
+    display: flex; flex-direction: column; gap: 3px;
+    font-size: 13px;
+  }
+  .dms-convo-body .bubble { font-size: 13px; padding: 6px 10px; }
+  .dms-convo-body .bubble-meta {
+    font-size: 10px;
+    color: var(--fg-subtle);
+    margin: 0 4px 6px;
+    letter-spacing: 0;
+    text-transform: none;
+    font-family: inherit;
+  }
+  .dms-convo-composer {
+    padding: 8px 12px;
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dms-convo-composer input {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 12px;
+    background: var(--bar-search);
+  }
+  .dms-convo-composer .ai-send { width: 28px; height: 28px; }
+  .dms-convo-composer .ai-send svg { width: 14px; height: 14px; }
+
+  /* =====================================================================
+     LEAVES — gallery of named leaf examples
+     ===================================================================== */
+  .leaf-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-5);
+  }
+  @media (max-width: 980px) { .leaf-gallery { grid-template-columns: 1fr; } }
+  .leaf-card {
+    display: flex; flex-direction: column;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    overflow: hidden;
+  }
+  .leaf-card.full { grid-column: 1 / -1; }
+  .leaf-card-foot {
+    padding: var(--space-3) var(--space-4) var(--space-4);
+    border-top: 1px solid var(--border);
+    display: flex; align-items: baseline; gap: var(--space-3);
+    justify-content: space-between;
+  }
+  .leaf-card-name {
+    font-weight: var(--w-bold);
+    font-size: var(--t-md);
+    letter-spacing: var(--tracking-tight);
+  }
+  .leaf-card-desc {
+    color: var(--fg-muted);
+    font-size: var(--t-small);
+    margin: 4px 0 0;
+    line-height: var(--leading-prose);
+    flex: 1;
+  }
+  .leaf-card-kind {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    font-weight: var(--w-bold);
+    flex-shrink: 0;
+  }
+
+  /* Week-plan leaf */
+  .wp-frame { display: flex; flex-direction: column; }
+  .wp-toolbar {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .wp-toolbar .range {
+    margin-left: auto;
+    font-weight: var(--w-bold);
+    font-size: var(--t-small);
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+  }
+  .wp-toolbar .arrow {
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+    border: 1px solid var(--border);
+    color: var(--fg-muted);
+    background: var(--bg);
+  }
+  .wp-grid {
+    display: grid;
+    grid-template-columns: 52px repeat(7, 1fr);
+    font-size: 11px;
+    background: var(--bg);
+  }
+  .wp-grid .wp-h, .wp-grid .wp-cell, .wp-grid .wp-time {
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .wp-grid .wp-h {
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    text-align: center;
+    padding: 8px 4px;
+    font-weight: var(--w-bold);
+  }
+  .wp-grid .wp-h strong { display: block; color: var(--fg); font-weight: var(--w-bold); }
+  .wp-grid .wp-h.today { background: #eaf2fb; }
+  .wp-grid .wp-h.corner { background: transparent; }
+  .wp-grid .wp-time {
+    font-size: 10px;
+    color: var(--fg-subtle);
+    padding: 4px 6px 0;
+    border-bottom: 0;
+    text-align: right;
+  }
+  .wp-grid .wp-cell { height: 28px; }
+  .wp-grid .wp-cell.today { background: rgba(234,242,251,0.4); }
+
+  /* Issue tracker leaf */
+  .it-toolbar {
+    padding: var(--space-3) var(--space-4);
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .it-search {
+    flex: 1;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    background: var(--bg);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .it-search svg { width: 12px; height: 12px; }
+  .it-pill {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    color: var(--fg);
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .it-pill.gh { background: #24292f; color: white; border-color: #24292f; }
+  .it-pill.primary { background: #2da44e; color: white; border-color: #2da44e; font-weight: var(--w-bold); }
+  .it-tabs {
+    display: flex; gap: var(--space-4); align-items: center;
+    padding: 12px var(--space-4) 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .it-tab { display: inline-flex; align-items: center; gap: 6px; padding-bottom: 12px; color: var(--fg-muted); }
+  .it-tab.active { color: var(--fg); font-weight: var(--w-bold); border-bottom: 2px solid #fd8c73; margin-bottom: -1px; }
+  .it-tab .count { background: rgba(0,0,0,0.06); padding: 0 6px; border-radius: 999px; font-size: 11px; }
+  .it-tab .dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid currentColor; }
+  .it-tab .dot.green { color: #2da44e; }
+  .it-tab .dot.purple { color: #8250df; }
+  .it-tabs .right { margin-left: auto; display: flex; gap: var(--space-3); color: var(--fg-muted); }
+  .it-tabs .right span { padding-bottom: 12px; }
+  .it-empty {
+    text-align: center;
+    padding: var(--space-7) var(--space-4);
+    color: var(--fg-muted);
+    font-size: var(--t-body);
+  }
+
+  /* Workstation list leaf */
+  .ws-tabs {
+    display: flex; gap: var(--space-5);
+    padding: 0 var(--space-4);
+    font-size: var(--t-small);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .ws-tab { padding: 12px 0; color: var(--fg-muted); }
+  .ws-tab.active { color: var(--fg); font-weight: var(--w-bold); border-bottom: 2px solid var(--fg); margin-bottom: -1px; }
+  .ws-groupby {
+    display: flex; align-items: center; gap: 10px;
+    padding: var(--space-3) var(--space-4);
+    background: #fafafa;
+    border-bottom: 1px solid var(--border);
+    font-size: var(--t-small);
+  }
+  .ws-groupby .pick { border: 1px solid var(--border); background: var(--bg); padding: 4px 10px; }
+  .ws-head {
+    display: grid;
+    grid-template-columns: 1fr 80px 70px 80px;
+    padding: 8px var(--space-4);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+    font-weight: var(--w-bold);
+    border-bottom: 1px solid var(--border);
+  }
+  .ws-section {
+    padding: var(--space-3) var(--space-4) 6px;
+    display: flex; align-items: center; gap: 8px;
+    font-size: var(--t-body);
+    font-weight: var(--w-bold);
+  }
+  .ws-section .num {
+    background: var(--bar-search);
+    padding: 0 8px;
+    border-radius: 999px;
+    font-size: 11px;
+    color: var(--fg-muted);
+    font-weight: 400;
+  }
+  .ws-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 70px 80px;
+    padding: 7px var(--space-4);
+    align-items: center;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ws-row:hover { background: rgba(0,0,0,0.02); }
+  .ws-row .name { display: flex; align-items: center; gap: 10px; min-width: 0; overflow: hidden; }
+  .ws-row .name .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border-strong); flex-shrink: 0; }
+  .ws-row .name .dot.green { background: #2da44e; }
+  .ws-row .name .dot.blue { background: #418cf0; }
+  .ws-row .name .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ws-row.done .name .label { color: var(--fg-muted); text-decoration: line-through; text-decoration-color: var(--fg-faint); }
+  .ws-row .pill { font-size: 10px; padding: 2px 8px; border-radius: 4px; display: inline-block; font-weight: var(--w-bold); letter-spacing: 0.02em; }
+  .ws-row .pill.done { background: #dcfce7; color: #166534; }
+  .ws-row .pill.todo { background: #dbeafe; color: #1e40af; }
+  .ws-row .pill.p3 { background: #dbeafe; color: #1e40af; }
+
+  /* Render leaf — AI generates in chat (browser chrome) */
+  .rl-frame {
+    background: var(--bg);
+    overflow: hidden;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .rl-head {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    display: flex; align-items: center; gap: 10px;
+    font-size: 13px;
+  }
+  .rl-head .globe { color: #4a8cd9; display: flex; }
+  .rl-head .globe svg { width: 16px; height: 16px; }
+  .rl-head .name { font-weight: var(--w-bold); }
+  .rl-head .slug { color: var(--fg-muted); font-family: var(--font-mono); font-size: 12px; }
+  .rl-head .code { margin-left: auto; color: var(--fg-subtle); font-family: var(--font-mono); font-size: 13px; }
+  .rl-body {
+    border: 1px solid var(--border);
+    border-top: 0;
+    padding: 16px 16px 18px;
+    background: #fafafa;
+  }
+  .rl-title { font-weight: var(--w-bold); font-size: 18px; letter-spacing: var(--tracking-tight); }
+  .rl-sub { color: var(--fg-subtle); font-size: 12px; margin: 2px 0 14px; }
+  .rl-group {
+    border: 1px solid var(--border);
+    background: var(--bg);
+    margin-bottom: 10px;
+  }
+  .rl-group-head {
+    padding: 8px 12px;
+    font-size: 12px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border);
+    color: var(--fg);
+    font-weight: var(--w-bold);
+  }
+  .rl-group-head .badge-count {
+    background: var(--bar-search);
+    color: var(--fg-muted);
+    padding: 1px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 400;
+  }
+  .rl-card {
+    padding: 10px 12px;
+    display: flex; gap: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .rl-card:last-child { border-bottom: 0; }
+  .rl-card .box {
+    width: 14px; height: 14px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 3px; flex-shrink: 0; margin-top: 3px;
+  }
+  .rl-card .body { flex: 1; min-width: 0; }
+  .rl-card .body strong { font-weight: var(--w-bold); display: block; font-size: 13px; line-height: 1.3; }
+  .rl-card .body .sub { color: var(--fg-muted); font-size: 12px; margin-top: 2px; }
+  .rl-card .body .meta { color: var(--fg-subtle); font-size: 11px; display: flex; gap: 10px; align-items: center; margin-top: 6px; }
+  .rl-card .body .meta .pill { background: var(--bar-search); color: var(--fg); padding: 1px 8px; border-radius: 4px; font-size: 10px; font-weight: var(--w-bold); }
+
+  /* =====================================================================
+     DETAILS PANEL — the redesigned details leaf
+     ===================================================================== */
+  .detail-panel {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .dp-top {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: var(--bar-search);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .dp-crumb {
+    display: flex; align-items: center; gap: 6px;
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    flex: 1;
+  }
+  .dp-crumb svg { width: 14px; height: 14px; }
+  .dp-crumb-sep { color: var(--berry); }
+  .dp-close, .dp-kebab {
+    border: none;
+    background: transparent;
+    color: var(--fg-muted);
+    cursor: pointer;
+    padding: 4px;
+    width: 28px; height: 28px;
+    display: grid; place-items: center;
+  }
+  .dp-close:hover, .dp-kebab:hover { background: rgba(0,0,0,0.04); color: var(--fg); }
+  .dp-close svg, .dp-kebab svg { width: 16px; height: 16px; }
+
+  .dp-title {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-5) var(--space-3);
+    flex-shrink: 0;
+  }
+  .dp-title .berry { margin-top: 8px; }
+  .dp-title-h {
+    flex: 1;
+    margin: 0;
+    font-size: 22px;
+    font-weight: var(--w-bold);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.25;
+    color: var(--fg);
+  }
+
+  .dp-props {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 0 var(--space-5) var(--space-4);
+    flex-shrink: 0;
+  }
+  .dp-prop {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    background: var(--bar-search);
+    border: 1px solid transparent;
+    color: var(--fg);
+    font: inherit;
+    font-size: var(--t-small);
+    cursor: pointer;
+    transition: background var(--d-fast) var(--ease), border-color var(--d-fast) var(--ease);
+  }
+  .dp-prop:hover { background: var(--bar-location); border-color: var(--border); }
+  .dp-prop svg { width: 12px; height: 12px; color: var(--fg-muted); flex-shrink: 0; }
+  .dp-prop-add {
+    background: transparent;
+    border: 1px dashed var(--border-strong);
+    color: var(--fg-muted);
+    width: 26px;
+    padding: 3px 0;
+    justify-content: center;
+  }
+  .dp-prop-add svg { color: var(--fg-muted); }
+
+  .dp-tabs {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    padding: 0 var(--space-5);
+    flex-shrink: 0;
+  }
+  .dp-tab {
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: var(--t-small);
+    color: var(--fg-muted);
+    padding: 10px 14px 10px 0;
+    margin-right: var(--space-4);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dp-tab:hover { color: var(--fg); }
+  .dp-tab.active {
+    color: var(--green-deep);
+    font-weight: var(--w-bold);
+    border-bottom-color: var(--green);
+  }
+  .dp-tab-count {
+    background: var(--bar-search);
+    color: var(--fg-muted);
+    font-size: 10px;
+    font-weight: var(--w-regular);
+    padding: 1px 6px;
+    border-radius: 999px;
+  }
+  .dp-tab.active .dp-tab-count {
+    background: var(--green-soft);
+    color: var(--green-deep);
+  }
+
+  .dp-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  .dp-comment {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 10px;
+  }
+  .dp-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--berry);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-weight: var(--w-bold);
+    font-size: var(--t-small);
+    flex-shrink: 0;
+  }
+  .dp-avatar-green { background: linear-gradient(135deg, var(--green), #6FA32D); }
+  .dp-avatar-berry { background: var(--berry); }
+  .dp-avatar-sky { background: linear-gradient(135deg, #5a7da5, #4a6fa5); }
+
+  .dp-comment-head {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .dp-comment-name {
+    font-weight: var(--w-bold);
+    font-size: var(--t-small);
+    color: var(--fg);
+  }
+  .dp-comment-time {
+    font-size: 11px;
+    color: var(--fg-subtle);
+  }
+  .dp-comment-text {
+    margin: 0;
+    font-size: var(--t-body);
+    color: var(--fg);
+    line-height: 1.5;
+  }
+
+  .dp-composer {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 10px var(--space-5);
+    border-top: 1px solid var(--border);
+    background: var(--bar-search);
+  }
+  .dp-composer input {
+    flex: 1;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    padding: 8px 12px;
+    font: inherit;
+    font-size: var(--t-body);
+    outline: none;
+    color: var(--fg);
+  }
+  .dp-composer input:focus { border-color: var(--green); }
+
+  .dp-foot {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: 6px var(--space-5);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--fg-subtle);
+    border-top: 1px solid var(--border-faint);
+    letter-spacing: 0.04em;
+  }
+</style>
+</head>
+<body>
+
+<main class="page">
+  <section class="hero">
+    <div class="hero-meta">
+      <span><i></i>Patterns</span>
+      <span>Real screens, assembled</span>
+    </div>
+    <h1>What the system feels like in <em>real screens</em>.</h1>
+    <p class="hero-lead">Three top-level surfaces, each modeled on a well-loved interface so users land on familiar ground: <strong>Home</strong> is an AI conversation, <strong>DMs</strong> is a familiar two-pane chat, <strong>Tree</strong> is an infinite outline. Everything else is a <strong>leaf</strong> — a view a user composes on top of their tree.</p>
+  </section>
+
+  <div class="docs">
+    <aside class="toc">
+      <div class="toc-h">On this page</div>
+      <a href="#home" class="active">Home · start route</a>
+      <a href="#dms">Chats · one leaf, always</a>
+      <a href="#tree">Tree · the outline</a>
+      <a href="#leaf">Leaves · five examples</a>
+      <a href="#details">Details · the leaf within a leaf</a>
+    </aside>
+
+    <div>
+
+      <!-- HOME -->
+      <section class="section" id="home" data-screen-label="01 Home AI Chat">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">01 · Home</div>
+            <h2 class="section-title">The start route — a single prompt</h2>
+          </div>
+          <p class="section-sub">Home is a quiet welcome. One input. A handful of suggested verbs. The user types what they want; Twigl decides where it goes in the tree.</p>
+        </div>
+
+        <div class="side-by-side">
+          <div class="desktop">
+            <div class="desktop-stack">
+              <div class="desktop-bars">
+                <div class="bar bar--search">
+                  <span class="bar-avatar">H</span>
+                  <span class="search" style="flex:1; max-width:420px; margin:0 auto;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                    <input placeholder="Search" />
+                    <span class="search-kbd">⌘ /</span>
+                  </span>
+                </div>
+                <div class="bar bar--location">
+                  <span class="bar-crumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 11l9-8 9 8v10h-6v-7H9v7H3z"/></svg>
+                    Home
+                  </span>
+                </div>
+              </div>
+              <div class="home-start">
+                <div class="home-mark"><img src="assets/brand/favicon.png" alt="Twiglit" /></div>
+                <h2 class="home-welcome">Welcome back, Heath</h2>
+                <p class="home-sub">How can I help you this afternoon?</p>
+                <div class="home-composer">
+                  <div class="placeholder">How can I help you today?</div>
+                  <div class="tools">
+                    <span class="plus" title="Attach">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </span>
+                    <span class="wave" aria-label="Voice">
+                      <i style="height: 6px;"></i>
+                      <i style="height: 12px;"></i>
+                      <i style="height: 16px;"></i>
+                      <i style="height: 10px;"></i>
+                      <i style="height: 14px;"></i>
+                    </span>
+                  </div>
+                </div>
+                <div class="home-prompts">
+                  <span class="home-prompt">What's on my plate today?</span>
+                  <span class="home-prompt">Plan my week</span>
+                  <span class="home-prompt">Capture a new idea</span>
+                  <span class="home-prompt">Summarise my recent twigs</span>
+                </div>
+              </div>
+            </div>
+            <div class="rail">
+              <div class="rail-pin brand"><img src="assets/brand/favicon.png" alt="Twiglit"/></div>
+              <div class="rail-pin active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 11l9-8 9 8v10h-6v-7H9v7H3z"/></svg></div>
+              <div class="rail-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.5L3 21l2-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg></div>
+              <div class="rail-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M8 8h13M8 12h13M8 16h13M3 8h.01M3 12h.01M3 16h.01"/></svg></div>
+              <div class="rail-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="5" width="18" height="16"/><path d="M16 3v4M8 3v4M3 11h18"/></svg></div>
+              <div class="spacer" style="flex:1;"></div>
+              <div class="rail-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg></div>
+            </div>
+          </div>
+
+          <div class="pattern-notes">
+            <h3>One prompt, one tree</h3>
+            <p>No history sidebar, no model picker, no proposal tray on the home route. The point is to start — anywhere the user goes from here, the tree is what they're working in.</p>
+
+            <h3>The mark sets the tone</h3>
+            <p>The Twiglit leaf on the green disc is the only piece of brand on the page. It anchors the screen the way a logotype anchors a marketing page.</p>
+
+            <h3>Suggested verbs, not features</h3>
+            <p>The pill prompts read as things a user might already be thinking — <em>what's on my plate, plan my week, capture an idea</em>. They route to the right leaf; users never have to learn which feature to open.</p>
+
+            <h3>Voice-first ready</h3>
+            <p>The waveform glyph on the composer is the second affordance — tap to talk. On mobile this becomes the dominant input.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- DMs -->
+      <section class="section" id="dms" data-screen-label="02 DMs">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">02 · Chats</div>
+            <h2 class="section-title">One leaf, always — single-pane chat</h2>
+          </div>
+          <p class="section-sub">Chats follow the WhatsApp shape. The list of people is one leaf; tapping a row replaces the leaf with the conversation. Never two panes at once — that's the rule.</p>
+        </div>
+
+        <div class="dms-pair">
+          <div class="dms-leaf">
+            <div class="leaf-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><path d="M3 21v-1a6 6 0 0 1 6-6h0a6 6 0 0 1 6 6v1"/><circle cx="17" cy="9" r="3"/><path d="M22 21v-1a5 5 0 0 0-3-4.6"/></svg>
+              <h3>People</h3>
+              <button class="close-x" aria-label="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+            <div class="dms-search">
+              <div class="dms-search-shell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                <span>Search people, groups, AI tools</span>
+              </div>
+            </div>
+            <div class="dms-letter">H</div>
+            <div class="dms-person">
+              <span class="ava photo">HW</span>
+              <div class="text"><div class="name">Heath Weaver</div></div>
+            </div>
+            <div class="dms-letter">E</div>
+            <div class="dms-person">
+              <span class="ava">E</span>
+              <div class="text"><div class="name">E2E Test User</div></div>
+            </div>
+            <div class="dms-letter">R</div>
+            <div class="dms-person">
+              <span class="ava">R</span>
+              <div class="text"><div class="name">Realdigit</div></div>
+            </div>
+            <div class="dms-letter">A</div>
+            <div class="dms-person">
+              <span class="ava berry">AI</span>
+              <div class="text">
+                <div class="name">AI</div>
+                <span class="tag">AI tool</span>
+              </div>
+            </div>
+            <div style="flex:1; background: var(--bg);"></div>
+          </div>
+
+          <div class="dms-leaf dms-convo">
+            <div class="dms-convo-head">
+              <button class="back" aria-label="Back">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+              </button>
+              <span class="ava"></span>
+              <div class="who">Heath Weaver</div>
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18" style="opacity:0.6;"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
+            </div>
+            <div class="dms-convo-body">
+              <div class="dm-day">Today · 13 May</div>
+
+              <div class="bubble">Pushed the new tree view. Tap a twig to focus.</div>
+              <div class="bubble-meta">10:18</div>
+
+              <div class="bubble me">Got it. Trying it now.</div>
+              <div class="bubble-meta">10:20</div>
+
+              <div class="bubble">Nit on the action bar — indent/outdent icons are slightly off-center. Worth raising?</div>
+              <div class="bubble-meta">10:22</div>
+
+              <div class="bubble me">Yes — twigl it under <a href="#" style="color: var(--green-deep); text-decoration: underline; text-underline-offset: 2px;">Twiglit › Bugs</a> and tag me.</div>
+              <div class="bubble-meta">10:23</div>
+
+              <div class="bubble">Done. <a href="#" style="color: var(--green-deep); text-decoration: underline; text-underline-offset: 2px;">Twiglit › Bugs › Action bar icon alignment</a></div>
+              <div class="bubble-meta">10:24</div>
+            </div>
+            <div class="dms-convo-composer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" width="20" height="20" style="color: var(--fg-muted); cursor: pointer; flex-shrink: 0;"><path d="M12 5v14M5 12h14"/></svg>
+              <input placeholder="Message Heath" />
+              <button class="ai-send" title="Send">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout" style="margin-top: var(--space-5);">
+          <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3c-7 0-13 4-13 12 0 3 1 6 1 6s3-1 6-1c8 0 12-6 12-13"/></svg>
+          <div>
+            <p><strong>One leaf, always.</strong> The list and the conversation are the same leaf in two states. Tapping a row replaces the leaf; the back arrow brings the list back. No split view, no master/detail — that's a desktop habit Twiglit doesn't inherit.</p>
+          </div>
+        </div>
+
+        <div class="side-by-side" style="margin-top: var(--space-5);">
+          <div></div>
+          <div class="pattern-notes">
+            <h3>People, groups, AI tools — one directory</h3>
+            <p>Humans and AI agents live in the same list. Tools are marked with a <span class="mono" style="color: var(--berry-deep); font-weight: var(--w-bold);">AI tool</span> tag in berry, so they're scannable but not loud. A group chat shows N+ in its avatar; AI tools take the berry circle.</p>
+
+            <h3>Bubbles, the rules</h3>
+            <ul>
+              <li><strong>Me</strong> — green-soft fill, right aligned. Soft enough not to fight the transcript.</li>
+              <li><strong>Them</strong> — white with hairline border, left aligned.</li>
+              <li><strong>System</strong> — mono caption only; never a coloured bubble.</li>
+            </ul>
+
+            <h3>Twiglit links are first-class</h3>
+            <p>Any bubble can deep-link to a row in the tree with green-underlined text. Clicking jumps to that row. Chats are how people <em>talk about</em> rows; the rows themselves live in the tree.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- TREE -->
+      <section class="section" id="tree" data-screen-label="03 Tree">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">03 · Tree</div>
+            <h2 class="section-title">An infinite outline</h2>
+          </div>
+          <p class="section-sub">The full four-bar header sits above an outline that nests by indent. Hover a row to surface controls; the selected row paints in <span class="mono">--bar-selected</span> bleed-to-edge.</p>
+        </div>
+
+        <div class="side-by-side">
+          <div class="desktop">
+            <div class="desktop-stack">
+              <div class="desktop-bars">
+                <div class="bar bar--search">
+                  <span class="bar-avatar">H</span>
+                  <span class="search" style="flex:1; max-width:420px; margin:0 auto;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                    <input placeholder="Search twigs" />
+                    <span class="search-kbd">⌘ /</span>
+                  </span>
+                </div>
+                <div class="bar bar--location">
+                  <span class="bar-crumb">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 11l9-8 9 8v10h-6v-7H9v7H3z"/></svg>
+                    Home
+                  </span>
+                  <span class="bar-crumb-arrow">›</span>
+                  <span class="bar-crumb">Twiglit</span>
+                  <span class="bar-crumb-arrow">›</span>
+                  <span class="bar-crumb" style="font-weight: var(--w-bold);">Outline</span>
+                </div>
+                <div class="bar bar--action">
+                  <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>Focus</span>
+                  <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="14 3 14 9 20 9"/></svg>Details</span>
+                  <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18"/></svg>Complete</span>
+                  <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="3 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Delete</span>
+                  <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="11 17 6 12 11 7"/><line x1="6" y1="12" x2="18" y2="12"/></svg>Outdent</span>
+                  <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="13 17 18 12 13 7"/><line x1="18" y1="12" x2="6" y2="12"/></svg>Indent</span>
+                  <div class="spacer"></div>
+                  <button class="btn-newtwigl" style="margin: 0;">
+                    <span class="btn-newtwigl-dot">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                    </span>
+                    New twigl
+                  </button>
+                </div>
+                <div class="bar bar--selected">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.75" width="18" height="18"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                  <span style="font-weight: var(--w-bold); font-size: var(--t-md);">Twiglit</span>
+                </div>
+              </div>
+              <div class="tree-body">
+                <div class="tree-row"><span class="berry"></span><span>Outline</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Nodes</span></div>
+                <div class="tree-row"><svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.75" width="14" height="14"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Node Metadata</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Multi-Homing</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Projects</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Views</span></div>
+                <div class="tree-children">
+                  <div class="tree-row"><span class="berry"></span><span>iOS chat-first view surfacing</span></div>
+                  <div class="tree-row"><span class="berry"></span><span>iOS and chat client rendering via WebView</span></div>
+                  <div class="tree-row selected"><span class="berry is-checked"></span><span>Saving and persisting views</span></div>
+                </div>
+                <div class="tree-row"><span class="berry"></span><span>Chat Threads</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Shadow System</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Agents</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Automation</span></div>
+                <div class="tree-row"><span class="berry"></span><span style="color:var(--fg-muted); text-decoration: line-through; text-decoration-color: var(--fg-faint);">MCP + REST API</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Inbox</span></div>
+                <div class="tree-row"><span class="berry"></span><span>Chat</span></div>
+              </div>
+            </div>
+            <div class="rail">
+              <div class="rail-pin brand"><img src="assets/brand/favicon.png" alt="Twiglit"/></div>
+              <div class="rail-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M3 11l9-8 9 8v10h-6v-7H9v7H3z"/></svg></div>
+              <div class="rail-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.5L3 21l2-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg></div>
+              <div class="rail-pin active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M8 8h13M8 12h13M8 16h13M3 8h.01M3 12h.01M3 16h.01"/></svg></div>
+              <div class="rail-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="5" width="18" height="16"/><path d="M16 3v4M8 3v4M3 11h18"/></svg></div>
+              <div class="spacer" style="flex:1;"></div>
+              <div class="rail-pin"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg></div>
+            </div>
+          </div>
+
+          <div class="pattern-notes">
+            <h3>An outline, infinite</h3>
+            <p>Any twig is the root of its own subtree. Click a twig to focus it; the breadcrumb grows. Hit <span class="mono">Esc</span> to climb back up.</p>
+
+            <h3>Indent &amp; relationship</h3>
+            <ul>
+              <li>Indent is the only nesting affordance. No chevrons by default.</li>
+              <li>Vertical hairline appears under any twig with children — that's the ancestry guide.</li>
+              <li>Folder icon (green) marks twigs that contain a curated view, not just descendants.</li>
+            </ul>
+
+            <h3>The action bar reacts</h3>
+            <p>Bar 3 is contextual: the verbs change depending on what's selected. When nothing is selected the bar is dimmed but still present, so the chrome stays predictable.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEAF -->
+      <section class="section" id="leaf" data-screen-label="04 Leaves">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">04 · Leaves</div>
+            <h2 class="section-title">Five leaves we've shipped</h2>
+          </div>
+          <p class="section-sub">A leaf is the lens over a slice of the tree. Each one solves a different question — <em>what's this week look like, who do I need to talk to, where are the open issues, what's the state of the project</em>. The tree underneath is unchanged; the leaf is just shape.</p>
+        </div>
+
+        <div class="leaf-gallery">
+
+          <!-- Week Plan leaf -->
+          <div class="leaf-card full">
+            <div class="leaf-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+              <h3>Weekly Planning</h3>
+            </div>
+            <div class="wp-frame">
+              <div class="wp-toolbar">
+                <span class="leaf-card-kind">Goals · Add more twigs</span>
+                <div class="spacer" style="flex:1;"></div>
+                <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="15 18 9 12 15 6"/></svg></span>
+                <span class="range">May 11 – May 17, 2026</span>
+                <span class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg></span>
+              </div>
+              <div class="wp-grid">
+                <div class="wp-h corner"></div>
+                <div class="wp-h">MON<strong>May 11</strong></div>
+                <div class="wp-h">TUE<strong>May 12</strong></div>
+                <div class="wp-h today">WED<strong>May 13</strong></div>
+                <div class="wp-h">THU<strong>May 14</strong></div>
+                <div class="wp-h">FRI<strong>May 15</strong></div>
+                <div class="wp-h">SAT<strong>May 16</strong></div>
+                <div class="wp-h">SUN<strong>May 17</strong></div>
+
+                <div class="wp-time">09:00</div>
+                <div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell today"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div>
+                <div class="wp-time">10:00</div>
+                <div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell today"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div>
+                <div class="wp-time">11:00</div>
+                <div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell today"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div>
+                <div class="wp-time">12:00</div>
+                <div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell today"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div>
+                <div class="wp-time">13:00</div>
+                <div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell today"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div>
+                <div class="wp-time">14:00</div>
+                <div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell today"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div>
+                <div class="wp-time">15:00</div>
+                <div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell today"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div>
+                <div class="wp-time">16:00</div>
+                <div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell today"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div><div class="wp-cell"></div>
+              </div>
+            </div>
+            <div class="leaf-card-foot">
+              <div>
+                <div class="leaf-card-name">Week plan</div>
+                <p class="leaf-card-desc">Drag twigs from the tree onto days and times. Goals on the left pin the rows worth doing this week; everything else stays calm.</p>
+              </div>
+              <span class="leaf-card-kind">calendar leaf</span>
+            </div>
+          </div>
+
+          <!-- Workstation leaf -->
+          <div class="leaf-card full">
+            <div class="leaf-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              <h3>Twiglit Development</h3>
+            </div>
+            <div class="ws-tabs">
+              <span class="ws-tab">Overview</span>
+              <span class="ws-tab active">List</span>
+              <span class="ws-tab">Board</span>
+              <span class="ws-tab">Calendar</span>
+            </div>
+            <div class="ws-groupby">
+              <span>Group by:</span>
+              <span class="pick">Section ▾</span>
+            </div>
+            <div class="ws-head">
+              <span>Name ▲</span><span>Status</span><span>Due</span><span>Priority</span>
+            </div>
+            <div class="ws-section">Roadmap <span class="num">12</span></div>
+            <div class="ws-row"><span class="name"><span class="dot"></span><span class="label">App/Plugins — build connection</span></span><span></span><span></span><span></span></div>
+            <div class="ws-row done"><span class="name"><span class="dot green"></span><span class="label">Backup the database</span></span><span class="pill done">done</span><span></span><span></span></div>
+            <div class="ws-row done"><span class="name"><span class="dot green"></span><span class="label">Browser plugin (hook to existing)</span></span><span class="pill done">done</span><span></span><span></span></div>
+            <div class="ws-row done"><span class="name"><span class="dot green"></span><span class="label">Copy-Paste Items</span></span><span class="pill done">done</span><span></span><span></span></div>
+            <div class="ws-row"><span class="name"><span class="dot"></span><span class="label">CREATE permissions in agent</span></span><span></span><span></span><span></span></div>
+            <div class="ws-row"><span class="name"><span class="dot blue"></span><span class="label">Load-aware dream-pass scheduling</span></span><span class="pill todo">todo</span><span></span><span></span></div>
+            <div class="ws-section">Fixes <span class="num">94</span></div>
+            <div class="ws-row"><span class="name"><span class="dot"></span><span class="label">Agents need to return links to twigs</span></span><span></span><span></span><span></span></div>
+            <div class="ws-row"><span class="name"><span class="dot"></span><span class="label">AI e2e flows: wire ai-journeys.html</span></span><span></span><span></span><span class="pill p3">P3</span></div>
+            <div class="ws-row"><span class="name"><span class="dot"></span><span class="label">Alt+Enter does not work for blocks</span></span><span></span><span></span><span></span></div>
+            <div class="leaf-card-foot">
+              <div>
+                <div class="leaf-card-name">Workstation</div>
+                <p class="leaf-card-desc">An Asana-shaped list view of a tree branch grouped by section. Switch tabs to see the same rows as board, calendar, or overview.</p>
+              </div>
+              <span class="leaf-card-kind">list leaf</span>
+            </div>
+          </div>
+
+          <!-- Issue tracker leaf -->
+          <div class="leaf-card full">
+            <div class="leaf-bar">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+              <h3>Twiglit Development<span class="leaf-bar-meta"> · Issues</span></h3>
+            </div>
+            <div class="it-toolbar">
+              <span class="it-search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+                Search issues
+              </span>
+              <span class="it-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" width="12" height="12"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/></svg>Labels</span>
+              <span class="it-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" width="12" height="12"><line x1="5" y1="3" x2="5" y2="21"/><path d="M5 5h13l-2 4 2 4H5"/></svg>Milestones</span>
+              <span class="it-pill gh"><svg viewBox="0 0 24 24" fill="currentColor" width="12" height="12"><path d="M12 0a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.6-5.5 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 0z"/></svg>GitHub</span>
+              <span class="it-pill primary">New issue</span>
+            </div>
+            <div class="it-tabs">
+              <span class="it-tab active"><span class="dot green"></span>Open <span class="count">0</span></span>
+              <span class="it-tab"><span class="dot purple"></span>Closed <span class="count">0</span></span>
+              <span class="right">
+                <span>Author ▾</span><span>Labels ▾</span><span>Milestones ▾</span><span>Assignees ▾</span><span>Sort ▾</span>
+              </span>
+            </div>
+            <div class="it-empty">No issues yet. Create one with the New issue button.</div>
+            <div class="leaf-card-foot">
+              <div>
+                <div class="leaf-card-name">Issue tracker</div>
+                <p class="leaf-card-desc">GitHub-shaped issue list for a tree branch. Mirrors to a real GitHub repo when one is connected, so engineering work has a familiar home.</p>
+              </div>
+              <span class="leaf-card-kind">list leaf</span>
+            </div>
+          </div>
+
+          <!-- Render leaf — AI generates in chat -->
+          <div class="leaf-card full">
+            <div class="rl-frame">
+              <div class="rl-head">
+                <span class="globe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18"/></svg></span>
+                <span class="name">Twiglit</span>
+                <span class="slug">render_leaf</span>
+                <span class="code">&lt;/&gt;</span>
+              </div>
+              <div class="rl-body">
+                <div class="rl-title">Overdue Twigs</div>
+                <div class="rl-sub">As of May 13, 2026</div>
+
+                <div class="rl-group">
+                  <div class="rl-group-head"><span>2026-04-08</span><span class="badge-count">1</span></div>
+                  <div class="rl-card">
+                    <div class="box"></div>
+                    <div class="body">
+                      <strong>Do my Think and Grow Rich exercise</strong>
+                      <div class="sub">Balance Sheet Wealthy</div>
+                      <div class="meta"><span class="pill">todo</span><span>Due 2026-04-08</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rl-group">
+                  <div class="rl-group-head"><span>2026-04-12</span><span class="badge-count">1</span></div>
+                  <div class="rl-card">
+                    <div class="box"></div>
+                    <div class="body">
+                      <strong>Create content for Remote Executive on LinkedIn across profiles</strong>
+                      <div class="sub">Test 202604122107</div>
+                      <div class="meta"><span class="pill">in_review</span><span>Due 2026-04-12</span></div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rl-group">
+                  <div class="rl-group-head"><span>2026-04-22</span><span class="badge-count">2</span></div>
+                  <div class="rl-card">
+                    <div class="box"></div>
+                    <div class="body">
+                      <strong>CREATE copy</strong>
+                      <div class="sub">Post – Nicolas: Your ClickUp setup is organized. It is not designed.</div>
+                      <div class="meta"><span class="pill">todo</span><span>Due 2026-04-22</span></div>
+                    </div>
+                  </div>
+                  <div class="rl-card">
+                    <div class="box"></div>
+                    <div class="body">
+                      <strong>Post – Fabrice: free operational capacity audits for agency founders this month</strong>
+                      <div class="sub">LinkedIn Content Calendar</div>
+                      <div class="meta"><span class="pill">todo</span><span>Due 2026-04-22</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="leaf-card-foot">
+              <div>
+                <div class="leaf-card-name">Render leaf</div>
+                <p class="leaf-card-desc">Generated by the AI inside a chat — Claude.ai, the in-app assistant, anywhere else. Same leaf grammar (header, grouped cards, status pills) ships on hosts that aren't Twiglit, so a teammate can act on the rows without leaving their thread.</p>
+              </div>
+              <span class="leaf-card-kind">embed leaf</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="side-by-side" style="margin-top: var(--space-6);">
+          <div></div>
+          <div class="pattern-notes">
+            <h3>Same grammar, every leaf</h3>
+            <p>Every leaf opens with a dark header bar — an icon, a title, an optional close. That's the contract that tells you which leaf you're in, and means leaves stack predictably whether they're inside Twiglit or rendered inside someone else's chat.</p>
+
+            <h3>The tree underneath never moves</h3>
+            <p>Leaves only reshape what you see. A row checked off in the workstation is checked everywhere; a twig moved on the calendar updates everywhere; the issue tracker, the chat, and the render-leaf are all the same rows, lensed.</p>
+
+            <h3>Render leaves cross the boundary</h3>
+            <p>The last card is rendered inside Claude.ai. Twiglit emits a leaf as a small embed; the host renders it. Users act on their own rows without ever leaving the assistant.</p>
+
+            <h3>Eventually: user-styled</h3>
+            <p>Leaf bodies can be styled freely (typography, density, color). The header bar, action verbs, and row identity stay system-owned — that's the contract a host can rely on.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- DETAILS LEAF -->
+      <section class="section" id="details" data-screen-label="05 Details">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">05 · Details</div>
+            <h2 class="section-title">The details panel — quiet by default</h2>
+          </div>
+          <p class="section-sub">The hardest surface in the app. It opens whenever you focus a row, so it must support 20 different concerns without feeling like a settings page. Tabs make most of them disappear until asked for.</p>
+        </div>
+
+        <!-- DIAGNOSIS -->
+        <div class="grid-2" style="margin-bottom: var(--space-5);">
+          <div class="card" style="border-color: var(--berry-soft);">
+            <h3 class="card-title" style="color: var(--berry-deep); margin-bottom: var(--space-3);">What's hard about it today</h3>
+            <ul style="margin: 0; padding-left: 16px; font-size: var(--t-small); color: var(--fg-muted); line-height: var(--leading-prose);">
+              <li>14+ sections stacked at equal weight — no hierarchy.</li>
+              <li>Most fields are empty placeholders eating vertical space.</li>
+              <li>Comments &amp; activity sit <em>below</em> the metadata fold — the thing users come for is the thing they have to scroll for.</li>
+              <li>Section headings ("Multiplied In", "Dependencies", "Twiglits", "Attachments") compete with each other; no visual triage.</li>
+              <li>Tabs at the bottom feel like an afterthought.</li>
+            </ul>
+          </div>
+          <div class="card" style="border-color: var(--green-soft);">
+            <h3 class="card-title" style="color: var(--green-deep); margin-bottom: var(--space-3);">What the redesign does</h3>
+            <ul style="margin: 0; padding-left: 16px; font-size: var(--t-small); color: var(--fg-muted); line-height: var(--leading-prose);">
+              <li><strong>Tabs move to the top</strong> and default to <em>Comments</em> — the most-touched surface.</li>
+              <li><strong>Metadata collapses to one inline strip</strong> — assignee · due · type · repeat. Click any chip to edit.</li>
+              <li><strong>Empty sections vanish.</strong> Add affordances become small "+" chips, not stacked headings.</li>
+              <li><strong>Title is large, editable, with the bullet inline.</strong> Tap the berry to complete.</li>
+              <li><strong>Body scrolls under a fixed header.</strong> Footer keeps ID/created and a kebab — out of the way but reachable.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- THE PANEL -->
+        <div class="side-by-side" style="grid-template-columns: 460px 1fr; gap: var(--space-6);">
+          <div class="detail-panel">
+            <!-- top bar: breadcrumb + close -->
+            <div class="dp-top">
+              <div class="dp-crumb">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                <span>Twiglit</span>
+                <span class="dp-crumb-sep">›</span>
+                <span>Outline</span>
+              </div>
+              <button class="dp-close" title="Close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </button>
+            </div>
+
+            <!-- title row: berry + big editable -->
+            <div class="dp-title">
+              <span class="berry" style="width: 18px; height: 18px;"></span>
+              <h1 class="dp-title-h">Persist the user's chosen view per branch</h1>
+              <button class="dp-kebab" title="More">
+                <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/></svg>
+              </button>
+            </div>
+
+            <!-- property strip -->
+            <div class="dp-props">
+              <button class="dp-prop">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></svg>
+                Maxine
+              </button>
+              <button class="dp-prop">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+                Today
+              </button>
+              <button class="dp-prop">
+                <span style="font-weight: var(--w-bold);">Type</span> · Twig
+              </button>
+              <button class="dp-prop">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg>
+                Daily
+              </button>
+              <button class="dp-prop dp-prop-add" title="Add property">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </button>
+            </div>
+
+            <!-- tabs -->
+            <div class="dp-tabs">
+              <button class="dp-tab active">Comments <span class="dp-tab-count">3</span></button>
+              <button class="dp-tab">Description</button>
+              <button class="dp-tab">Properties</button>
+              <button class="dp-tab">Activity</button>
+            </div>
+
+            <!-- body: comments -->
+            <div class="dp-body">
+              <div class="dp-comment">
+                <div class="dp-avatar dp-avatar-green">M</div>
+                <div class="dp-comment-body">
+                  <div class="dp-comment-head">
+                    <span class="dp-comment-name">Maxine</span>
+                    <span class="dp-comment-time">10:18</span>
+                  </div>
+                  <p class="dp-comment-text">Pushed the saving logic — works on chrome/safari, not yet on the iOS WebView. Looking into it tomorrow.</p>
+                </div>
+              </div>
+
+              <div class="dp-comment">
+                <div class="dp-avatar dp-avatar-berry">H</div>
+                <div class="dp-comment-body">
+                  <div class="dp-comment-head">
+                    <span class="dp-comment-name">Heath</span>
+                    <span class="dp-comment-time">10:42</span>
+                  </div>
+                  <p class="dp-comment-text">Nice. Once iOS is sorted, we can ship behind the feature flag and dogfood.</p>
+                </div>
+              </div>
+
+              <div class="dp-comment">
+                <div class="dp-avatar dp-avatar-sky">T</div>
+                <div class="dp-comment-body">
+                  <div class="dp-comment-head">
+                    <span class="dp-comment-name">Twigl</span>
+                    <span class="dp-comment-time">11:04</span>
+                  </div>
+                  <p class="dp-comment-text">Found 2 similar items in your archive that might inform the iOS approach — want me to surface them?</p>
+                  <div style="margin-top: 6px; display: flex; gap: 6px;">
+                    <button class="btn btn-secondary btn-sm">Show them</button>
+                    <button class="btn btn-ghost btn-sm">Not now</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- composer -->
+            <div class="dp-composer">
+              <input placeholder="Add a comment, or @ a teammate" />
+              <button class="ai-send" title="Send">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+              </button>
+            </div>
+
+            <!-- footer -->
+            <div class="dp-foot">
+              <span>ID 7c9fc27c</span>
+              <span class="spacer"></span>
+              <span>Created 4/17/26</span>
+            </div>
+          </div>
+
+          <div class="pattern-notes">
+            <h3>Layout, top down</h3>
+            <ul>
+              <li><strong>Top bar (32px).</strong> Breadcrumb to remind where you are; close on the right. Nothing else.</li>
+              <li><strong>Title row.</strong> The berry bullet doubles as the complete-toggle. Title is editable in place at large size — this is the row's identity.</li>
+              <li><strong>Property strip.</strong> A single horizontal line of inline-editable chips. Only properties with values render; the trailing "+" lets the user surface more. Replaces 4–6 stacked form rows.</li>
+              <li><strong>Tabs.</strong> Comments default, because that's what users open the panel for 80% of the time. Description for the body, Properties for the long-form metadata (assignee modal, dependencies, multiplied-in, attachments), Activity for the audit log.</li>
+              <li><strong>Body.</strong> Scrolls. AI replies (Twigl) get the same bubble register as people — left-aligned, with their identity marked by avatar color and a softer tint. They never look like a form alert.</li>
+              <li><strong>Footer (24px).</strong> ID + created timestamp in micro grey. Always visible. Never the focus.</li>
+            </ul>
+
+            <h3>Properties tab — what it holds</h3>
+            <p>Everything that <em>was</em> stacked on the front page lives behind this tab: full assignee picker, dependencies, multiplied-in locations, attachments, repeat rules, custom fields, AI actions ("Start working / Cancel"), extensions. Each gets a dedicated section so they have room to breathe — the front page no longer pays the cost for fields that aren't set.</p>
+
+            <h3>Empty handling</h3>
+            <p>An empty property doesn't render. Empty Description tab shows a single 80%-faded "Write…" prompt. Empty Activity shows nothing. The user only sees what's there.</p>
+
+            <h3>AI Actions and Extensions</h3>
+            <p>"Start working" becomes a verb in the kebab — same place as Share, Duplicate, Delete. Extensions (kanban, doc, status, etc.) become small icons on a dedicated row in the Properties tab — not chrome the user has to ignore every time.</p>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Patterns · Twiglit Design System</span>
+        <span>← <a href="components.html">components</a> · back to <a href="index.html">overview</a></span>
+      </footer>
+    </div>
+  </div>
+</main>
+
+<script src="assets/js/topbar.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+  const links = document.querySelectorAll('.toc a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const idx = sections.indexOf(e.target);
+        if (idx >= 0) links[idx].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => s && io.observe(s));
+</script>
+</body>
+</html>

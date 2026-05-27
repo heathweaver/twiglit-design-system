@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/system.css">
+<link rel="stylesheet" href="_card.css"></head><body>
+<div class="card-shell">
+<div class="field">
+  <label class="field-label">Label</label>
+  <input class="input" placeholder="Enter a value…" value="example text"/>
+</div>
+<div style="background:var(--bar-search); padding:6px 18px; margin: 0 -24px;">
+  <div class="search" style="max-width:380px">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input placeholder="Search…"/>
+    <span class="kbd-group">
+      <span class="kbd">⌘</span>
+      <span class="kbd">/</span>
+    </span>
+  </div>
+</div>
+<div class="row" style="gap:18px">
+  <label class="check"><input type="checkbox" checked><span class="check-box"></span>Done</label>
+  <label class="check"><input type="checkbox"><span class="check-box"></span>To do</label>
+</div>
+<p style="font-size:11px;color:var(--fg-muted);margin:0;line-height:1.5"><strong>Square corners.</strong> Inputs use <span class="mono" style="color:var(--fg-muted)">--border-strong</span>; focus shifts to <span class="mono" style="color:var(--fg-muted)">--green</span>. Search lives on the bar grey, not white.</p>
+</div>
+</body></html>

@@ -1,0 +1,740 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Components — Twiglit Design System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="assets/brand/favicon.png" />
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/system.css" />
+<style>
+  .docs { display: grid; grid-template-columns: 180px 1fr; gap: var(--space-6); align-items: start; }
+  @media (max-width: 720px) {
+    .docs { grid-template-columns: 1fr; }
+    .toc { position: static; display: flex; flex-wrap: wrap; gap: 4px 6px; }
+    .toc .toc-h { width: 100%; padding: 0 0 4px; margin: 0; }
+    .toc a { padding: 4px 10px; background: var(--bar-search); }
+  }
+  .toc { position: sticky; top: 88px; font-size: var(--t-small); display: grid; gap: 2px; }
+  .toc-h {
+    font-family: var(--font-mono); font-size: 10px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--fg-subtle);
+    padding: 6px 10px;
+    margin-top: var(--space-3);
+  }
+  .toc a {
+    padding: 6px 10px;
+    color: var(--fg-muted);
+    transition: background var(--d-fast) var(--ease);
+  }
+  .toc a:hover { background: var(--bar-search); color: var(--fg); }
+  .toc a.active { background: var(--green-soft); color: var(--green-deep); font-weight: var(--w-bold); }
+
+  .demo-box {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: var(--space-5);
+    margin-bottom: var(--space-3);
+  }
+  .demo-box-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+  }
+  .demo-box-title { font-weight: var(--w-bold); font-size: var(--t-body); letter-spacing: var(--tracking-tight); margin: 0; }
+  .demo-box-meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-subtle); }
+  .demo-strip { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
+  .demo-col { display: flex; flex-direction: column; gap: var(--space-3); }
+
+  .anatomy {
+    background: var(--bar-search);
+    padding: var(--space-4);
+    margin-top: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-muted);
+    line-height: 1.7;
+    border-left: 2px solid var(--green);
+  }
+  .anatomy strong { color: var(--fg); font-weight: var(--w-bold); }
+
+  .do-dont {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+  }
+  @media (max-width: 720px) { .do-dont { grid-template-columns: 1fr; } }
+  .do-dont > div {
+    border: 1px solid var(--border);
+    padding: var(--space-4);
+    background: var(--bg);
+  }
+  .do-dont .label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: var(--space-2);
+    font-weight: var(--w-bold);
+  }
+  .do-dont .yes .label { color: var(--green-deep); }
+  .do-dont .no .label { color: var(--berry-deep); }
+  .do-dont p { margin: 0; font-size: var(--t-small); color: var(--fg-muted); line-height: var(--leading-prose); }
+</style>
+</head>
+<body>
+
+<main class="page">
+  <section class="hero">
+    <div class="hero-meta">
+      <span><i></i>Components</span>
+      <span>The product, atomized</span>
+    </div>
+    <h1>The atoms of Twiglit, on the page.</h1>
+    <p class="hero-lead">Every screen in Twiglit is built from this list. If you find yourself needing something not here, propose adding it — don't invent it inline.</p>
+  </section>
+
+  <div class="docs">
+    <aside class="toc">
+      <div class="toc-h">On this page</div>
+      <a href="#button" class="active">Buttons</a>
+      <a href="#newtwigl">+ New twigl</a>
+      <a href="#input">Inputs &amp; search</a>
+      <a href="#chip">Chips &amp; badges</a>
+      <a href="#berry">The berry</a>
+      <a href="#outline">Outlines</a>
+      <a href="#bars">The four bars</a>
+      <a href="#rail">The ink rail</a>
+      <a href="#mnav">Mobile nav pill</a>
+      <a href="#callout">Callouts</a>
+    </aside>
+
+    <div>
+
+      <!-- BUTTONS -->
+      <section class="section" id="button" data-screen-label="01 Buttons">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">01 · Action</div>
+            <h2 class="section-title">Buttons</h2>
+          </div>
+          <p class="section-sub">Four intent levels — primary, secondary, ghost, danger. No pill rounding. One primary per surface.</p>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Variants</h3><span class="demo-box-meta">.btn-primary · .btn-secondary · .btn-ghost · .btn-danger</span></div>
+          <div class="demo-strip">
+            <button class="btn btn-primary">Save</button>
+            <button class="btn btn-secondary">Cancel</button>
+            <button class="btn btn-ghost">Skip</button>
+            <button class="btn btn-danger">Delete</button>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Sizes</h3><span class="demo-box-meta">.btn-sm · default · .btn-lg</span></div>
+          <div class="demo-strip">
+            <button class="btn btn-primary btn-sm">Small</button>
+            <button class="btn btn-primary">Default</button>
+            <button class="btn btn-primary btn-lg">Large</button>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">With icons</h3><span class="demo-box-meta">always label — never icon-only when actionable</span></div>
+          <div class="demo-strip">
+            <button class="btn btn-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><path d="M12 5v14M5 12h14"/></svg>
+              Add
+            </button>
+            <button class="btn btn-secondary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
+              Focus
+            </button>
+            <button class="btn btn-ghost">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="13 17 18 12 13 7"/><line x1="18" y1="12" x2="6" y2="12"/></svg>
+              Indent
+            </button>
+            <button class="btn btn-icon btn-secondary" aria-label="More">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="anatomy">
+          <strong>ANATOMY</strong><br />
+          height 30 (default) · 38 (large) · 22 (small)<br />
+          padding 14×7 · gap 8 · radius 0<br />
+          font-size --t-small · weight 600 · letter-spacing -0.015em
+        </div>
+
+        <div class="do-dont">
+          <div class="yes">
+            <div class="label">✓ Do</div>
+            <p>One primary per surface. Action-first verbs: "Save", "Add", "Move". Use the icon to clarify the verb, never to replace it.</p>
+          </div>
+          <div class="no">
+            <div class="label">✗ Don't</div>
+            <p>Stack primaries side-by-side. "Save" and "Submit" should never both be green — secondary the less-common path.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW TWIGL BUTTON -->
+      <section class="section" id="newtwigl" data-screen-label="01a New twigl">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">01a · Action</div>
+            <h2 class="section-title">The “+ New twigl” affordance</h2>
+          </div>
+          <p class="section-sub">The product's most-used action. A green-deep circle with a plus, paired with green-deep label text. Renders inline; reads as both a button and a link.</p>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Default</h3><span class="demo-box-meta">.btn-newtwigl</span></div>
+          <button class="btn-newtwigl">
+            <span class="btn-newtwigl-dot">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+            </span>
+            New twigl
+          </button>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Where it lives</h3><span class="demo-box-meta">action bar (Bar 3) · sidebar root · mobile FAB</span></div>
+          <div class="demo-strip" style="gap: var(--space-7);">
+            <button class="btn-newtwigl">
+              <span class="btn-newtwigl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+              New twigl
+            </button>
+            <button class="btn-newtwigl">
+              <span class="btn-newtwigl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+              Add twiglit
+            </button>
+            <button class="btn-newtwigl">
+              <span class="btn-newtwigl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+              Add note
+            </button>
+          </div>
+        </div>
+
+        <div class="anatomy">
+          <strong>ANATOMY</strong><br />
+          dot 22×22 · background --green-deep · stroke 2.4 (icon)<br />
+          label color --green-deep · size --t-body · weight 400<br />
+          gap 8 · padding 4×8 · hover: opacity 0.7
+        </div>
+      </section>
+
+      <!-- INPUTS -->
+      <section class="section" id="input" data-screen-label="02 Inputs">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">02 · Capture</div>
+            <h2 class="section-title">Inputs &amp; search</h2>
+          </div>
+          <p class="section-sub">Sharp. Hairline border. The search field is the most-used input — it gets its own treatment.</p>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Global search</h3><span class="demo-box-meta">.search — used in Bar 1</span></div>
+          <div class="demo-col" style="max-width: 520px;">
+            <label class="search" style="background: var(--bg);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input type="text" placeholder="Search twigs, threads, leaves…" />
+              <span class="search-kbd">⌘ /</span>
+            </label>
+            <label class="search" style="background: var(--bg); border-color: var(--green);">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="color: var(--green);"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input type="text" value="design" />
+              <span class="search-kbd">↵</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Text fields</h3><span class="demo-box-meta">.input · .field</span></div>
+          <div class="grid-2" style="max-width: 720px;">
+            <div class="field">
+              <label class="field-label">Twig title</label>
+              <input class="input" placeholder="What's growing?" />
+            </div>
+            <div class="field">
+              <label class="field-label">Parent</label>
+              <input class="input" value="Twiglit · Outline" />
+            </div>
+            <div class="field" style="grid-column: 1 / -1;">
+              <label class="field-label">Notes</label>
+              <textarea class="input" rows="3" placeholder="Optional"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Checkboxes</h3><span class="demo-box-meta">.check</span></div>
+          <div class="demo-col" style="max-width: 360px;">
+            <label class="check"><input type="checkbox" /><span class="check-box"></span> Show in inbox</label>
+            <label class="check"><input type="checkbox" checked /><span class="check-box"></span> Sync to calendar</label>
+            <label class="check"><input type="checkbox" /><span class="check-box"></span> Re-prompt on edit</label>
+          </div>
+        </div>
+      </section>
+
+      <!-- CHIPS -->
+      <section class="section" id="chip" data-screen-label="03 Chips">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">03 · Filtering &amp; state</div>
+            <h2 class="section-title">Chips &amp; badges</h2>
+          </div>
+          <p class="section-sub">Pill chips for filters (one of the few places we round). Badges for status — kept small, lowercase, mono-typed.</p>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Filter chips</h3><span class="demo-box-meta">.chip · scroll horizontally on overflow</span></div>
+          <div class="demo-strip">
+            <span class="chip active">All</span>
+            <span class="chip">Unread</span>
+            <span class="chip">Favorites</span>
+            <span class="chip">Groups</span>
+            <span class="chip">Mentions</span>
+            <span class="chip">Bookmarks</span>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Badges</h3><span class="demo-box-meta">.badge · .badge-green · .badge-berry</span></div>
+          <div class="demo-strip">
+            <span class="badge">draft</span>
+            <span class="badge badge-green">shipped</span>
+            <span class="badge badge-berry">blocked</span>
+            <span class="badge">archived</span>
+            <span class="badge badge-green">on track</span>
+          </div>
+        </div>
+
+        <div class="anatomy">
+          <strong>WHEN TO USE WHICH</strong><br />
+          chip — for <strong>filters</strong> the user toggles on/off (active state shows green-soft)<br />
+          badge — for <strong>state of a thing</strong> the user is looking at (read-only, lowercase mono)
+        </div>
+      </section>
+
+      <!-- BERRY -->
+      <section class="section" id="berry" data-screen-label="04 Berry">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">04 · The signature mark</div>
+            <h2 class="section-title">The berry</h2>
+          </div>
+          <p class="section-sub">The bullet at the tip of every row. Drawn as a stroked SVG ring at 11×11 with a 1.1px effective stroke. Recolors with currentColor; replaceable with a folder when the row contains children.</p>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Berry states</h3><span class="demo-box-meta">.berry · .is-checked · .is-shared · .is-multiplied</span></div>
+          <div class="demo-strip" style="gap: var(--space-7); padding: var(--space-3) 0; align-items: flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 64px;">
+              <span class="berry size-xl"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">default</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 64px;">
+              <span class="berry is-checked size-xl"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">checked</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 64px;">
+              <span class="berry is-shared size-xl"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">shared</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 64px;">
+              <span class="berry is-shared is-checked size-xl"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">shared · checked</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 64px;">
+              <span class="berry is-multiplied size-xl"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">multiplied</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 64px;">
+              <span class="berry is-multiplied is-checked size-xl"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">multi · checked</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Folder bullet</h3><span class="demo-box-meta">.berry-folder · .is-open · .is-focused — replaces the berry when the row has children</span></div>
+          <div class="demo-strip" style="gap: var(--space-7); padding: var(--space-3) 0; align-items: flex-start;">
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 80px;">
+              <span class="berry-folder" style="width: 28px; height: 28px;"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">closed</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 80px;">
+              <span class="berry-folder is-open" style="width: 28px; height: 28px;"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">open</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 80px;">
+              <span class="berry-folder is-focused" style="width: 28px; height: 28px;"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">focused</span>
+            </div>
+            <div style="display:flex; flex-direction:column; align-items:center; gap: 10px; min-width: 80px;">
+              <span class="berry-folder is-open is-focused" style="width: 28px; height: 28px;"></span>
+              <span style="font-size: 11px; color: var(--fg-muted);">open · focused</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Sizes</h3><span class="demo-box-meta">11px default · .size-md 14 · .size-lg 18 · .size-xl 24</span></div>
+          <div class="demo-strip" style="gap: var(--space-6); align-items: baseline;">
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 13px;"><span class="berry"></span>11px (in row)</span>
+            <span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px;"><span class="berry size-md"></span>14px</span>
+            <span style="display: inline-flex; align-items: center; gap: 8px; font-size: 17px;"><span class="berry size-lg"></span>18px (title row)</span>
+            <span style="display: inline-flex; align-items: center; gap: 10px; font-size: 22px; font-weight: var(--w-bold);"><span class="berry size-xl"></span>24px</span>
+          </div>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Inline</h3><span class="demo-box-meta">in a tree row</span></div>
+          <div class="outline">
+            <div class="outline-row"><span class="berry"></span><span class="outline-text">iOS chat-first view surfacing</span><span class="outline-meta">2 views</span></div>
+            <div class="outline-row selected"><span class="berry is-checked"></span><span class="outline-text">Saving and persisting views</span><span class="outline-meta">in progress</span></div>
+            <div class="outline-row"><span class="berry"></span><span class="outline-text" style="color: var(--fg-muted); text-decoration: line-through; text-decoration-color: var(--fg-faint);">iOS and chat client rendering via WebView</span><span class="outline-meta">shipped</span></div>
+            <div class="outline-row"><span class="berry is-shared"></span><span class="outline-text">Shared with Maxine</span></div>
+            <div class="outline-row"><span class="berry-folder"></span><span class="outline-text">Node Metadata</span></div>
+            <div class="outline-row"><span class="berry-folder is-open"></span><span class="outline-text">Views</span></div>
+          </div>
+        </div>
+
+        <div class="anatomy">
+          <strong>ANATOMY</strong><br />
+          source <em>components/icons.tsx</em> · UncheckedRadio / CheckedRadio<br />
+          viewBox 20×20 · ring path: outer r10 / inner r8 (2-unit stroke ≈ 1.1px at 11px)<br />
+          checked: same ring + inner dot r4 (≈ 4.4px center disc)<br />
+          color via <span style="color: var(--fg);">background-color</span> + CSS <span style="color: var(--fg);">mask</span> — inherits or overrides per state<br />
+          shared #27AA66 · multiplied #9B59B6 · focused row recolors to --green-deep
+        </div>
+
+        <div class="callout">
+          <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/></svg>
+          <div>
+            <p><strong>Completion is text, not a berry state.</strong> A completed row gets <span class="mono">text-decoration: line-through</span> and 60% opacity on its label — the berry itself stays as it was. One bullet, one truth.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- OUTLINE -->
+      <section class="section" id="outline" data-screen-label="05 Outline">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">05 · The tree</div>
+            <h2 class="section-title">Outlines</h2>
+          </div>
+          <p class="section-sub">Outline rows nest by indent only — no expand chevrons by default. Hover surfaces actions; the selected row paints in <span class="mono">--bar-selected</span> across the full bleed.</p>
+        </div>
+
+        <div class="demo-box">
+          <div class="demo-box-head"><h3 class="demo-box-title">Tree with folders</h3><span class="demo-box-meta">.outline · .outline-row · .outline-indent</span></div>
+          <div class="outline" style="max-width: 640px;">
+            <div class="outline-row">
+              <span class="berry-folder"></span>
+              <span class="outline-text"><strong>Twiglit</strong></span>
+              <span class="outline-meta">workspace</span>
+            </div>
+            <div class="outline-row outline-indent"><span class="berry"></span><span class="outline-text">Outline</span></div>
+            <div class="outline-row outline-indent"><span class="berry"></span><span class="outline-text">Nodes</span></div>
+            <div class="outline-row outline-indent">
+              <span class="berry-folder"></span>
+              <span class="outline-text">Node Metadata</span>
+            </div>
+            <div class="outline-row outline-indent"><span class="berry"></span><span class="outline-text">Views</span></div>
+            <div class="outline-row outline-indent-2 selected"><span class="berry is-checked"></span><span class="outline-text">iOS chat-first view surfacing</span></div>
+            <div class="outline-row outline-indent-2"><span class="berry"></span><span class="outline-text">Saving and persisting views</span></div>
+            <div class="outline-row outline-indent"><span class="berry"></span><span class="outline-text">Chat Threads</span></div>
+            <div class="outline-row outline-indent"><span class="berry"></span><span class="outline-text">Shadow System</span></div>
+            <div class="outline-row outline-indent"><span class="berry"></span><span class="outline-text" style="color: var(--fg-muted); text-decoration: line-through; text-decoration-color: var(--fg-faint);">MCP + REST API</span><span class="outline-meta">shipped</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- THE FOUR BARS -->
+      <section class="section" id="bars" data-screen-label="06 Bars">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">06 · The spine</div>
+            <h2 class="section-title">The four-bar header</h2>
+          </div>
+          <p class="section-sub">This is the desktop's vocabulary. Each bar has one job and one grey. You stack them in this order, top to bottom — search, location, action, selected.</p>
+        </div>
+
+        <div class="bars" style="border: 1px solid var(--border);">
+          <div class="bar bar--search">
+            <span class="bar-avatar">H</span>
+            <span class="search" style="flex:1; max-width:480px; margin:0 auto;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+              <input placeholder="Search…" />
+              <span class="search-kbd">⌘ /</span>
+            </span>
+          </div>
+          <div class="bar bar--location">
+            <span class="bar-crumb">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10h-6v-7H9v7H3z"/></svg>
+              Home
+            </span>
+            <span class="bar-crumb-arrow">›</span>
+            <span class="bar-crumb">Twiglit</span>
+            <span class="bar-crumb-arrow">›</span>
+            <span class="bar-crumb" style="font-weight: var(--w-bold);">Views</span>
+          </div>
+          <div class="bar bar--action">
+            <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>Focus</span>
+            <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="14 3 14 9 20 9"/></svg>Details</span>
+            <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18"/></svg>Complete</span>
+            <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="3 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Delete</span>
+            <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="11 17 6 12 11 7"/><line x1="6" y1="12" x2="18" y2="12"/></svg>Outdent</span>
+            <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><polyline points="13 17 18 12 13 7"/><line x1="18" y1="12" x2="6" y2="12"/></svg>Indent</span>
+            <div class="spacer"></div>
+            <span class="bar-verb"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M12 5v14M5 12h14"/></svg>Template</span>
+            <button class="btn-newtwigl" style="margin: 0;">
+              <span class="btn-newtwigl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+              New twigl
+            </button>
+          </div>
+          <div class="bar bar--selected">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            <span style="font-weight: var(--w-bold); font-size: var(--t-md);">Twiglit</span>
+          </div>
+          <div style="padding: var(--space-5) var(--space-6); background: var(--bg); font-size: var(--t-body); display: flex; flex-direction: column; gap: 4px;">
+            <div style="display: flex; align-items: center; gap: var(--space-2);"><span class="berry"></span><span>Outline</span></div>
+            <div style="display: flex; align-items: center; gap: var(--space-2);"><span class="berry"></span><span>Nodes</span></div>
+            <div style="display: flex; align-items: center; gap: var(--space-2);"><span class="berry"></span><span>Multi-Homing</span></div>
+          </div>
+        </div>
+
+        <div class="anatomy" style="margin-top: var(--space-4);">
+          <strong>HEIGHTS</strong> 44 + 36 + 40 = 120px of fixed header.<br />
+          <strong>BORDERS</strong> 1px between bars. Bar 3 gets a soft drop-shadow because verbs feel like buttons.<br />
+          <strong>BAR 4</strong> bleeds left and right past the gutter (negative inset) so the row reads as a full stripe across the tree.
+        </div>
+      </section>
+
+      <!-- INK RAIL -->
+      <section class="section" id="rail" data-screen-label="07 Rail">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">07 · Right rail</div>
+            <h2 class="section-title">The ink rail</h2>
+          </div>
+          <p class="section-sub">A 64px dark column pinned to the right edge. Logo at top, primary destinations below, settings at bottom. The active destination gets a green tick mark.</p>
+        </div>
+
+        <div style="display: flex; justify-content: center; padding: var(--space-5); background: var(--bar-search); border: 1px solid var(--border);">
+          <div class="rail" style="height: 480px;">
+            <div class="rail-pin brand"><img src="assets/brand/favicon.png" alt="Twiglit"/></div>
+            <div class="rail-pin active" title="Tree">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8h13M8 12h13M8 16h13M3 8h.01M3 12h.01M3 16h.01"/></svg>
+            </div>
+            <div class="rail-pin" title="Today">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16"/><path d="M16 3v4M8 3v4M3 11h18"/></svg>
+            </div>
+            <div class="rail-pin" title="Team">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="4"/><circle cx="17" cy="9" r="3"/><path d="M3 21v-1a6 6 0 0 1 6-6"/></svg>
+            </div>
+            <div class="rail-pin" title="Bookmarks">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="rail-pin" title="Views">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.5V19l4 2v-8.5z"/></svg>
+            </div>
+            <div class="rail-pin" title="Chats">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.5L3 21l2-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg>
+            </div>
+            <div class="spacer"></div>
+            <div class="rail-pin" title="Settings">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MOBILE NAV -->
+      <section class="section" id="mnav" data-screen-label="08 Mobile pill">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">08 · Mobile</div>
+            <h2 class="section-title">The dark mobile nav pill</h2>
+          </div>
+          <p class="section-sub">A floating dark pill at the bottom of the iOS screen. Active tab uses berry red (not green) on the dark surface — green is too low-contrast there. The "+" sits outside the pill as a separate FAB.</p>
+        </div>
+
+        <div style="background: var(--bar-search); padding: var(--space-9) var(--space-5); display: flex; justify-content: center; gap: 12px; align-items: center; border: 1px solid var(--border);">
+          <div class="mnav" style="flex: 1; max-width: 320px;">
+            <div class="mnav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8v10h-6v-7H9v7H3z"/></svg>
+              <span>Home</span>
+            </div>
+            <div class="mnav-item active">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.5L3 21l2-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg>
+              <span>DMs</span>
+            </div>
+            <div class="mnav-item">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8h13M8 12h13M8 16h13M3 8h.01M3 12h.01M3 16h.01"/></svg>
+              <span>Tree</span>
+            </div>
+            <div class="mnav-item">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="6" cy="12" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="18" cy="12" r="1.5"/></svg>
+              <span>More</span>
+            </div>
+          </div>
+          <div class="mnav-add"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></div>
+        </div>
+      </section>
+
+      <!-- CALLOUTS -->
+      <section class="section" id="callout" data-screen-label="09 Callouts">
+        <div class="section-head">
+          <div>
+            <div class="section-eyebrow">09 · Inline messaging</div>
+            <h2 class="section-title">Callouts &amp; empty states</h2>
+          </div>
+        </div>
+
+        <div class="demo-col" style="max-width: 720px;">
+          <div class="callout">
+            <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 3c-7 0-13 4-13 12 0 3 1 6 1 6s3-1 6-1c8 0 12-6 12-13"/></svg>
+            <div>
+              <p><strong>Press &nbsp;<span class="kbd">⌘ T</span>&nbsp; to ask the AI.</strong> Select any text in any view, then call up the assistant to turn the selection into a row or summary.</p>
+            </div>
+          </div>
+
+          <div class="callout callout--berry">
+            <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 17h.01"/></svg>
+            <div>
+              <p><strong>Couldn't move.</strong> The target row is read-only. Try a different parent or duplicate it first.</p>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: var(--space-5); padding: var(--space-9) var(--space-6); text-align: center; max-width: 720px; border: 1px solid var(--border); background: var(--bg);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="40" height="40" style="margin: 0 auto var(--space-3); display: block; color: var(--fg-faint);"><path d="M21 3c-7 0-13 4-13 12 0 3 1 6 1 6s3-1 6-1c8 0 12-6 12-13"/></svg>
+          <h3 style="margin: 0 0 var(--space-2); font-size: var(--t-md); font-weight: var(--w-bold); letter-spacing: var(--tracking-tight);">Nothing here yet</h3>
+          <p style="margin: 0 0 var(--space-4); color: var(--fg-muted); font-size: var(--t-small);">Add a row by hand, or ask the AI to turn a brief into one.</p>
+          <div style="display:flex; justify-content:center; gap: var(--space-2); align-items: center;">
+            <button class="btn-newtwigl">
+              <span class="btn-newtwigl-dot">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+              New twigl
+            </button>
+            <button class="btn btn-secondary">Ask the AI</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <span>Components · Twiglit Design System</span>
+        <span>← <a href="foundations.html">foundations</a> · next: <a href="patterns.html">patterns</a></span>
+      </footer>
+    </div>
+  </div>
+</main>
+
+<script src="assets/js/topbar.js"></script>
+<script src="assets/js/app.js"></script>
+
+<!-- Tweaks panel ----------------------------------------------------------- -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="assets/js/tweaks-panel.jsx"></script>
+<div id="tweaks-root"></div>
+<script type="text/babel">
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "berryColor": "#B86B6A",
+    "berryStroke": 1.5,
+    "berryCheckedInset": 17,
+    "berrySize": 10,
+    "newTwiglStroke": 3,
+    "density": "roomy"
+  }/*EDITMODE-END*/;
+
+  function TweaksApp() {
+    const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+    React.useEffect(() => {
+      const r = document.documentElement.style;
+      r.setProperty('--berry', t.berryColor);
+      r.setProperty('--tweak-berry-size', t.berrySize + 'px');
+      r.setProperty('--tweak-berry-stroke', t.berryStroke + 'px');
+      r.setProperty('--tweak-berry-inset', t.berryCheckedInset + '%');
+      r.setProperty('--tweak-plus-stroke', t.newTwiglStroke);
+      document.documentElement.setAttribute('data-density', t.density);
+    }, [t]);
+
+    return (
+      <TweaksPanel>
+        <TweakSection label="The berry" />
+        <TweakColor label="Color" value={t.berryColor}
+                    options={['#B86B6A', '#27AA66', '#9B59B6', '#417505']}
+                    onChange={(v) => setTweak('berryColor', v)} />
+        <TweakSlider label="Default size" value={t.berrySize} min={8} max={20} step={1} unit="px"
+                     onChange={(v) => setTweak('berrySize', v)} />
+        <TweakSlider label="Ring stroke" value={t.berryStroke} min={0.5} max={2.5} step={0.25} unit="px"
+                     onChange={(v) => setTweak('berryStroke', v)} />
+        <TweakSlider label="Checked dot inset" value={t.berryCheckedInset} min={10} max={40} step={1} unit="%"
+                     onChange={(v) => setTweak('berryCheckedInset', v)} />
+
+        <TweakSection label="+ New twigl" />
+        <TweakSlider label="Plus stroke" value={t.newTwiglStroke} min={1.5} max={4} step={0.25} unit=""
+                     onChange={(v) => setTweak('newTwiglStroke', v)} />
+
+        <TweakSection label="Layout" />
+        <TweakRadio label="Density" value={t.density}
+                    options={['compact', 'roomy']}
+                    onChange={(v) => setTweak('density', v)} />
+      </TweaksPanel>
+    );
+  }
+
+  // Inject CSS that maps tweak variables onto the system
+  const tweakOverrides = document.createElement('style');
+  tweakOverrides.textContent = `
+    .berry {
+      width: var(--tweak-berry-size, 11px);
+      height: var(--tweak-berry-size, 11px);
+      --berry-stroke: var(--tweak-berry-stroke, 1px);
+      --berry-checked-inset: var(--tweak-berry-inset, 22%);
+    }
+    .btn-newtwigl-dot svg { stroke-width: var(--tweak-plus-stroke, 3); }
+  `;
+  document.head.appendChild(tweakOverrides);
+
+  ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<TweaksApp />);
+</script>
+<script>
+  const links = document.querySelectorAll('.toc a');
+  const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const idx = sections.indexOf(e.target);
+        if (idx >= 0) links[idx].classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => s && io.observe(s));
+</script>
+</body>
+</html>

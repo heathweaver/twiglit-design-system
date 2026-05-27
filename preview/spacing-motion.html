@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="_card.css"></head><body>
+<div class="card-shell">
+<div style="display:flex; align-items:baseline; gap:14px; padding:6px 0; border-bottom:1px solid var(--border-faint)">
+  <span class="mono" style="flex:0 0 100px">--d-fast</span>
+  <span style="flex:0 0 70px; font-size:14px; font-weight:600">80ms</span>
+  <span style="font-size:12px; color:var(--fg-muted); flex:1">Hover, focus, taps, color swaps — default for everything</span>
+</div>
+<div style="display:flex; align-items:baseline; gap:14px; padding:6px 0; border-bottom:1px solid var(--border-faint)">
+  <span class="mono" style="flex:0 0 100px">--d-base</span>
+  <span style="flex:0 0 70px; font-size:14px; font-weight:600">100ms</span>
+  <span style="font-size:12px; color:var(--fg-muted); flex:1">Ceiling — panel slide, accordion open</span>
+</div>
+<div style="display:flex; align-items:baseline; gap:14px; padding:6px 0; border-bottom:1px solid var(--border-faint)">
+  <span class="mono" style="flex:0 0 100px">--ease</span>
+  <span class="mono" style="flex:0 0 220px; color:var(--fg)">cubic-bezier(.2,.7,.2,1)</span>
+  <span style="font-size:12px; color:var(--fg-muted); flex:1">The only easing</span>
+</div>
+<div style="display:flex; align-items:center; gap:18px; margin-top:6px">
+  <svg width="100" height="60" viewBox="0 0 100 60" style="flex-shrink:0">
+    <rect x="0" y="0" width="100" height="60" fill="var(--surface-tint)" stroke="var(--border)"/>
+    <path d="M 0 60 C 20 18, 20 18, 50 12 C 80 6, 80 6, 100 0" stroke="var(--green)" stroke-width="2" fill="none"/>
+    <circle cx="0" cy="60" r="2.5" fill="var(--green-deep)"/>
+    <circle cx="100" cy="0" r="2.5" fill="var(--green-deep)"/>
+  </svg>
+  <p style="font-size:12px;color:var(--fg-muted);margin:0;line-height:1.5;flex:1"><strong>Sub-100ms target.</strong> If a transition takes longer, something is wrong with the code, not the design. Patience is calm; slowness is rude.</p>
+</div>
+</div>
+</body></html>

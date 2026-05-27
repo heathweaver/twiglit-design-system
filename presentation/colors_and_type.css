@@ -1,0 +1,179 @@
+/* =========================================================================
+   Twiglit Design System — colors + type, distilled
+   ---------------------------------------------------------------------------
+   This file is the design agent's canonical reference for colors + type.
+   For the FULL token set (spacing, motion, bar heights, elevation), import
+   assets/css/tokens.css. For component CSS, import assets/css/system.css.
+   ========================================================================= */
+
+/* No webfonts ship with the design system.
+   The wordmark is the only place Avenir Next appears, and it ships as
+   outlined SVG paths (see wordmark.svg). Body, headings, and UI use the
+   system stack — declared in --font-sans below. */
+
+:root {
+  /* ---------------------------------------------------------------------
+     COLOR — base roles
+     White body + 4 layered greys + 1 ink + 1 green family + 1 berry.
+     The palette is CLOSED. Don't introduce new greens or greys.
+     --------------------------------------------------------------------- */
+
+  /* Surface — the four-bar vocabulary */
+  --bg:              #ffffff;   /* Body / content surface (the tree, modal body) */
+  --bar-search:      #f2f2f2;   /* Bar 1 — global nav / search */
+  --bar-location:    #e9e9e9;   /* Bar 2 — breadcrumb / location */
+  --bar-action:      #d7d7d7;   /* Bar 3 — verbs on the selected twig */
+  --bar-selected:    #f0f0f0;   /* Bar 4 — selected row highlight */
+  --surface-sunken:  #f8f8f8;
+  --surface-tint:    #fafafa;
+
+  /* Ink — dark right rail / mobile pill */
+  --ink:             #40404a;
+  --ink-elev:        #4d4d58;
+  --ink-icon:        #9b9b9b;
+  --ink-icon-hover:  rgba(255, 255, 255, 0.85);
+  --ink-divider:     rgba(255, 255, 255, 0.10);
+
+  /* Foreground / text */
+  --fg:              #333333;
+  --fg-muted:        #666666;
+  --fg-subtle:       #999999;
+  --fg-faint:        #c0c0c0;
+  --fg-on-ink:       #ffffff;
+  --fg-on-brand:     #ffffff;
+
+  /* Border */
+  --border:          #e0e0e0;
+  --border-strong:   #c0c0c0;
+  --border-faint:    #f0f0f0;
+
+  /* Brand green — one bright, one deep, one tint */
+  --green:           #417505;   /* Brand bg, logo, FAB, primary button */
+  --green-deep:      #2d5103;   /* Green TEXT on grey surfaces (verbs, links) */
+  --green-soft:      #e8f0da;   /* Tint behind selected items, soft callouts */
+  --green-hover:     #345d04;
+
+  /* Berry — the signature bullet color */
+  --berry:           #b86b6a;   /* Default twig bullet, avatar fallback */
+  --berry-soft:      #f1dcdb;   /* Tint for locked / attention states */
+  --berry-deep:      #8e4a4a;   /* Berry text on tint */
+
+  /* ---------------------------------------------------------------------
+     TYPE — system stack, four weights
+     No webfonts. Apple system first, fall back to Segoe / Noto.
+     Mono is for keyboard chips, monospace labels, and timestamps.
+     --------------------------------------------------------------------- */
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", "Noto Sans",
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono:
+    ui-monospace, "SF Mono", Menlo, Monaco, "Cascadia Mono", monospace;
+
+  /* Weights — only these four. Never 300, 800, 900. */
+  --w-regular:       400;
+  --w-medium:        500;
+  --w-bold:          600;
+  --w-heavy:         700;
+
+  /* Type scale — tuned for high-density tree readability */
+  --t-micro:         11px;   /* badge text, timestamps */
+  --t-small:         12px;   /* secondary labels */
+  --t-body:          14px;   /* default body / row text */
+  --t-base:          15px;   /* paragraph prose */
+  --t-md:            17px;   /* small heading */
+  --t-lg:            20px;   /* section title */
+  --t-xl:            28px;   /* page title */
+  --t-2xl:           40px;   /* display */
+  --t-3xl:           56px;   /* hero */
+
+  --leading-tight:   1.25;
+  --leading-body:    1.5;
+  --leading-prose:   1.6;
+  --tracking-tight:  -0.015em;
+  --tracking-display:-0.022em;
+  --tracking-mono:   0.04em;
+}
+
+/* =========================================================================
+   SEMANTIC TYPE — drop-in classes that compose the tokens above.
+   Use these rather than hand-rolling font-size + weight + tracking each time.
+   ========================================================================= */
+
+.ds-hero {
+  font-size: var(--t-3xl);
+  font-weight: var(--w-bold);
+  line-height: 1.02;
+  letter-spacing: var(--tracking-display);
+}
+.ds-display {
+  font-size: var(--t-2xl);
+  font-weight: var(--w-bold);
+  line-height: 1.05;
+  letter-spacing: var(--tracking-display);
+}
+.ds-h1, .ds-page-title {
+  font-size: var(--t-xl);
+  font-weight: var(--w-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.ds-h2, .ds-section-title {
+  font-size: var(--t-lg);
+  font-weight: var(--w-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.ds-h3, .ds-heading {
+  font-size: var(--t-md);
+  font-weight: var(--w-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+.ds-lead {
+  font-size: var(--t-md);
+  font-weight: var(--w-regular);
+  line-height: var(--leading-prose);
+  color: var(--fg-muted);
+}
+.ds-paragraph, .ds-p {
+  font-size: var(--t-base);
+  font-weight: var(--w-regular);
+  line-height: var(--leading-body);
+}
+.ds-body {
+  font-size: var(--t-body);
+  font-weight: var(--w-regular);
+  line-height: var(--leading-body);
+}
+.ds-small {
+  font-size: var(--t-small);
+  font-weight: var(--w-regular);
+  color: var(--fg-muted);
+}
+.ds-micro {
+  font-size: var(--t-micro);
+  font-weight: var(--w-regular);
+  color: var(--fg-subtle);
+}
+.ds-mono {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: var(--tracking-mono);
+  color: var(--fg-muted);
+}
+.ds-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: var(--w-regular);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.ds-label {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  font-weight: var(--w-bold);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}

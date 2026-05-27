@@ -1,0 +1,552 @@
+/* =========================================================================
+   Twiglit Presentation Kit — deck_kit.css
+   ---------------------------------------------------------------------------
+   Slide-specific layer on top of colors_and_type.css. Tuned for 1920×1080.
+   The four-bar header does NOT apply to slides — slides are their own
+   surface: white body, big calm type, one idea at a time. Optional accent
+   backgrounds: green-soft (sage), ink (dark), bar-search (paper).
+
+   Type scale is much larger than web (slides are read from across a room).
+   Everything here keeps square corners, hairlines, and zero rounded edges
+   except the berry. No emoji, no decorative SVG, no gradients.
+   ========================================================================= */
+
+@import url("colors_and_type.css");
+
+:root {
+  /* Slide page geometry */
+  --slide-w: 1920px;
+  --slide-h: 1080px;
+  --slide-pad-x: 140px;
+  --slide-pad-y: 110px;
+  --slide-pad-top: 110px;
+  --slide-pad-bottom: 100px;
+
+  /* Slide type scale — bigger than web. Read from the back of the room. */
+  --s-hero:    220px;   /* cover wordmark */
+  --s-display: 144px;   /* hero / big statement */
+  --s-h1:       96px;   /* section title, quote */
+  --s-h2:       60px;   /* column heading */
+  --s-h3:       40px;   /* sub-heading, list item */
+  --s-lead:     44px;   /* lead paragraph */
+  --s-body:     28px;   /* body text */
+  --s-mono:     22px;   /* eyebrow / page-no / labels */
+  --s-number:  340px;   /* big-number stat */
+}
+
+/* -------------------------------------------------------------------------
+   Slide shell — every <section> in <deck-stage> is a slide.
+   ------------------------------------------------------------------------- */
+.slide {
+  width: var(--slide-w);
+  height: var(--slide-h);
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  padding: var(--slide-pad-top) var(--slide-pad-x) var(--slide-pad-bottom);
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Vertical anchors */
+.slide--center { justify-content: center; }
+.slide--bottom { justify-content: flex-end; }
+.slide--top    { justify-content: flex-start; }
+
+/* Background accents — pick at most one per slide */
+.slide--sage  { background: var(--green-soft); }
+.slide--ink   { background: var(--ink); color: var(--fg-on-ink); }
+.slide--paper { background: var(--bar-search); }
+
+/* Dark-slide overrides */
+.slide--ink .ds-eyebrow,
+.slide--ink .slide__eyebrow,
+.slide--ink .slide__pageno,
+.slide--ink .slide__section,
+.slide--ink .slide__caption { color: rgba(255, 255, 255, 0.55); }
+.slide--ink .slide__lead    { color: rgba(255, 255, 255, 0.78); }
+.slide--ink .slide__body    { color: rgba(255, 255, 255, 0.72); }
+.slide--ink .slide__wordmark { color: var(--fg-on-ink); }
+.slide--ink .pillar          { border-color: rgba(255, 255, 255, 0.25); }
+
+/* -------------------------------------------------------------------------
+   Chrome — wordmark, page number, section label, master tag.
+   These are persistent across slides; remove for a fully-bleed slide.
+   ------------------------------------------------------------------------- */
+/* Chrome logo — the green long-shadow plant tile. Replaces the wordmark on
+   every non-cover slide. Same size + position regardless of background
+   (white / sage / ink) because the tile carries its own green ground. */
+.slide__logo {
+  position: absolute;
+  top: 56px;
+  left: var(--slide-pad-x);
+  width: 56px;
+  height: 56px;
+  display: block;
+}
+/* Legacy wordmark — kept for back-compat if a deck overrides the chrome. */
+.slide__wordmark {
+  position: absolute;
+  top: 56px;
+  left: var(--slide-pad-x);
+  font-family: "Avenir Next", var(--font-sans);
+  font-weight: 700;
+  font-size: 30px;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  margin: 0;
+}
+.slide__pageno {
+  position: absolute;
+  bottom: 56px;
+  right: var(--slide-pad-x);
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  letter-spacing: 0.06em;
+  color: var(--fg-subtle);
+}
+.slide__section {
+  position: absolute;
+  bottom: 56px;
+  left: var(--slide-pad-x);
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+}
+.slide__master {
+  position: absolute;
+  top: 56px;
+  right: var(--slide-pad-x);
+  font-family: var(--font-mono);
+  font-size: 18px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-faint);
+}
+
+/* Inline head-row — logo + intro text side by side at the top of a slide.
+   Use on slides 4–6 (or any slide where you want the chrome logo to lead a
+   short section label or subtitle instead of floating absolute). When this
+   is used, omit the standalone <img class="slide__logo"> chrome on the slide. */
+.slide__head-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  margin: 0 0 56px 0;
+}
+.slide__head-row .slide__logo--inline {
+  width: 56px;
+  height: 56px;
+  display: block;
+  flex-shrink: 0;
+}
+.slide__head-row .slide__eyebrow { margin: 0; }
+.slide__head-title {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--fg-muted);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Type primitives (slide-scale).
+   ------------------------------------------------------------------------- */
+.slide__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+  margin: 0 0 56px 0;
+}
+.slide__hero {
+  font-size: var(--s-hero);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.028em;
+  margin: 0;
+  text-wrap: pretty;
+}
+.slide__display {
+  font-size: var(--s-display);
+  font-weight: 700;
+  line-height: 1.0;
+  letter-spacing: -0.024em;
+  margin: 0;
+  max-width: 1500px;
+  text-wrap: pretty;
+}
+.slide__h1 {
+  font-size: var(--s-h1);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  margin: 0;
+  text-wrap: pretty;
+}
+.slide__h2 {
+  font-size: var(--s-h2);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.018em;
+  margin: 0;
+}
+.slide__h3 {
+  font-size: var(--s-h3);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  margin: 0;
+}
+.slide__lead {
+  font-size: var(--s-lead);
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--fg-muted);
+  margin: 0;
+  max-width: 1400px;
+  text-wrap: pretty;
+}
+.slide__body {
+  font-size: var(--s-body);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--fg-muted);
+  margin: 0;
+  max-width: 560px;
+  text-wrap: pretty;
+}
+.slide__caption {
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  letter-spacing: 0.08em;
+  color: var(--fg-subtle);
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   The berry — single allowed round shape. Used as bullet / accent.
+   ------------------------------------------------------------------------- */
+.berry {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--berry);
+  flex-shrink: 0;
+}
+.berry--lg { width: 28px; height: 28px; }
+.berry--xl { width: 56px; height: 56px; }
+.berry--green { background: var(--green); }
+
+/* -------------------------------------------------------------------------
+   Cover — wordmark big, tagline below.
+   ------------------------------------------------------------------------- */
+.cover {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 40px;
+}
+.cover__logo {
+  width: 280px;
+  height: 280px;
+  display: block;
+  margin-bottom: 16px;
+}
+/* Wordmark lockup — "Twiglit" with "connect & do" integrated. Sits
+   directly under the logo on the cover. Sized by width so the SVG stays
+   crisp at any export resolution. */
+.cover__wordmark {
+  width: 960px;
+  height: auto;
+  display: block;
+}
+.cover__tagline {
+  font-size: 56px;
+  font-weight: 400;
+  color: var(--fg-muted);
+  margin: 0;
+  letter-spacing: -0.012em;
+  line-height: 1.15;
+  max-width: 1500px;
+}
+.cover__meta {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-subtle);
+  margin-top: 24px;
+}
+.cover__rule {
+  width: 80px;
+  height: 1px;
+  background: var(--fg-faint);
+}
+
+/* -------------------------------------------------------------------------
+   Section divider — eyebrow number + huge title.
+   ------------------------------------------------------------------------- */
+.divider {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+}
+.divider__num {
+  font-family: var(--font-mono);
+  font-size: 36px;
+  letter-spacing: 0.16em;
+  color: var(--fg-muted);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Two-column (problem / solution, before / after).
+   ------------------------------------------------------------------------- */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 140px;
+  align-content: center;
+  flex: 1;
+}
+.two-col__cell {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.two-col__cell .slide__eyebrow { margin-bottom: 12px; }
+
+/* -------------------------------------------------------------------------
+   Three-column pillars.
+   ------------------------------------------------------------------------- */
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 96px;
+  flex: 1;
+  /* start-aligned so the pillars sit close to the headline rather than
+     centering in the remaining space — the eye should fall from title
+     to pillar with no visual gap. */
+  align-content: start;
+}
+.pillar {
+  border-top: 2px solid var(--fg);
+  padding-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.pillar__index {
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  letter-spacing: 0.12em;
+  color: var(--fg-subtle);
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------------------
+   Big number — one giant stat.
+   ------------------------------------------------------------------------- */
+.bignum {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  flex: 1;
+  justify-content: center;
+}
+.bignum__num {
+  font-size: var(--s-number);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.045em;
+  color: var(--green);
+  margin: 0;
+}
+.bignum__caption {
+  font-size: 52px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  margin: 0;
+  max-width: 1400px;
+  text-wrap: pretty;
+}
+.bignum__source {
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  letter-spacing: 0.08em;
+  color: var(--fg-subtle);
+  margin-top: 8px;
+}
+
+/* -------------------------------------------------------------------------
+   Quote.
+   Inline curly-quote treatment — the open and close marks live in the text
+   itself so the slide reads as a quote without a free-floating glyph block.
+   The attribution sits below with an em-dash prefix.
+   ------------------------------------------------------------------------- */
+.quote {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 56px;
+  max-width: 1500px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.quote__body {
+  font-size: 80px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  margin: 0;
+  text-wrap: pretty;
+  /* Hanging punctuation — the curly open-quote at the start hangs into
+     the left margin so the first real glyph aligns with everything below. */
+  hanging-punctuation: first last;
+  text-indent: -0.42em;
+}
+.quote__attribution {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 24px;
+}
+.quote__name {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--fg);
+  margin: 0;
+}
+.quote__role {
+  font-size: 26px;
+  font-weight: 400;
+  color: var(--fg-muted);
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Berry list — vertical list with the brand bullet.
+   ------------------------------------------------------------------------- */
+.berry-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.berry-list li {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 28px;
+  align-items: start;
+  font-size: var(--s-h3);
+  font-weight: 400;
+  line-height: 1.3;
+  color: inherit;
+}
+.berry-list li::before {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--berry);
+  margin-top: 18px;
+}
+
+/* -------------------------------------------------------------------------
+   Ask slide — amount + use-of-funds breakdown.
+   The ask slide carries an extra chrome row (contact-row) at the bottom, so
+   it needs more clearance than the default --slide-pad-bottom (100px). The
+   --has-contact modifier reserves ~180px so neither the use-of-funds block
+   nor the page number collides with the contact row.
+   ------------------------------------------------------------------------- */
+.slide--has-contact {
+  padding-bottom: 180px;
+}
+.ask {
+  flex: 1;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 80px;
+  align-content: center;
+}
+.ask__head {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.ask__amount {
+  font-size: 240px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.88;
+  color: var(--green);
+  margin: 0;
+}
+.slide--ink .ask__amount { color: #b1d473; }     /* lifted green for dark bg */
+.slide--ink .bignum__num { color: #b1d473; }
+.ask__line {
+  font-size: 44px;
+  font-weight: 400;
+  letter-spacing: -0.012em;
+  color: var(--fg);
+  margin: 0;
+}
+.slide--ink .ask__line { color: var(--fg-on-ink); }
+.ask__use {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 80px;
+  border-top: 2px solid currentColor;
+  padding-top: 40px;
+  opacity: 0.9;
+}
+.ask__use h4 {
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin: 0 0 16px 0;
+  opacity: 0.6;
+}
+.ask__use p {
+  font-size: 32px;
+  font-weight: 400;
+  line-height: 1.25;
+  margin: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Mini-utility — small contact line.
+   ------------------------------------------------------------------------- */
+.contact-row {
+  display: flex;
+  gap: 56px;
+  font-family: var(--font-mono);
+  font-size: var(--s-mono);
+  letter-spacing: 0.06em;
+  color: var(--fg-subtle);
+}
+.slide--ink .contact-row { color: rgba(255, 255, 255, 0.6); }

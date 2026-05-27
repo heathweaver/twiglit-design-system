@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Twiglit · Presentation kit (8 masters)</title>
+<link rel="icon" type="image/png" href="../assets/brand/favicon.png" />
+<link rel="stylesheet" href="deck_kit.css" />
+<script src="deck-stage.js"></script>
+<style>
+  /* Page chrome outside the deck */
+  body { margin: 0; background: #1a1a1a; }
+</style>
+
+<!-- Speaker-notes are intentionally omitted; this is a template kit, not a real
+     pitch script. Add a <script type="application/json" id="speaker-notes">
+     [ "...", "..." ] </script> when you fork this into a real deck. -->
+</head>
+<body>
+
+<deck-stage>
+
+  <!-- ===================================================================
+       MASTER 01 · COVER
+       Use as: slide 1 of every deck.
+       Slots: logo · wordmark · tagline · meta line (round / date / founder)
+       =================================================================== -->
+  <section class="slide slide--bottom" data-screen-label="01 Cover">
+    <p class="slide__master">Master · Cover</p>
+
+    <div class="cover">
+      <img class="cover__logo" src="app-icon.png" alt="Twiglit" />
+      <img class="cover__wordmark" src="wordmark.svg" alt="Twiglit — connect &amp; do" />
+      <p class="cover__tagline">Connecting the people and AIs in your life.</p>
+      <div class="cover__meta">
+        <span>Seed round</span>
+        <span class="cover__rule"></span>
+        <span>May 2026</span>
+        <span class="cover__rule"></span>
+        <span>Heath Weaver, founder</span>
+      </div>
+    </div>
+
+    <span class="slide__pageno">01 / 08</span>
+  </section>
+
+
+  <!-- ===================================================================
+       MASTER 02 · SECTION DIVIDER (sage background)
+       Use as: chapter break between sections.
+       Slots: number · title (slide__display) · one supporting line
+       =================================================================== -->
+  <section class="slide slide--sage slide--center" data-screen-label="02 Section divider">
+    <img class="slide__logo" src="app-icon.png" alt="Twiglit" />
+    <p class="slide__master">Master · Section divider</p>
+
+    <div class="divider">
+      <p class="divider__num">01 — The problem</p>
+      <h2 class="slide__display">Everyone has an AI.<br />Nobody has a place to put what comes out.</h2>
+      <p class="slide__lead">Chats end. Threads get lost. The knowledge built between people and their AIs leaks back into the void.</p>
+    </div>
+
+    <span class="slide__section">Section · Problem</span>
+    <span class="slide__pageno">02 / 08</span>
+  </section>
+
+
+  <!-- ===================================================================
+       MASTER 03 · BIG STATEMENT (ink background)
+       Use as: the one slide that sticks. One claim, nothing else.
+       Slots: claim · optional small caption
+       =================================================================== -->
+  <section class="slide slide--ink slide--center" data-screen-label="03 Big statement">
+    <img class="slide__logo" src="app-icon.png" alt="Twiglit" />
+    <p class="slide__master">Master · Big statement</p>
+
+    <div style="display:flex; flex-direction:column; gap:64px;">
+      <h2 class="slide__display">A tree, not a thread.</h2>
+      <p class="slide__lead" style="max-width: 1200px;">
+        Twiglit is the shared tree where what you and your AIs build together
+        actually stays — branched, focused, and pick‑up‑able by anyone you share it with.
+      </p>
+    </div>
+
+    <span class="slide__section">Section · Insight</span>
+    <span class="slide__pageno">03 / 08</span>
+  </section>
+
+
+  <!-- ===================================================================
+       MASTER 04 · TWO-COLUMN (problem / solution, before / after)
+       Slots: left eyebrow + h2 + body · right eyebrow + h2 + body
+       =================================================================== -->
+  <section class="slide" data-screen-label="04 Two column">
+    <p class="slide__master">Master · Two column</p>
+
+    <header class="slide__head-row">
+      <img class="slide__logo--inline" src="app-icon.png" alt="Twiglit" />
+      <h3 class="slide__head-title">A new tool for an old habit.</h3>
+    </header>
+
+    <div class="two-col">
+      <div class="two-col__cell">
+        <p class="slide__eyebrow">Today</p>
+        <h3 class="slide__h2">Knowledge lives in chat logs.</h3>
+        <p class="slide__body">
+          Twenty open tabs. Three AI accounts. A folder of screenshots.
+          Anything worth keeping gets copy‑pasted into Notion at midnight,
+          or — more often — forgotten by Friday.
+        </p>
+      </div>
+      <div class="two-col__cell">
+        <p class="slide__eyebrow">With Twiglit</p>
+        <h3 class="slide__h2">Knowledge lives in a tree.</h3>
+        <p class="slide__body">
+          Every twig is a thought. Twigl in what matters from any AI or
+          person, branch it, share branches with the people who need them.
+          The next AI you talk to reads the tree and picks up where the last one left off.
+        </p>
+      </div>
+    </div>
+
+    <span class="slide__section">Section · Solution</span>
+    <span class="slide__pageno">04 / 08</span>
+  </section>
+
+
+  <!-- ===================================================================
+       MASTER 05 · THREE PILLARS
+       Slots: deck eyebrow + section title, then 3 × (index + h3 + body)
+       =================================================================== -->
+  <section class="slide" data-screen-label="05 Three pillars">
+    <p class="slide__master">Master · Three pillars</p>
+
+    <header class="slide__head-row">
+      <img class="slide__logo--inline" src="app-icon.png" alt="Twiglit" />
+      <p class="slide__eyebrow">What Twiglit is</p>
+    </header>
+    <h2 class="slide__h1" style="margin-bottom: 72px; max-width: 1500px;">Three principles, one tree.</h2>
+
+    <div class="three-col">
+      <div class="pillar">
+        <span class="pillar__index">01</span>
+        <h3 class="slide__h2">Trees, not folders.</h3>
+        <p class="slide__body">
+          Every twig has a parent. Move one, the children move with it.
+          The structure of your thinking is the structure of the file.
+        </p>
+      </div>
+      <div class="pillar">
+        <span class="pillar__index">02</span>
+        <h3 class="slide__h2">Berries, not checkboxes.</h3>
+        <p class="slide__body">
+          One bullet says it all — empty, focused, shared, multiplied.
+          The berry is the bullet, the status, and the brand.
+        </p>
+      </div>
+      <div class="pillar">
+        <span class="pillar__index">03</span>
+        <h3 class="slide__h2">Calm, never quiet.</h3>
+        <p class="slide__body">
+          Sub‑100ms motion. No notifications. The tree is patient because
+          the work is. Twiglit waits for you, not the other way around.
+        </p>
+      </div>
+    </div>
+
+    <span class="slide__section">Section · Solution</span>
+    <span class="slide__pageno">05 / 08</span>
+  </section>
+
+
+  <!-- ===================================================================
+       MASTER 06 · BIG NUMBER
+       Slots: stat · caption (what it means) · source
+       =================================================================== -->
+  <section class="slide" data-screen-label="06 Big number">
+    <p class="slide__master">Master · Big number</p>
+
+    <header class="slide__head-row">
+      <img class="slide__logo--inline" src="app-icon.png" alt="Twiglit" />
+      <p class="slide__eyebrow">Why now</p>
+    </header>
+
+    <div class="bignum">
+      <p class="bignum__num">3.4×</p>
+      <p class="bignum__caption">
+        the number of AI assistants a knowledge worker uses, vs. 2023.
+        Nobody is building the connective tissue.
+      </p>
+      <p class="bignum__source">Source · Twiglit research, n=412 · Apr 2026 · placeholder figure</p>
+    </div>
+
+    <span class="slide__section">Section · Market</span>
+    <span class="slide__pageno">06 / 08</span>
+  </section>
+
+
+  <!-- ===================================================================
+       MASTER 07 · QUOTE (sage background)
+       Slots: quote · name · role / company
+       =================================================================== -->
+  <section class="slide slide--sage slide--center" data-screen-label="07 Quote">
+    <blockquote class="quote">
+      <p class="quote__body">
+        &ldquo;I used to end every workday by copying things out of Claude
+        into Notion. Now I just twigl them in.&rdquo;
+      </p>
+      <footer class="quote__attribution">
+        <p class="quote__name">&mdash; [ Beta customer name ]</p>
+        <p class="quote__role">[ Role, Company ] &mdash; placeholder, swap before send</p>
+      </footer>
+    </blockquote>
+
+    <span class="slide__section">Section · Traction</span>
+    <span class="slide__pageno">07 / 08</span>
+  </section>
+
+
+  <!-- ===================================================================
+       MASTER 08 · ASK (ink background)
+       Slots: amount · one-line use · 3 × (label + line) use-of-funds · contact
+       =================================================================== -->
+  <section class="slide slide--ink slide--has-contact" data-screen-label="08 Ask">
+    <p class="slide__master">Master · Ask</p>
+
+    <header class="slide__head-row">
+      <img class="slide__logo--inline" src="app-icon.png" alt="Twiglit" />
+      <p class="slide__eyebrow">The ask</p>
+    </header>
+
+    <div class="ask">
+      <div class="ask__head">
+        <p class="ask__amount">$2.5M</p>
+        <p class="ask__line">Seed round. 18 months of runway to ship the iOS app and reach 10k weekly twiglers.</p>
+      </div>
+
+      <div class="ask__use">
+        <div>
+          <h4>Engineering · 60%</h4>
+          <p>Three founding engineers. iOS, sync, and the AI ingestion pipeline.</p>
+        </div>
+        <div>
+          <h4>Design &amp; brand · 20%</h4>
+          <p>One designer. Marketing site, onboarding, the next berry.</p>
+        </div>
+        <div>
+          <h4>Go‑to‑market · 20%</h4>
+          <p>Community, partnerships, the first 10k twiglers.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-row" style="position:absolute; bottom: 56px; left: var(--slide-pad-x);">
+      <span>heath.weaver@twigl.it</span>
+      <span>www.twigl.it</span>
+    </div>
+    <span class="slide__pageno">08 / 08</span>
+  </section>
+
+</deck-stage>
+
+</body>
+</html>

@@ -27,7 +27,7 @@ This system was built from materials the user attached:
   - `spec/patterns.html` — assembled screens (Home, DMs, Tree, Leaves)
   - `spec/README.md` — the team's own README, palette table, three rules
   - `spec/Overview.pdf` — printable one-pager
-- **Brand assets**: logo lockup (`wordmark.svg`), app icon, chat icon, favicon
+- **Brand assets**: logo lockup (`wordmark.svg`, outlined), app icon, chat icon, favicon
 - **CSS**: `assets/css/tokens.css` (canonical), `assets/css/system.css`
 - **GitHub repos**:
   - [`heathweaver/twiglit`](https://github.com/heathweaver/twiglit) — the
@@ -57,7 +57,7 @@ This system was built from materials the user attached:
 | `assets/css/tokens.css`    | Canonical token list (color, space, motion, etc.)   |
 | `assets/css/system.css`    | Reference component CSS — buttons, inputs, bars, berry, outline, rail, mobile pill, callouts |
 | `assets/css/colors_and_type.css` | Mirror of root colors_and_type.css            |
-| `assets/brand/`            | Wordmark (`wordmark.svg`, outlined), `app-icon.png`, `chat-icon.png`, `favicon.png` |
+| `assets/brand/`            | Logo (`wordmark.svg`, outlined), `app-icon.png`, `chat-icon.png`, `favicon.png` |
 | `assets/js/`               | Spec-page support scripts (topbar, tweaks-panel)    |
 | `spec/`                    | The four canonical spec HTML pages + the team's README and PDF |
 | `preview/`                 | Cards rendered in the Design System tab (one swatch / specimen / spec per card) |
@@ -65,8 +65,9 @@ This system was built from materials the user attached:
 | `assets/glossary.ts`       | The authoritative vocabulary file — same content the MCP server uses |
 
 No webfonts ship with the design system. Twiglit uses the **system stack**
-(`-apple-system`, `system-ui`, "Segoe UI", "Noto Sans") for all UI, and
-the wordmark is a self-contained outlined SVG. See "Typography" below.
+(`-apple-system`, `system-ui`, "Segoe UI", "Noto Sans") for everything,
+and the wordmark ships as outlined SVG (`assets/brand/wordmark.svg`).
+See "Typography" below.
 
 ---
 
@@ -202,10 +203,10 @@ or merge them.
   converted to vector paths, so the file is self-contained and renders
   identically regardless of which fonts the viewer has installed. The
   source font, Avenir Next, is proprietary (Linotype/Monotype) and is
-  not bundled with this repo — to regenerate the wordmark, work on a
-  Mac where Avenir Next is system-installed, then outline before
-  exporting. Avenir Next is **only** used in the wordmark — never for
-  body, headings, or UI chrome.
+  **not bundled** — to regenerate the wordmark, work on a Mac where
+  Avenir Next is system-installed, then outline before exporting.
+  Avenir Next is **only** used in the wordmark — never for body,
+  headings, or UI chrome.
 - **Four weights** in product type: 400 (regular), 500 (medium), 600
   (bold), 700 (heavy). Default rhythm is regular + bold. 300 and 800/900
   are forbidden.

@@ -6,8 +6,11 @@
    assets/css/tokens.css. For component CSS, import assets/css/system.css.
    ========================================================================= */
 
-/* The wordmark ships as an outlined SVG at assets/brand/wordmark.svg —
-   no webfont needed. Body, headings, UI — SF Pro / system stack. */
+/* No webfonts ship with the design system.
+   The wordmark is the only place Avenir Next appears, and it ships as
+   outlined SVG paths (see assets/brand/wordmark.svg). Body, headings, and
+   UI use the system stack (SF Pro on Apple, Segoe UI on Windows, Noto
+   Sans on Android) — declared in --font-sans below. */
 
 :root {
   /* ---------------------------------------------------------------------

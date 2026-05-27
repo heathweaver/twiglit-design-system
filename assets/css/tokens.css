@@ -3,9 +3,12 @@
    Single direction. Collapsed palette. Sharp corners. Density-first.
    ========================================================================= */
 
-/* The wordmark ships as an outlined SVG at assets/brand/wordmark.svg —
-   no webfont is loaded. Body, headings, UI all use the SF Pro / system
-   stack defined below. */
+/* No webfonts ship with the design system.
+   The wordmark is the only place Avenir Next appears, and it ships as
+   outlined SVG paths (see assets/brand/wordmark.svg). Body, headings, and
+   UI use the system stack — declared in --font-sans below. Do NOT add
+   webfonts here. The source font (Avenir Next, Linotype/Monotype) is
+   proprietary and is not bundled with the repo. */
 
 :root {
   /* -----------------------------------------------------------------------

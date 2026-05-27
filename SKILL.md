@@ -82,3 +82,46 @@ the doc — they own the system.
   ≥18px in chrome, ≥22px in chat composers + any tappable surface. The
   glyph must fill ≥60% of its well — tiny icon in big circle reads as
   decorative. See the **Iconography sizing rules** card.
+
+## Copywriting — anti-slop
+
+Twiglit copy is **direct, calm, declarative** (see README "Voice & tone").
+On top of that, any copy you write — UI strings, slide text, prototype
+microcopy, marketing — must avoid the patterns below. Source of truth is
+the team's "Copywriting Rules" doc in Twiglit; this is the distilled
+checklist.
+
+**Hard rules** (banned outright in all output, including conversational
+replies):
+
+- **No em dashes** (—). Use commas, parentheses, or two sentences.
+- **No colons** as a rhetorical device inside prose. (Token tables, time
+  stamps `09:42`, and ratios are fine.)
+- **No "not X, but Y" / "no X, no Y, just Z" parallelisms.**
+
+**Slop tells to avoid** (the fingerprints of unedited LLM output):
+
+- **Rule-of-three triplets** when listing adjectives, benefits, or
+  takeaways. Use one strong word or two, not always three.
+- **Bolded bullet headers followed by a colon + descriptive text.** The
+  single most recognisable LLM list format. Use prose or unbolded
+  bullets. (Yes, this file uses some — exempted because it's a reference
+  checklist, not product copy.)
+- **Hedging openers**: "It's worth noting that," "Importantly,"
+  "Notably," "Interestingly."
+- **Promotional intensifiers**: "rich cultural heritage," "vibrant,"
+  "bustling," "stunning," "robust," "seamless," "leverage," "delve,"
+  "unpack," "multifaceted."
+- **Vague closers**: "ultimately, this represents a paradigm shift," "in
+  conclusion, X is more than just Y."
+- **Broad-theme inflation** that connects a small thing to "the future
+  of work," "human civilisation," "the digital age," without earning it.
+- **Predictable transitions**: "moreover," "furthermore," "additionally,"
+  "in addition to this."
+- **Title-case subheadings** inside body copy. Sentence case (already a
+  Twiglit rule — reinforced here).
+- **Markdown leaking into prose** — stiff structure where a flowing
+  paragraph would do.
+
+**Test before shipping:** read it out loud. If it sounds like a
+corporate blog post nobody asked for, rewrite it.

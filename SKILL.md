@@ -34,15 +34,15 @@ sub-100ms motion. No emoji.
 
 ## File map for an agent
 
-| Need… | Look at… |
-| ----- | -------- |
-| Token vars (color/space/motion/type) | `assets/css/tokens.css` |
-| Component CSS (buttons, bars, berry, rail) | `assets/css/system.css` |
-| Just color + type, distilled | `colors_and_type.css` |
-| Logo, app icon, favicon | `assets/brand/` |
-| Source-of-truth spec (HTML) | `spec/index.html`, `spec/foundations.html`, `spec/components.html`, `spec/patterns.html` |
-| UI kits — real screens | `ui_kits/twiglit-ios/` |
-| Cards used in the Design System tab | `preview/` |
+| Need…                                      | Look at…                                                                                 |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| Token vars (color/space/motion/type)       | `assets/css/tokens.css`                                                                  |
+| Component CSS (buttons, bars, berry, rail) | `assets/css/system.css`                                                                  |
+| Just color + type, distilled               | `colors_and_type.css`                                                                    |
+| Logo, app icon, favicon                    | `assets/brand/`                                                                          |
+| Source-of-truth spec (HTML)                | `spec/index.html`, `spec/foundations.html`, `spec/components.html`, `spec/patterns.html` |
+| UI kits — real screens                     | `ui_kits/twiglit-ios/`                                                                   |
+| Cards used in the Design System tab        | `preview/`                                                                               |
 
 ## How to use this skill
 

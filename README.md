@@ -49,20 +49,20 @@ This system was built from materials the user attached:
 
 ## Index
 
-| File / Folder              | What it is                                          |
-| -------------------------- | --------------------------------------------------- |
-| `README.md`                | This file — start here                              |
-| `SKILL.md`                 | Agent-skill manifest (cross-compatible w/ Claude Code) |
-| `colors_and_type.css`      | Distilled CSS vars + semantic type classes          |
-| `assets/css/tokens.css`    | Canonical token list (color, space, motion, etc.)   |
-| `assets/css/system.css`    | Reference component CSS — buttons, inputs, bars, berry, outline, rail, mobile pill, callouts |
-| `assets/css/colors_and_type.css` | Mirror of root colors_and_type.css            |
-| `assets/brand/`            | Logo (`wordmark.svg`, outlined), `app-icon.png`, `chat-icon.png`, `favicon.png` |
-| `assets/js/`               | Spec-page support scripts (topbar, tweaks-panel)    |
-| `spec/`                    | The four canonical spec HTML pages + the team's README and PDF |
-| `preview/`                 | Cards rendered in the Design System tab (one swatch / specimen / spec per card) |
-| `ui_kits/twiglit-ios/`     | UI kit — seven iOS screens (Login, DM list, Tree, Twigl AI start, DM thread, Twig details, AI thread) showing how the iOS app **should** look once the design system is applied |
-| `assets/glossary.ts`       | The authoritative vocabulary file — same content the MCP server uses |
+| File / Folder                    | What it is                                                                                                                                                                      |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `README.md`                      | This file — start here                                                                                                                                                          |
+| `SKILL.md`                       | Agent-skill manifest (cross-compatible w/ Claude Code)                                                                                                                          |
+| `colors_and_type.css`            | Distilled CSS vars + semantic type classes                                                                                                                                      |
+| `assets/css/tokens.css`          | Canonical token list (color, space, motion, etc.)                                                                                                                               |
+| `assets/css/system.css`          | Reference component CSS — buttons, inputs, bars, berry, outline, rail, mobile pill, callouts                                                                                    |
+| `assets/css/colors_and_type.css` | Mirror of root colors_and_type.css                                                                                                                                              |
+| `assets/brand/`                  | Logo (`wordmark.svg`, outlined), `app-icon.png`, `chat-icon.png`, `favicon.png`                                                                                                 |
+| `assets/js/`                     | Spec-page support scripts (topbar, tweaks-panel)                                                                                                                                |
+| `spec/`                          | The four canonical spec HTML pages + the team's README and PDF                                                                                                                  |
+| `preview/`                       | Cards rendered in the Design System tab (one swatch / specimen / spec per card)                                                                                                 |
+| `ui_kits/twiglit-ios/`           | UI kit — seven iOS screens (Login, DM list, Tree, Twigl AI start, DM thread, Twig details, AI thread) showing how the iOS app **should** look once the design system is applied |
+| `assets/glossary.ts`             | The authoritative vocabulary file — same content the MCP server uses                                                                                                            |
 
 No webfonts ship with the design system. Twiglit uses the **system stack**
 (`-apple-system`, `system-ui`, "Segoe UI", "Noto Sans") for everything,
@@ -111,8 +111,9 @@ considered notebook, not a chirpy app.
   - **Owner / Assignee / Participant** — roles on a twig.
 
   > ⚠️ The early spec `spec/index.html` proposed extra verbs like
-  > *prune*, *graft*, *bloom* — those are **not in the glossary** and
+  > _prune_, _graft_, _bloom_ — those are **not in the glossary** and
   > should not be used. Stick to the list above.
+
 - **Sentence case for everything.** Titles, buttons, menus — sentence
   case. Never Title Case In UI. Never ALL CAPS except in mono eyebrow
   labels (where it's a typographic move, not shouting).
@@ -124,19 +125,20 @@ considered notebook, not a chirpy app.
 
 ### Casing examples
 
-| Surface | Example |
-| ------- | ------- |
-| Hero    | "Twigl what matters between the AIs and people in your life." |
-| Section eyebrow | `01 · Foundations` (mono, uppercase, dotted) |
-| Section title | "Color roles, not raw colors" |
-| Button  | "Save" · "Add" · "Cancel" · "Delete" · "+ New twigl" |
-| Bar verb | "Focus" · "Details" · "Complete" · "Outdent" · "Indent" |
-| Callout headline | "The bars are a vocabulary, not decoration." |
-| Empty state | "Nothing pinned yet." |
+| Surface          | Example                                                       |
+| ---------------- | ------------------------------------------------------------- |
+| Hero             | "Twigl what matters between the AIs and people in your life." |
+| Section eyebrow  | `01 · Foundations` (mono, uppercase, dotted)                  |
+| Section title    | "Color roles, not raw colors"                                 |
+| Button           | "Save" · "Add" · "Cancel" · "Delete" · "+ New twigl"          |
+| Bar verb         | "Focus" · "Details" · "Complete" · "Outdent" · "Indent"       |
+| Callout headline | "The bars are a vocabulary, not decoration."                  |
+| Empty state      | "Nothing pinned yet."                                         |
 
 ### Headlines lean punchy
 
 The team writes single-clause headlines that double as principles:
+
 - "Grow softly."
 - "Trees, not folders."
 - "Calm, never quiet."
@@ -162,12 +164,12 @@ The team writes single-clause headlines that double as principles:
 Every desktop screen stacks the same four horizontal bars, each a darker
 grey than the last. Read top-down: **who → where → what → selected**.
 
-| Bar | Token | Hex | Job |
-| --- | ----- | --- | --- |
-| Bar 1 | `--bar-search` | `#f2f2f2` | Avatar, global search, inbox icon |
-| Bar 2 | `--bar-location` | `#e9e9e9` | Breadcrumb / location |
-| Bar 3 | `--bar-action` | `#d7d7d7` | Verbs on the selected twig (Focus, Details, Complete…) |
-| Bar 4 | `--bar-selected` | `#f0f0f0` | The selected row highlight |
+| Bar   | Token            | Hex       | Job                                                    |
+| ----- | ---------------- | --------- | ------------------------------------------------------ |
+| Bar 1 | `--bar-search`   | `#f2f2f2` | Avatar, global search, inbox icon                      |
+| Bar 2 | `--bar-location` | `#e9e9e9` | Breadcrumb / location                                  |
+| Bar 3 | `--bar-action`   | `#d7d7d7` | Verbs on the selected twig (Focus, Details, Complete…) |
+| Bar 4 | `--bar-selected` | `#f0f0f0` | The selected row highlight                             |
 
 Heights are fixed: `44 / 36 / 40 / variable`. Bar 3 is the only one with
 a real elevation (`--shadow-action`, `0 2px 3px rgba(0,0,0,.12)`).
@@ -181,9 +183,9 @@ or merge them.
 - **White body**, **four greys** (Bar 1–4), **two greens** (bright +
   deep) + a soft tint, **one berry** + a soft tint, **one ink** for the
   right rail and mobile pill. That's the whole brand.
-- **`--green` (#417505)** is for *fills*: logo bg, FAB, primary button,
+- **`--green` (#417505)** is for _fills_: logo bg, FAB, primary button,
   the AI send button, the rail-active stripe.
-- **`--green-deep` (#2d5103)** is for *green text on grey*: action-bar
+- **`--green-deep` (#2d5103)** is for _green text on grey_: action-bar
   verbs ("Focus", "Indent"), the "+ New twigl" label, focused folder
   glyph.
 - **`--green-soft` (#e8f0da)** tints behind selected items, callout
@@ -239,9 +241,9 @@ actually the berry or a filter chip. If not, square it.
 - **No hand-drawn illustrations.** The brand is allergic to whimsy.
 - The only gradient permitted is the subtle "long shadow" on the app
   icon and the avatar gradients in DMs (e.g. `linear-gradient(135deg,
-  #b88a6e, #8b5a3c)` for a photo avatar fallback).
+#b88a6e, #8b5a3c)` for a photo avatar fallback).
 - The `topbar` on the doc site uses `backdrop-filter: saturate(1.4)
-  blur(12px)` over rgba(255,255,255,0.92). That's the **one** place blur
+blur(12px)` over rgba(255,255,255,0.92). That's the **one** place blur
   is used.
 
 ### Motion
@@ -308,6 +310,7 @@ type scale and tight gaps, not shrinking padding.
 ### The berry (signature visual)
 
 A 1px-stroke circle with an optional pseudo-element center dot:
+
 - **Empty** — outline only (`--berry`)
 - **Checked** — outline + 22%-inset filled center
 - **Shared** — color shifts to `#27AA66`
@@ -325,6 +328,7 @@ treatment is a brand cue and should be reused for any icon needing depth.
 Photo avatars in DMs use a warm gradient
 (`linear-gradient(135deg, #b88a6e, #8b5a3c)`) as a placeholder until a
 real photo loads. The DM list also uses these gradient blobs:
+
 - berry red gradient for an unset avatar (`var(--berry)`)
 - green gradient for the AI / system
 - sky-blue gradient (`#5a7da5 → #4a6fa5`) for an alternate accent

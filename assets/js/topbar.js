@@ -2,16 +2,20 @@
 (function () {
   const here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const nav = [
-    ['index.html',       'Overview'],
+    ['index.html', 'Overview'],
     ['foundations.html', 'Foundations'],
-    ['components.html',  'Components'],
-    ['patterns.html',    'Patterns'],
+    ['components.html', 'Components'],
+    ['patterns.html', 'Patterns'],
   ];
-  const links = nav.map(([href, label]) =>
-    `<a href="${href}" class="${href === here ? 'active' : ''}">${label}</a>`
-  ).join('');
+  const links = nav
+    .map(
+      ([href, label]) => `<a href="${href}" class="${href === here ? 'active' : ''}">${label}</a>`
+    )
+    .join('');
 
-  document.body.insertAdjacentHTML('afterbegin', `
+  document.body.insertAdjacentHTML(
+    'afterbegin',
+    `
     <header class="topbar">
       <div class="topbar-inner">
         <a href="index.html" class="brand">
@@ -22,5 +26,6 @@
         <nav class="nav-links">${links}</nav>
       </div>
     </header>
-  `);
+  `
+  );
 })();

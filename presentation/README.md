@@ -5,26 +5,26 @@ Built on the Twiglit design system — same tokens as the product so a deck and 
 
 ## What's in here
 
-| File | Purpose |
-| --- | --- |
-| `slide_templates.html` | The 8 masters, filled in with sample Twiglit content. **Open this to see the kit.** Duplicate it to start a real deck. |
-| `deck_kit.css` | Slide-specific styles. Extends `colors_and_type.css`. Sets the 1920×1080 type scale, layouts, and accent backgrounds. |
-| `deck-stage.js` | Slide shell (scaling, keyboard nav, print-to-PDF). Don't edit. |
-| `colors_and_type.css` | Mirror of the root file. Tokens stay one-direction. |
-| `wordmark.svg` / `app-icon.png` | Brand assets used in slides. The wordmark is outlined SVG; no webfont needed. |
+| File                            | Purpose                                                                                                                |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
+| `slide_templates.html`          | The 8 masters, filled in with sample Twiglit content. **Open this to see the kit.** Duplicate it to start a real deck. |
+| `deck_kit.css`                  | Slide-specific styles. Extends `colors_and_type.css`. Sets the 1920×1080 type scale, layouts, and accent backgrounds.  |
+| `deck-stage.js`                 | Slide shell (scaling, keyboard nav, print-to-PDF). Don't edit.                                                         |
+| `colors_and_type.css`           | Mirror of the root file. Tokens stay one-direction.                                                                    |
+| `wordmark.svg` / `app-icon.png` | Brand assets used in slides. The wordmark is outlined SVG; no webfont needed.                                          |
 
 ## The 8 masters
 
-| # | Master | When to use it |
-| - | --- | --- |
-| 01 | **Cover** | Slide 1 of every deck. Wordmark + tagline + round/date/founder. |
-| 02 | **Section divider** | Chapter break between sections. Big number eyebrow, hero headline, one-line context. Sage background. |
-| 03 | **Big statement** | The slide that has to stick. One claim, nothing else. Ink background. |
-| 04 | **Two-column** | Problem/solution, today/with Twiglit, before/after. |
-| 05 | **Three pillars** | Three principles, three features, three reasons-why-us. |
-| 06 | **Big number** | A market stat or traction stat. Stat + caption + source line. |
-| 07 | **Quote** | Customer testimonial, advisor quote, press pull-quote. Sage background. |
-| 08 | **Ask** | Closing slide. Amount raised + use-of-funds split + contact. Ink background. |
+| #   | Master              | When to use it                                                                                        |
+| --- | ------------------- | ----------------------------------------------------------------------------------------------------- |
+| 01  | **Cover**           | Slide 1 of every deck. Wordmark + tagline + round/date/founder.                                       |
+| 02  | **Section divider** | Chapter break between sections. Big number eyebrow, hero headline, one-line context. Sage background. |
+| 03  | **Big statement**   | The slide that has to stick. One claim, nothing else. Ink background.                                 |
+| 04  | **Two-column**      | Problem/solution, today/with Twiglit, before/after.                                                   |
+| 05  | **Three pillars**   | Three principles, three features, three reasons-why-us.                                               |
+| 06  | **Big number**      | A market stat or traction stat. Stat + caption + source line.                                         |
+| 07  | **Quote**           | Customer testimonial, advisor quote, press pull-quote. Sage background.                               |
+| 08  | **Ask**             | Closing slide. Amount raised + use-of-funds split + contact. Ink background.                          |
 
 ## How to make a real deck
 

@@ -4,6 +4,9 @@
 .build/
 .swiftpm/
 
+# Node / package manager artifacts
+node_modules/
+
 # Working stash — session screenshots, mirrors of files that live
 # elsewhere in the repo, ad-hoc reference material. Not a deliverable;
 # the public design system ships without it.

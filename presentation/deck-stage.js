@@ -77,12 +77,13 @@
   const FINE_POINTER_MQ = matchMedia('(hover: hover) and (pointer: fine)');
   const NARROW_MQ = matchMedia('(max-width: 640px)');
   // Slide-authored controls that should keep a tap instead of it navigating.
-  const INTERACTIVE_SEL = 'a[href], button, input, select, textarea, summary, label, video[controls], audio[controls], [role="button"], [onclick], [tabindex]:not([tabindex^="-"]), [contenteditable]:not([contenteditable="false" i])';
+  const INTERACTIVE_SEL =
+    'a[href], button, input, select, textarea, summary, label, video[controls], audio[controls], [role="button"], [onclick], [tabindex]:not([tabindex^="-"]), [contenteditable]:not([contenteditable="false" i])';
 
-  const pad2 = (n) => String(n).padStart(2, '0');
+  const pad2 = n => String(n).padStart(2, '0');
 
   // Label precedence: data-label → data-screen-label (number stripped) → first heading → "Slide".
-  const getSlideLabel = (el) => {
+  const getSlideLabel = el => {
     const explicit = el.getAttribute('data-label');
     if (explicit) return explicit;
 
@@ -539,7 +540,9 @@
   `;
 
   class DeckStage extends HTMLElement {
-    static get observedAttributes() { return ['width', 'height', 'noscale', 'no-rail']; }
+    static get observedAttributes() {
+      return ['width', 'height', 'noscale', 'no-rail'];
+    }
 
     constructor() {
       super();
@@ -561,7 +564,7 @@
       // ignore clicks that land inside the menu itself — otherwise the
       // capture handler runs before the menu's own (bubble) handler and
       // clears _menuIndex out from under it.
-      this._onDocClick = (e) => {
+      this._onDocClick = e => {
         if (this._menu && e.composedPath && e.composedPath().includes(this._menu)) return;
         this._closeMenu();
       };
@@ -603,7 +606,7 @@
       requestAnimationFrame(() => {
         Promise.race([
           document.fonts ? document.fonts.ready : Promise.resolve(),
-          new Promise((r) => setTimeout(r, 2000)),
+          new Promise(r => setTimeout(r, 2000)),
         ]).then(reveal, reveal);
       });
     }
@@ -627,7 +630,7 @@
       // spurious refreshes.
       const OWN_ATTRS = /^data-(deck-|screen-label$|om-validate$)/;
       this._liveDirty = new Set();
-      this._liveObserver = new MutationObserver((records) => {
+      this._liveObserver = new MutationObserver(records => {
         for (const r of records) {
           if (r.type === 'attributes' && OWN_ATTRS.test(r.attributeName || '')) continue;
           let n = r.target;
@@ -637,24 +640,30 @@
         if (this._liveDirty.size && !this._liveTimer) {
           this._liveTimer = setTimeout(() => {
             this._liveTimer = null;
-            this._liveDirty.forEach((s) => this._refreshThumb(s));
+            this._liveDirty.forEach(s => this._refreshThumb(s));
             this._liveDirty.clear();
           }, 200);
         }
       });
       this._liveObserver.observe(this, {
-        subtree: true, childList: true, characterData: true, attributes: true,
+        subtree: true,
+        childList: true,
+        characterData: true,
+        attributes: true,
       });
       // Lazy thumbnail materialization — clone the slide only when its
       // frame scrolls into (or near) the rail viewport. rootMargin gives
       // ~4 thumbs of pre-load so fast scrolling doesn't flash blanks.
-      this._railObserver = new IntersectionObserver((entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting && e.target.__deckThumb) {
-            this._materialize(e.target.__deckThumb);
-          }
-        });
-      }, { root: this._rail, rootMargin: '400px 0px' });
+      this._railObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(e => {
+            if (e.isIntersecting && e.target.__deckThumb) {
+              this._materialize(e.target.__deckThumb);
+            }
+          });
+        },
+        { root: this._rail, rootMargin: '400px 0px' }
+      );
       // Tweaks typically change CSS vars / attrs OUTSIDE <deck-stage>
       // (on <html>, <body>, a wrapper div, or a <style> tag), which
       // _liveObserver can't see. Re-snapshot author CSS (constructable
@@ -670,7 +679,7 @@
           // getPropertyValue read below reuses the same computed style
           // as long as nothing invalidates layout between thumbs.
           const cs = getComputedStyle(this);
-          (this._thumbs || []).forEach((t) => {
+          (this._thumbs || []).forEach(t => {
             if (t.host) this._syncThumbHostAttrs(t.host, cs);
           });
         }, 120);
@@ -697,11 +706,17 @@
       // Rewrite :root → :host and mirror <html>'s data-*/class/lang onto
       // each thumb host (see _syncThumbHostAttrs) so the same selectors
       // match inside the thumbnail's shadow tree.
-      const authorCss = Array.from(document.styleSheets).map((sh) => {
-        try {
-          return Array.from(sh.cssRules).map((r) => r.cssText).join('\n');
-        } catch (e) { return ''; }
-      }).join('\n')
+      const authorCss = Array.from(document.styleSheets)
+        .map(sh => {
+          try {
+            return Array.from(sh.cssRules)
+              .map(r => r.cssText)
+              .join('\n');
+          } catch (e) {
+            return '';
+          }
+        })
+        .join('\n')
         // The shadow host is featureless outside the functional :host(...)
         // form, so any compound on :root — [attr], .class, #id, :pseudo —
         // must become :host(<compound>) not :host<compound>. Same for the
@@ -710,7 +725,10 @@
         // match inside the thumb's shadow tree.
         .replace(/:root((?:\[[^\]]*\]|[.#][-\w]+|:[-\w]+(?:\([^)]*\))?)+)/g, ':host($1)')
         .replace(/:root\b/g, ':host')
-        .replace(/(^|[\s,>~+(}])html((?:\[[^\]]*\]|[.#][-\w]+|:[-\w]+(?:\([^)]*\))?)+)(?![-\w])/g, '$1:host($2)')
+        .replace(
+          /(^|[\s,>~+(}])html((?:\[[^\]]*\]|[.#][-\w]+|:[-\w]+(?:\([^)]*\))?)+)(?![-\w])/g,
+          '$1:host($2)'
+        )
         .replace(/(^|[\s,>~+(}])html(?![-\w])/g, '$1:host');
       // Every custom property the author references. _syncThumbHostAttrs
       // mirrors each one's *computed* value at <deck-stage> onto the
@@ -737,8 +755,7 @@
       // because removeAttribute mutates the live NamedNodeMap.
       for (let i = host.attributes.length - 1; i >= 0; i--) {
         const n = host.attributes[i].name;
-        if ((n.startsWith('data-') || n === 'class' || n === 'lang')
-            && !de.hasAttribute(n)) {
+        if ((n.startsWith('data-') || n === 'class' || n === 'lang') && !de.hasAttribute(n)) {
           host.removeAttribute(n);
         }
       }
@@ -762,7 +779,7 @@
         if (p.startsWith('--') && !vars.has(p)) host.style.removeProperty(p);
       }
       const live = cs || getComputedStyle(this);
-      vars.forEach((p) => {
+      vars.forEach(p => {
         const v = live.getPropertyValue(p);
         if (v) host.style.setProperty(p, v.trim());
         else host.style.removeProperty(p);
@@ -853,7 +870,7 @@
       // so off-screen drop targets are reachable. Native dragover fires
       // continuously while the pointer is stationary, so a per-event nudge
       // (ramped by edge proximity) is enough — no rAF loop needed.
-      rail.addEventListener('dragover', (e) => {
+      rail.addEventListener('dragover', e => {
         if (this._dragFrom == null) return;
         const r = rail.getBoundingClientRect();
         const EDGE = 40;
@@ -873,7 +890,7 @@
         <hr>
         <button type="button" data-act="delete">Delete slide</button>
       `;
-      menu.addEventListener('click', (e) => {
+      menu.addEventListener('click', e => {
         const act = e.target && e.target.getAttribute && e.target.getAttribute('data-act');
         if (!act) return;
         const i = this._menuIndex;
@@ -883,24 +900,26 @@
         else if (act === 'down') this._moveSlide(i, i + 1);
         else if (act === 'delete') this._openConfirm(i);
       });
-      menu.addEventListener('contextmenu', (e) => e.preventDefault());
+      menu.addEventListener('contextmenu', e => e.preventDefault());
 
       // Rail resize handle — drag to set --deck-rail-w, persisted to
       // localStorage so the width survives reloads.
       const resize = document.createElement('div');
       resize.className = 'rail-resize export-hidden';
       resize.setAttribute('data-omelette-chrome', '');
-      resize.addEventListener('pointerdown', (e) => {
+      resize.addEventListener('pointerdown', e => {
         e.preventDefault();
         resize.setPointerCapture(e.pointerId);
         resize.setAttribute('data-dragging', '');
-        const move = (ev) => this._setRailWidth(ev.clientX);
+        const move = ev => this._setRailWidth(ev.clientX);
         const up = () => {
           resize.removeEventListener('pointermove', move);
           resize.removeEventListener('pointerup', up);
           resize.removeEventListener('pointercancel', up);
           resize.removeAttribute('data-dragging');
-          try { localStorage.setItem('deck-stage.railWidth', String(this._railPx)); } catch (err) {}
+          try {
+            localStorage.setItem('deck-stage.railWidth', String(this._railPx));
+          } catch (err) {}
         };
         resize.addEventListener('pointermove', move);
         resize.addEventListener('pointerup', up);
@@ -923,7 +942,7 @@
           </div>
         </div>
       `;
-      confirm.addEventListener('click', (e) => {
+      confirm.addEventListener('click', e => {
         if (e.target === confirm) this._closeConfirm();
       });
       confirm.querySelector('.cancel').addEventListener('click', () => this._closeConfirm());
@@ -984,7 +1003,11 @@
         document.head.appendChild(tag);
       }
       tag.textContent =
-        '@page { size: ' + this.designWidth + 'px ' + this.designHeight + 'px; margin: 0; } ' +
+        '@page { size: ' +
+        this.designWidth +
+        'px ' +
+        this.designHeight +
+        'px; margin: 0; } ' +
         '@media print { html, body { margin: 0 !important; padding: 0 !important; background: none !important; overflow: visible !important; height: auto !important; } ' +
         '* { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }';
     }
@@ -993,7 +1016,10 @@
       // Rail mutations (delete/move) already reconcile synchronously and
       // emit slidechange with reason 'api'; skip the async slotchange that
       // would otherwise re-broadcast with reason 'init'.
-      if (this._squelchSlotChange) { this._squelchSlotChange = false; return; }
+      if (this._squelchSlotChange) {
+        this._squelchSlotChange = false;
+        return;
+      }
       this._collectSlides();
       this._restoreIndex();
       this._applyIndex({ showOverlay: false, broadcast: true, reason: 'init' });
@@ -1002,7 +1028,7 @@
 
     _collectSlides() {
       const assigned = this._slot.assignedElements({ flatten: true });
-      this._slides = assigned.filter((el) => {
+      this._slides = assigned.filter(el => {
         // Skip template/style/script nodes even if someone slots them.
         const tag = el.tagName;
         return tag !== 'TEMPLATE' && tag !== 'SCRIPT' && tag !== 'STYLE';
@@ -1032,7 +1058,7 @@
      *  alone matches a hidden skipped slide). */
     _markLastVisible() {
       let last = null;
-      this._slides.forEach((s) => {
+      this._slides.forEach(s => {
         s.removeAttribute('data-deck-last-visible');
         if (!s.hasAttribute('data-deck-skip')) last = s;
       });
@@ -1041,7 +1067,10 @@
 
     _loadNotes() {
       const tag = document.getElementById('speaker-notes');
-      if (!tag) { this._notes = []; return; }
+      if (!tag) {
+        this._notes = [];
+        return;
+      }
       try {
         const parsed = JSON.parse(tag.textContent || '[]');
         if (Array.isArray(parsed)) this._notes = parsed;
@@ -1069,7 +1098,9 @@
       // Keep the iframe's own hash in sync so an in-iframe location.reload()
       // (reload banner path in viewer-handle.ts) lands on the current slide,
       // not the stale deep-link hash from initial load.
-      try { history.replaceState(null, '', '#' + (curr + 1)); } catch (e) {}
+      try {
+        history.replaceState(null, '', '#' + (curr + 1));
+      } catch (e) {}
       this._slides.forEach((s, i) => {
         if (i === curr) s.setAttribute('data-deck-active', '');
         else s.removeAttribute('data-deck-active');
@@ -1084,7 +1115,16 @@
 
       if (broadcast) {
         // (1) Legacy: host-window postMessage for speaker-notes renderers.
-        try { window.postMessage({ slideIndexChanged: curr, deckTotal: this._slides.length, deckSkipped: this._skippedIndices() }, '*'); } catch (e) {}
+        try {
+          window.postMessage(
+            {
+              slideIndexChanged: curr,
+              deckTotal: this._slides.length,
+              deckSkipped: this._skippedIndices(),
+            },
+            '*'
+          );
+        } catch (e) {}
 
         // (2) In-page CustomEvent on the <deck-stage> element itself.
         //     Bubbles and composes out of shadow DOM so slide code can listen:
@@ -1096,14 +1136,16 @@
           previousIndex: prev,
           total: this._slides.length,
           slide: this._slides[curr] || null,
-          previousSlide: prev >= 0 ? (this._slides[prev] || null) : null,
+          previousSlide: prev >= 0 ? this._slides[prev] || null : null,
           reason: reason, // 'init' | 'keyboard' | 'click' | 'tap' | 'api'
         };
-        this.dispatchEvent(new CustomEvent('slidechange', {
-          detail,
-          bubbles: true,
-          composed: true,
-        }));
+        this.dispatchEvent(
+          new CustomEvent('slidechange', {
+            detail,
+            bubbles: true,
+            composed: true,
+          })
+        );
       }
 
       this._prevIndex = curr;
@@ -1127,9 +1169,16 @@
       // rail has had layout on some load paths, and a 0 there paints the
       // slide full-width for one frame before the post-slotchange _fit()
       // corrects it.
-      if (!this._railEnabled || !this._railVisible || this.hasAttribute('no-rail')
-          || this.hasAttribute('noscale') || this._presenting || this._previewMode
-          || NARROW_MQ.matches) return 0;
+      if (
+        !this._railEnabled ||
+        !this._railVisible ||
+        this.hasAttribute('no-rail') ||
+        this.hasAttribute('noscale') ||
+        this._presenting ||
+        this._previewMode ||
+        NARROW_MQ.matches
+      )
+        return 0;
       return this._railPx || 0;
     }
 
@@ -1150,7 +1199,7 @@
       // Overlay is centred on the viewport via left:50% + translate(-50%);
       // marginLeft shifts the centre by rw/2 so it lands in the middle of
       // the [rw, innerWidth] stage region.
-      if (this._overlay) this._overlay.style.marginLeft = (rw / 2) + 'px';
+      if (this._overlay) this._overlay.style.marginLeft = rw / 2 + 'px';
       const vw = window.innerWidth - rw;
       const vh = window.innerHeight;
       const s = Math.min(vw / this.designWidth, vh / this.designHeight);
@@ -1209,7 +1258,9 @@
       if (d && d.type === '__deck_rail_visible' && typeof d.on === 'boolean') {
         if (d.on === this._railVisible) return;
         this._railVisible = d.on;
-        try { localStorage.setItem('deck-stage.railVisible', d.on ? '1' : '0'); } catch (e) {}
+        try {
+          localStorage.setItem('deck-stage.railVisible', d.on ? '1' : '0');
+        } catch (e) {}
         // Arm the transition, commit it, then flip state — otherwise the
         // browser coalesces both writes and nothing animates on show.
         this.setAttribute('data-rail-anim', '');
@@ -1270,7 +1321,10 @@
       // is left to the focused button's native activation so Tab→Cancel
       // →Enter activates Cancel, not the window-level confirm path.
       if (this._confirm && this._confirm.hasAttribute('data-open')) {
-        if (e.key === 'Escape') { this._closeConfirm(); e.preventDefault(); }
+        if (e.key === 'Escape') {
+          this._closeConfirm();
+          e.preventDefault();
+        }
         return;
       }
       if (e.key === 'Escape' && this._menu && this._menu.hasAttribute('data-open')) {
@@ -1327,7 +1381,10 @@
       while (i >= 0 && i < this._slides.length && this._slides[i].hasAttribute('data-deck-skip')) {
         i += dir;
       }
-      if (i < 0 || i >= this._slides.length) { this._flashOverlay(); return; }
+      if (i < 0 || i >= this._slides.length) {
+        this._flashOverlay();
+        return;
+      }
       this._go(i, reason);
     }
 
@@ -1341,7 +1398,10 @@
     // only visible-ish slides pay the clone + image-decode cost.
 
     _renderRail() {
-      if (!this._rail || !this._railEnabled) { this._thumbs = []; return; }
+      if (!this._rail || !this._railEnabled) {
+        this._thumbs = [];
+        return;
+      }
       // FLIP: record each *materialized* thumb's top before the reconcile.
       // Off-screen (non-materialized) thumbs don't need the animation and
       // skipping their getBoundingClientRect saves a forced layout per
@@ -1355,16 +1415,16 @@
       // Reconcile: reuse thumbs that already exist for a slide, create
       // shells for new slides, drop thumbs for removed slides.
       const bySlide = new Map();
-      (this._thumbs || []).forEach((t) => bySlide.set(t.slide, t));
+      (this._thumbs || []).forEach(t => bySlide.set(t.slide, t));
       const next = [];
-      this._slides.forEach((slide) => {
+      this._slides.forEach(slide => {
         let t = bySlide.get(slide);
         if (t) bySlide.delete(slide);
         else t = this._makeThumb(slide);
         next.push(t);
       });
       // Orphans — slides removed since last render.
-      bySlide.forEach((t) => {
+      bySlide.forEach(t => {
         if (this._railObserver) this._railObserver.unobserve(t.frame);
         t.thumb.remove();
       });
@@ -1399,11 +1459,17 @@
           // on — otherwise the browser coalesces both style writes and
           // nothing animates.
           void this._rail.offsetHeight;
-          moved.forEach((t) => {
+          moved.forEach(t => {
             t.style.transition = 'transform 180ms cubic-bezier(.2,.7,.3,1)';
             t.style.transform = '';
           });
-          setTimeout(() => moved.forEach((t) => { t.style.transition = ''; }), 220);
+          setTimeout(
+            () =>
+              moved.forEach(t => {
+                t.style.transition = '';
+              }),
+            220
+          );
         }
       }
       requestAnimationFrame(() => this._scaleThumbs());
@@ -1435,7 +1501,7 @@
       // view; we move focus to it (preventScroll — _syncRail already
       // scrolled) so a held key walks the whole list. stopPropagation keeps
       // this out of the window-level _onKey nav handler.
-      thumb.addEventListener('keydown', (e) => {
+      thumb.addEventListener('keydown', e => {
         if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
         if (e.metaKey || e.ctrlKey || e.altKey) return;
         e.preventDefault();
@@ -1444,30 +1510,32 @@
         const cur = this._thumbs && this._thumbs[this._index];
         if (cur) cur.thumb.focus({ preventScroll: true });
       });
-      thumb.addEventListener('contextmenu', (e) => {
+      thumb.addEventListener('contextmenu', e => {
         e.preventDefault();
         this._openMenu(idx(), e.clientX, e.clientY);
       });
       thumb.draggable = true;
-      thumb.addEventListener('dragstart', (e) => {
+      thumb.addEventListener('dragstart', e => {
         this._dragFrom = idx();
         thumb.setAttribute('data-dragging', '');
         e.dataTransfer.effectAllowed = 'move';
-        try { e.dataTransfer.setData('text/plain', String(this._dragFrom)); } catch (err) {}
+        try {
+          e.dataTransfer.setData('text/plain', String(this._dragFrom));
+        } catch (err) {}
       });
       thumb.addEventListener('dragend', () => {
         thumb.removeAttribute('data-dragging');
         this._clearDrop();
         this._dragFrom = null;
       });
-      thumb.addEventListener('dragover', (e) => {
+      thumb.addEventListener('dragover', e => {
         if (this._dragFrom == null) return;
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
         const r = thumb.getBoundingClientRect();
         this._setDrop(idx(), e.clientY < r.top + r.height / 2 ? 'before' : 'after');
       });
-      thumb.addEventListener('drop', (e) => {
+      thumb.addEventListener('drop', e => {
         if (this._dragFrom == null) return;
         e.preventDefault();
         const i = idx();
@@ -1488,21 +1556,26 @@
     /** Lazily build the clone for a thumb that has scrolled into view. */
     _materialize(entry) {
       if (entry.host) return;
-      const dw = this.designWidth, dh = this.designHeight;
+      const dw = this.designWidth,
+        dh = this.designHeight;
       let clone = entry.slide.cloneNode(true);
       clone.removeAttribute('id');
       clone.removeAttribute('data-deck-active');
-      clone.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+      clone.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
       // Neuter heavy media; replace <video> with its poster so the box
       // keeps a visual. <iframe>/<audio> become empty placeholders.
-      clone.querySelectorAll('iframe, audio, object, embed').forEach((el) => {
+      clone.querySelectorAll('iframe, audio, object, embed').forEach(el => {
         el.removeAttribute('src');
         el.removeAttribute('srcdoc');
         el.removeAttribute('data');
         el.innerHTML = '';
       });
-      clone.querySelectorAll('video').forEach((el) => {
-        if (!el.poster) { el.removeAttribute('src'); el.innerHTML = ''; return; }
+      clone.querySelectorAll('video').forEach(el => {
+        if (!el.poster) {
+          el.removeAttribute('src');
+          el.innerHTML = '';
+          return;
+        }
         const img = document.createElement('img');
         img.src = el.poster;
         img.alt = '';
@@ -1514,7 +1587,7 @@
       // srcset candidate for the ~140px thumb. Same-URL clones reuse the
       // slide's decoded bitmap (URL-keyed cache), so the remaining cost
       // is paint/composite — lazy+async keeps that off the main thread.
-      clone.querySelectorAll('img').forEach((el) => {
+      clone.querySelectorAll('img').forEach(el => {
         el.loading = 'lazy';
         el.decoding = 'async';
         if (el.srcset) el.sizes = (this._railPx || 188) + 'px';
@@ -1527,17 +1600,24 @@
       // still show their authored content; the querySelectorAll NodeList
       // is static, so nested custom elements in the moved subtree are
       // still visited on later iterations.
-      const neuter = (el) => {
+      const neuter = el => {
         const box = document.createElement('div');
-        box.style.cssText = (el.getAttribute('style') || '') +
+        box.style.cssText =
+          (el.getAttribute('style') || '') +
           ';background:rgba(0,0,0,0.06);border:1px dashed rgba(0,0,0,0.15);';
         box.className = el.className;
         // Preserve theming/i18n hooks so [data-*] / :lang() / [dir]
         // descendant selectors still match the neutered root.
         for (const a of el.attributes) {
           const n = a.name;
-          if (n.startsWith('data-') || n.startsWith('aria-') ||
-              n === 'lang' || n === 'dir' || n === 'role' || n === 'title') {
+          if (
+            n.startsWith('data-') ||
+            n.startsWith('aria-') ||
+            n === 'lang' ||
+            n === 'dir' ||
+            n === 'role' ||
+            n === 'title'
+          ) {
             box.setAttribute(n, a.value);
           }
         }
@@ -1548,11 +1628,16 @@
       // slide root (<my-slide>…</my-slide>) would slip through and upgrade
       // on append. Swap the root first.
       if (clone.tagName.includes('-')) clone = neuter(clone);
-      clone.querySelectorAll('*').forEach((el) => {
+      clone.querySelectorAll('*').forEach(el => {
         if (el.tagName.includes('-')) el.replaceWith(neuter(el));
       });
-      clone.style.cssText += ';position:absolute;top:0;left:0;transform-origin:0 0;' +
-        'pointer-events:none;width:' + dw + 'px;height:' + dh + 'px;' +
+      clone.style.cssText +=
+        ';position:absolute;top:0;left:0;transform-origin:0 0;' +
+        'pointer-events:none;width:' +
+        dw +
+        'px;height:' +
+        dh +
+        'px;' +
         'box-sizing:border-box;overflow:hidden;visibility:visible;opacity:1;';
       const host = document.createElement('div');
       host.style.cssText = 'position:absolute;inset:0;';
@@ -1578,7 +1663,7 @@
      *  hasn't been materialized yet — it'll pick up current content when
      *  it scrolls into view. */
     _refreshThumb(slide) {
-      const entry = (this._thumbs || []).find((t) => t.slide === slide);
+      const entry = (this._thumbs || []).find(t => t.slide === slide);
       if (!entry || !entry.host) return;
       entry.host.remove();
       entry.host = entry.clone = null;
@@ -1633,7 +1718,9 @@
       this._menuIndex = i;
       const slide = this._slides[i];
       const skip = slide && slide.hasAttribute('data-deck-skip');
-      this._menu.querySelector('[data-act="skip"]').textContent = skip ? 'Unskip slide' : 'Skip slide';
+      this._menu.querySelector('[data-act="skip"]').textContent = skip
+        ? 'Unskip slide'
+        : 'Skip slide';
       this._menu.querySelector('[data-act="up"]').disabled = i <= 0;
       this._menu.querySelector('[data-act="down"]').disabled = i >= this._slides.length - 1;
       this._menu.querySelector('[data-act="delete"]').disabled = this._slides.length <= 1;
@@ -1668,9 +1755,13 @@
     }
 
     _emitDeckChange(detail) {
-      this.dispatchEvent(new CustomEvent('deckchange', {
-        detail, bubbles: true, composed: true,
-      }));
+      this.dispatchEvent(
+        new CustomEvent('deckchange', {
+          detail,
+          bubbles: true,
+          composed: true,
+        })
+      );
     }
 
     _deleteSlide(i) {
@@ -1699,7 +1790,16 @@
       this._emitDeckChange({ action: on ? 'skip' : 'unskip', from: i, slide });
       // Re-broadcast so the presenter popup's prev/next thumbnails re-pick
       // the nearest non-skipped slide without waiting for a nav event.
-      try { window.postMessage({ slideIndexChanged: this._index, deckTotal: this._slides.length, deckSkipped: this._skippedIndices() }, '*'); } catch (e) {}
+      try {
+        window.postMessage(
+          {
+            slideIndexChanged: this._index,
+            deckTotal: this._slides.length,
+            deckSkipped: this._skippedIndices(),
+          },
+          '*'
+        );
+      } catch (e) {}
     }
 
     _skippedIndices() {
@@ -1730,14 +1830,26 @@
     // Public API ------------------------------------------------------------
 
     /** Current slide index (0-based). */
-    get index() { return this._index; }
+    get index() {
+      return this._index;
+    }
     /** Total slide count. */
-    get length() { return this._slides.length; }
+    get length() {
+      return this._slides.length;
+    }
     /** Programmatically navigate. */
-    goTo(i) { this._go(i, 'api'); }
-    next() { this._advance(1, 'api'); }
-    prev() { this._advance(-1, 'api'); }
-    reset() { this._go(0, 'api'); }
+    goTo(i) {
+      this._go(i, 'api');
+    }
+    next() {
+      this._advance(1, 'api');
+    }
+    prev() {
+      this._advance(-1, 'api');
+    }
+    reset() {
+      this._go(0, 'api');
+    }
   }
 
   if (!customElements.get('deck-stage')) {

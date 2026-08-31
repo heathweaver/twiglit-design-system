@@ -25,24 +25,24 @@ propose it — never invent inline.
 
 ## Closed palette (memorize this)
 
-| Role           | Token            | Hex       | Use                              |
-| -------------- | ---------------- | --------- | -------------------------------- |
-| Body           | `--bg`           | `#ffffff` | Content surface                  |
-| Bar 1          | `--bar-search`   | `#f2f2f2` | Top search bar                   |
-| Bar 2          | `--bar-location` | `#e9e9e9` | Breadcrumb / location            |
-| Bar 3          | `--bar-action`   | `#d7d7d7` | Action verbs on selected twig    |
-| Bar 4          | `--bar-selected` | `#f0f0f0` | Selected row highlight           |
-| Ink            | `--ink`          | `#40404a` | Right-rail dark column           |
-| Foreground     | `--fg`           | `#333333` | Body text                        |
-| Muted          | `--fg-muted`     | `#666666` | Secondary text                   |
-| Subtle         | `--fg-subtle`    | `#999999` | Meta, timestamps                 |
-| Faint          | `--fg-faint`     | `#c0c0c0` | Placeholder, disabled            |
-| Border         | `--border`       | `#e0e0e0` | Default hairline                 |
-| Green          | `--green`        | `#417505` | Brand bg, FAB, logo              |
-| Green deep     | `--green-deep`   | `#2d5103` | Green text on grey               |
-| Green soft     | `--green-soft`   | `#e8f0da` | Tint behind selected items       |
-| Berry          | `--berry`        | `#b86b6a` | Twig bullet, avatar fallback     |
-| Berry soft     | `--berry-soft`   | `#f1dcdb` | Tint for attention states        |
+| Role       | Token            | Hex       | Use                           |
+| ---------- | ---------------- | --------- | ----------------------------- |
+| Body       | `--bg`           | `#ffffff` | Content surface               |
+| Bar 1      | `--bar-search`   | `#f2f2f2` | Top search bar                |
+| Bar 2      | `--bar-location` | `#e9e9e9` | Breadcrumb / location         |
+| Bar 3      | `--bar-action`   | `#d7d7d7` | Action verbs on selected twig |
+| Bar 4      | `--bar-selected` | `#f0f0f0` | Selected row highlight        |
+| Ink        | `--ink`          | `#40404a` | Right-rail dark column        |
+| Foreground | `--fg`           | `#333333` | Body text                     |
+| Muted      | `--fg-muted`     | `#666666` | Secondary text                |
+| Subtle     | `--fg-subtle`    | `#999999` | Meta, timestamps              |
+| Faint      | `--fg-faint`     | `#c0c0c0` | Placeholder, disabled         |
+| Border     | `--border`       | `#e0e0e0` | Default hairline              |
+| Green      | `--green`        | `#417505` | Brand bg, FAB, logo           |
+| Green deep | `--green-deep`   | `#2d5103` | Green text on grey            |
+| Green soft | `--green-soft`   | `#e8f0da` | Tint behind selected items    |
+| Berry      | `--berry`        | `#b86b6a` | Twig bullet, avatar fallback  |
+| Berry soft | `--berry-soft`   | `#f1dcdb` | Tint for attention states     |
 
 The legacy `#6b8f3c` brand green is **retired** — replace with `--green`.
 
@@ -52,12 +52,12 @@ Four weights are available. Default rhythm is regular + bold; reach for medium
 and heavy only when bold isn't enough nuance. Don't use 300 (light) or 800/900
 (extra-bold/black) — they read thin or shouty on screen.
 
-| Token         | Value | Use                                          |
-| ------------- | ----- | -------------------------------------------- |
-| `--w-regular` | 400   | Body, paragraphs, captions, tree rows        |
-| `--w-medium`  | 500   | Secondary emphasis, small labels             |
-| `--w-bold`    | 600   | Headings, titles, primary emphasis           |
-| `--w-heavy`   | 700   | Strong emphasis when bold isn't enough       |
+| Token         | Value | Use                                    |
+| ------------- | ----- | -------------------------------------- |
+| `--w-regular` | 400   | Body, paragraphs, captions, tree rows  |
+| `--w-medium`  | 500   | Secondary emphasis, small labels       |
+| `--w-bold`    | 600   | Headings, titles, primary emphasis     |
+| `--w-heavy`   | 700   | Strong emphasis when bold isn't enough |
 
 ## Three rules
 

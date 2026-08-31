@@ -17,26 +17,28 @@ that doesn't quite match the spec's mobile pill.
 
 This kit corrects each of those:
 
-| Concern | Current iOS app | This kit |
-| ------- | --------------- | -------- |
-| Greys | `Color(.systemGray5)` (~#E5E5EA) | `--bar-search` / `--bar-location` / `--bar-action` (the four-bar vocabulary) |
-| Bullets | None (chevron + text only) | The **berry** — empty, checked, shared, multiplied, focused |
-| Tree header | `house.fill` + `›` text | The four-bar spine: search → breadcrumb → action verbs → selected row |
-| Action verbs | SF Symbols icon-only buttons | Icon + green-deep label (`Complete`, `Outdent`, `Indent`, `Delete`, `Details`) |
-| Send button | `arrowtriangle.forward.fill` | Square green tile, matches web "+ New twigl" treatment |
-| Nav pill | `house.fill / bubble.left / list.bullet.indent` | `tree / chat / team / more` icons matching `spec/components.html` |
-| Twigl start | Plain text field | The patterns-page `home-start` (serif welcome + composer + prompts) |
-| DM bubbles | `(220,248,198)` green + `Color.white` | `--green-soft` + `--bg` with `--border` hairline — square, not rounded |
+| Concern      | Current iOS app                                 | This kit                                                                       |
+| ------------ | ----------------------------------------------- | ------------------------------------------------------------------------------ |
+| Greys        | `Color(.systemGray5)` (~#E5E5EA)                | `--bar-search` / `--bar-location` / `--bar-action` (the four-bar vocabulary)   |
+| Bullets      | None (chevron + text only)                      | The **berry** — empty, checked, shared, multiplied, focused                    |
+| Tree header  | `house.fill` + `›` text                         | The four-bar spine: search → breadcrumb → action verbs → selected row          |
+| Action verbs | SF Symbols icon-only buttons                    | Icon + green-deep label (`Complete`, `Outdent`, `Indent`, `Delete`, `Details`) |
+| Send button  | `arrowtriangle.forward.fill`                    | Square green tile, matches web "+ New twigl" treatment                         |
+| Nav pill     | `house.fill / bubble.left / list.bullet.indent` | `tree / chat / team / more` icons matching `spec/components.html`              |
+| Twigl start  | Plain text field                                | The patterns-page `home-start` (serif welcome + composer + prompts)            |
+| DM bubbles   | `(220,248,198)` green + `Color.white`           | `--green-soft` + `--bg` with `--border` hairline — square, not rounded         |
 
 ## Screens
 
 The canvas has three sections:
 
 **Entry & navigation**
+
 - **Login · magic link** — replaces `LoginView.swift`. Centered brand mark, the bar-location grey as a quiet auth background, square email input + green button.
 - **DMs list** — replaces `ConversationsView.swift` (list mode). Brand-styled rows with avatar, name + timestamp, preview, shared-twig count, and a green unread chip.
 
 **Core surfaces**
+
 1. **Tree (outline)** — replaces `OutlineRootView.swift`. The four-bar header is the spine. Rows use berries with `done` / `shared` /
    `multiplied` / focused states. "+ New twigl" button matches web.
 2. **Twigl (AI start)** — replaces `ConversationsView` empty state. The
@@ -47,6 +49,7 @@ The canvas has three sections:
    card using the design system.
 
 **Detail surfaces**
+
 - **Twig details · the leaf** — replaces `TwigDetailsSheet.swift`. Title with berry, mono meta strip, description, twiglits list, people roles, activity feed. Ink header.
 - **Twigl · AI conversation** — the active AI thread (after sending from the start screen). Shows the **Bloom** propose-tray (the green-soft card with "Accept all / Pick" actions).
 
@@ -80,9 +83,9 @@ with the brand greys.
 
 ## Files
 
-| File | What it is |
-| ---- | ---------- |
-| `index.html` | Mounted canvas with three iOS frames |
-| `iosScreens.jsx` | `ScreenTree`, `ScreenTwigl`, `ScreenDM` + `Berry`, `FolderBullet`, `MobilePillNav` |
-| `ios-frame.jsx` | iPhone bezel + status bar (starter) |
-| `design-canvas.jsx` | Pan/zoom canvas (starter) |
+| File                | What it is                                                                         |
+| ------------------- | ---------------------------------------------------------------------------------- |
+| `index.html`        | Mounted canvas with three iOS frames                                               |
+| `iosScreens.jsx`    | `ScreenTree`, `ScreenTwigl`, `ScreenDM` + `Berry`, `FolderBullet`, `MobilePillNav` |
+| `ios-frame.jsx`     | iPhone bezel + status bar (starter)                                                |
+| `design-canvas.jsx` | Pan/zoom canvas (starter)                                                          |

@@ -1,0 +1,306 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/system.css">
+<link rel="stylesheet" href="_card.css">
+<style>
+  /* ---- Share modal shell ---------------------------------------------- */
+  .sheet {
+    width: 460px;
+    background: var(--bg);
+    box-shadow: var(--shadow-modal);
+    border: 1px solid var(--border);
+    /* Sharp corners — DS principle. */
+  }
+  .sheet-head {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-4) var(--space-4) var(--space-3);
+  }
+  .sheet-title { font-size: var(--t-md); font-weight: var(--w-bold); letter-spacing: var(--tracking-tight); margin: 0; }
+  .sheet-title .sub { color: var(--fg-subtle); font-weight: var(--w-regular); }
+  .sheet-head .spacer { flex: 1; }
+  .linkbtn {
+    appearance: none; border: none; background: transparent; cursor: pointer;
+    font: inherit; font-size: var(--t-small); font-weight: var(--w-bold);
+    color: var(--green-deep); display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 6px;
+  }
+  .linkbtn:hover { background: var(--green-soft); }
+  .iconbtn {
+    appearance: none; border: none; background: transparent; cursor: pointer;
+    width: 28px; height: 28px; display: grid; place-items: center; color: var(--fg-muted);
+  }
+  .iconbtn:hover { background: var(--bar-search); color: var(--fg); }
+  .iconbtn svg, .linkbtn svg { width: 15px; height: 15px; }
+
+  .sheet-body { padding: 0 var(--space-4) var(--space-4); display: flex; flex-direction: column; gap: var(--space-4); }
+
+  /* Invite row */
+  .invite-row { display: flex; gap: var(--space-2); }
+  .invite-row .input { flex: 1; }
+
+  /* Access list */
+  .access-list { display: flex; flex-direction: column; }
+  .access-row {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-2) 0;
+  }
+  .access-row + .access-row { border-top: 1px solid var(--border-faint); }
+  .av {
+    width: 30px; height: 30px; border-radius: 50%; flex: none;
+    display: grid; place-items: center; color: var(--fg-on-brand);
+    font-size: var(--t-small); font-weight: var(--w-bold);
+  }
+  .av.berry { background: var(--berry); }
+  .av.green { background: var(--green); }
+  .av.glyph { background: var(--surface-sunken); color: var(--fg-muted); border: 1px solid var(--border); }
+  .av svg { width: 16px; height: 16px; }
+  .who { flex: 1; min-width: 0; }
+  .who .name { font-size: var(--t-body); color: var(--fg); }
+  .who .meta { font-size: var(--t-small); color: var(--fg-subtle); }
+  .role {
+    appearance: none; border: none; background: transparent; cursor: pointer;
+    font: inherit; font-size: var(--t-small); color: var(--fg-muted);
+    display: inline-flex; align-items: center; gap: 4px; padding: 4px 6px;
+  }
+  .role:hover { background: var(--bar-search); color: var(--fg); }
+  .role.fixed { cursor: default; color: var(--fg-subtle); }
+  .role.fixed:hover { background: transparent; }
+  .role svg { width: 13px; height: 13px; }
+
+  /* Secondary link-options menu (the "lower modal") */
+  .menu {
+    width: 320px; background: var(--bg);
+    box-shadow: var(--shadow-menu); border: 1px solid var(--border);
+    padding: var(--space-1);
+  }
+  .menu-item {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-2) var(--space-3); cursor: pointer; font-size: var(--t-body);
+  }
+  .menu-item:hover, .menu-item.active { background: var(--surface-sunken); }
+  .menu-item .spacer { flex: 1; }
+  .menu-item svg { width: 16px; height: 16px; color: var(--fg-muted); }
+  .menu-item .chev { color: var(--fg-faint); }
+  .menu-item .tbd { font-size: var(--t-micro); color: var(--fg-faint); font-family: var(--font-mono); }
+
+  /* Screen 2 — share options / role setter */
+  .opt-group { display: flex; flex-direction: column; }
+  .opt {
+    display: flex; align-items: flex-start; gap: var(--space-3);
+    padding: var(--space-3); cursor: pointer; border: 1px solid var(--border-faint);
+  }
+  .opt + .opt { border-top: none; }
+  .opt.sel { border-color: var(--green); background: var(--green-soft); }
+  .opt .tick { width: 18px; height: 18px; flex: none; margin-top: 1px; color: var(--green); }
+  .opt.sel .tick { opacity: 1; } .opt .tick { opacity: 0; }
+  .opt .lbl { font-size: var(--t-body); font-weight: var(--w-bold); color: var(--fg); }
+  .opt .desc { font-size: var(--t-small); color: var(--fg-muted); line-height: var(--leading-body); }
+  .opt .col { gap: 2px; }
+  .toggle-row {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-3) 0; border-top: 1px solid var(--border-faint);
+  }
+  .toggle-row .col { flex: 1; gap: 2px; }
+  .switch { width: 36px; height: 20px; background: var(--border-strong); border-radius: 999px; position: relative; flex: none; }
+  .switch.on { background: var(--green); }
+  .switch::after { content:""; position:absolute; width:16px; height:16px; background:#fff; border-radius:50%; top:2px; left:2px; transition: left var(--d-fast) var(--ease); }
+  .switch.on::after { left: 18px; }
+  .back {
+    appearance: none; border: none; background: transparent; cursor: pointer; font: inherit;
+    font-size: var(--t-small); font-weight: var(--w-bold); color: var(--fg-muted);
+    display: inline-flex; align-items: center; gap: 6px; padding: 4px 6px;
+  }
+  .back:hover { color: var(--fg); }
+  .back svg { width: 14px; height: 14px; }
+  .sheet-foot { display: flex; justify-content: flex-end; gap: var(--space-2); padding-top: var(--space-2); border-top: 1px solid var(--border-faint); }
+
+  /* Contacts typeahead — the "list of choices" that drops under the invite
+     input as you type a name. Picking a row shares with that twigler. */
+  .ta-wrap { position: relative; }
+  .ta {
+    border: 1px solid var(--border); box-shadow: var(--shadow-menu);
+    margin-top: 4px; background: var(--bg);
+  }
+  .ta-row {
+    display: flex; align-items: center; gap: var(--space-3);
+    padding: var(--space-2) var(--space-3); cursor: pointer;
+  }
+  .ta-row:hover { background: var(--surface-sunken); }
+  .ta-row .av { width: 24px; height: 24px; font-size: 10px; }
+  .ta-name { font-size: var(--t-body); color: var(--fg); }
+</style>
+</head><body>
+<div class="card-shell">
+
+  <!-- ============================================================= -->
+  <p class="eyebrow">Screen 1 · Share</p>
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 class="sheet-title">Share <span class="sub">Therapy plan</span></h2>
+      <span class="spacer"></span>
+      <button class="linkbtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+        Copy link
+      </button>
+      <button class="iconbtn" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+
+      <div class="callout">
+        <svg class="callout-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6"/></svg>
+        <p>People you invite can see this twig and everything nested under it. Pick what each person can do when you invite them.</p>
+      </div>
+
+      <div class="invite-row">
+        <input class="input" placeholder="Search people or add an email">
+        <button class="btn btn-primary">Invite</button>
+      </div>
+
+      <div>
+        <p class="field-label" style="margin:0 0 8px">Who has access</p>
+        <div class="access-list">
+          <div class="access-row">
+            <div class="av glyph">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>
+            </div>
+            <div class="who"><div class="name">Anyone with the link</div><div class="meta">Off · only invited people</div></div>
+            <button class="role">Can view
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+          </div>
+          <div class="access-row">
+            <div class="av green">H</div>
+            <div class="who"><div class="name">Heath (you)</div><div class="meta">heath@remote-executive.com</div></div>
+            <button class="role fixed">Owner</button>
+          </div>
+          <div class="access-row">
+            <div class="av berry">DS</div>
+            <div class="who"><div class="name">Dr. Smith</div><div class="meta">Guest · dr.smith@clinic.com</div></div>
+            <button class="role">Can comment
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <p class="eyebrow">Screen 1 · contacts typeahead (list of choices)</p>
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2 class="sheet-title">Share</h2>
+      <span class="spacer"></span>
+      <button class="linkbtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+        Copy link
+      </button>
+      <button class="iconbtn" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+      <div class="ta-wrap">
+        <div class="invite-row">
+          <input class="input" style="flex:1" value="da">
+          <button class="role" style="border:1px solid var(--border-strong)">Full access
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <button class="btn btn-primary" disabled style="opacity:.45">Invite</button>
+        </div>
+        <div class="ta">
+          <div class="ta-row">
+            <div class="av berry">DA</div><span class="ta-name">Dana Alvarez</span>
+          </div>
+          <div class="ta-row">
+            <div class="av" style="background:var(--ink)">AI</div><span class="ta-name">Daily Digest AI</span>
+          </div>
+          <div class="ta-row">
+            <div class="av berry">DR</div><span class="ta-name">David Romero</span>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:var(--t-small);color:var(--fg-muted);margin:0">Typing a name surfaces existing twiglers + AI connections; picking a row shares directly. An email that matches no one falls through to the <strong>Invite</strong> button (outsider, at the chosen role).</p>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <p class="eyebrow">Secondary menu · link &amp; export options (the "lower modal" — contents TBD)</p>
+  <div class="menu">
+    <div class="menu-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>
+      Copy link
+    </div>
+    <div class="menu-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>
+      Connect AI to this twig <span class="spacer"></span><span class="tbd">MCP</span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+    <div class="menu-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM8 9h8M8 13h6"/></svg>
+      Copy as Markdown
+    </div>
+    <div class="menu-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 11l4 4 4-4M5 21h14"/></svg>
+      Export… <span class="spacer"></span>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+  </div>
+
+  <!-- ============================================================= -->
+  <p class="eyebrow">Screen 2 · Share options (set when inviting / changing a role)</p>
+  <div class="sheet">
+    <div class="sheet-head">
+      <button class="back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        Back
+      </button>
+      <h2 class="sheet-title" style="font-size:var(--t-body)">Dr. Smith</h2>
+      <span class="spacer"></span>
+      <button class="iconbtn" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="sheet-body">
+
+      <div>
+        <p class="field-label" style="margin:0 0 8px">What can they do</p>
+        <div class="opt-group">
+          <div class="opt">
+            <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            <div class="col"><span class="lbl">Can view</span><span class="desc">Read the twig and its twiglits. No comments, no edits</span></div>
+          </div>
+          <div class="opt sel">
+            <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            <div class="col"><span class="lbl">Can comment</span><span class="desc">View plus leave comments, can't change the twig itself</span></div>
+          </div>
+          <div class="opt">
+            <svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            <div class="col"><span class="lbl">Can contribute</span><span class="desc">View, comment, and edit content &amp; context, can't restructure or delete</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="toggle-row">
+        <div class="col">
+          <span class="lbl" style="font-size:var(--t-body);font-weight:var(--w-bold)">Make assignable</span>
+          <span class="desc" style="font-size:var(--t-small);color:var(--fg-muted)">Let this person be set as assignee on twigs in this subtree. Off keeps them a guest only <span class="tbd" style="color:var(--fg-faint)">(open question)</span></span>
+        </div>
+        <div class="switch"></div>
+      </div>
+
+      <div class="sheet-foot">
+        <button class="btn btn-ghost">Remove access</button>
+        <button class="btn btn-primary">Done</button>
+      </div>
+
+    </div>
+  </div>
+
+  <p style="font-size:11px;color:var(--fg-muted);margin:0;line-height:1.5;max-width:460px"><strong>Twiglit-DS conversion of Figma's "Share this file".</strong> Sharp corners, hairline rows, mono section labels, green primary, berry avatars. Screen 2 is the per-person options panel — tiers map 1:1 to <code>permission_level</code> (read/comment/contribute); "Make assignable" is the unresolved guest-wall decision, shown as a placeholder.</p>
+
+</div>
+</body></html>

@@ -66,6 +66,14 @@
   --berry-soft:      #f1dcdb;   /* tint for locked/attention states */
   --berry-deep:      #8e4a4a;   /* berry text on tint */
 
+  /* Warning notices */
+  --tw-warn-fg:          #7a5b12;
+  --tw-warn-border:      #e0b34a;
+  --tw-warn-bg:          #fdf6e3;
+  --tw-warn-fg-dark:     #e8c86a;
+  --tw-warn-border-dark: #6b5417;
+  --tw-warn-bg-dark:     #2c2413;
+
   /* -----------------------------------------------------------------------
      TYPE — system stack, collapsed weights
      ----------------------------------------------------------------------- */

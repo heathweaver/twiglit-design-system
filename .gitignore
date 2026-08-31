@@ -12,5 +12,3 @@ node_modules/
 # the public design system ships without it.
 uploads/
 @eaDir*
-node_modules
-node_modules
